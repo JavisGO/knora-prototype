@@ -1,1 +1,87 @@
-.ksd-tree{padding:4px 8px 12px}.ksd-node{min-height:48px;display:flex;align-items:center;padding-left:calc(var(--ksd-level)*22px);border:1px solid transparent;border-radius:9px;color:#394b63}.ksd-node:hover{background:#f4f8fd}.ksd-node.selected{border-color:#c5daf8;background:#edf5ff;color:#1768e8}.ksd-toggle{width:23px;height:28px;flex:0 0 23px;border:0;background:transparent;color:#66778d;cursor:pointer}.ksd-toggle.empty{cursor:default}.ksd-node>label{min-width:0;flex:1;display:grid;grid-template-columns:18px 30px minmax(0,1fr);align-items:center;gap:8px;cursor:pointer}.ksd-node input{width:15px!important;height:15px!important;margin:0;accent-color:#1768e8}.ksd-node label>i{width:27px;height:27px;display:grid;place-items:center;border-radius:7px;background:#eaf2ff;color:#1768e8;font-size:9px;font-style:normal}.ksd-node label>span{min-width:0}.ksd-node label b,.ksd-node label small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ksd-node label b{font-size:11px}.ksd-node label small{margin-top:3px;color:#8794a6;font-size:8px}.ksd-node[hidden]{display:none}.ksd-tree-note{margin:8px 14px;padding:9px 11px;border-radius:8px;background:#f5f8fc;color:#75849a;font-size:9px}
+.ksd-tree {
+  padding: 4px 8px 12px;
+}
+.ksd-node {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  padding-left: calc(var(--ksd-level) * 22px);
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #394b63;
+}
+.ksd-node:hover {
+  background: #f4f8fd;
+}
+.ksd-node.selected {
+  border-color: #c5daf8;
+  background: #edf5ff;
+  color: #1768e8;
+}
+.ksd-toggle {
+  width: 23px;
+  height: 28px;
+  flex: 0 0 23px;
+  border: 0;
+  background: transparent;
+  color: #66778d;
+  cursor: pointer;
+}
+.ksd-toggle.empty {
+  cursor: default;
+}
+.ksd-node > label {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 18px 30px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.ksd-node input {
+  width: 15px !important;
+  height: 15px !important;
+  margin: 0;
+  accent-color: #1768e8;
+}
+.ksd-node label > i {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: #eaf2ff;
+  color: #1768e8;
+  font-size: 9px;
+  font-style: normal;
+}
+.ksd-node label > span {
+  min-width: 0;
+}
+.ksd-node label b,
+.ksd-node label small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ksd-node label b {
+  font-size: 11px;
+}
+.ksd-node label small {
+  margin-top: 3px;
+  color: #8794a6;
+  font-size: 8px;
+}
+.ksd-node[hidden] {
+  display: none;
+}
+.ksd-tree-note {
+  margin: 8px 14px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  background: #f5f8fc;
+  color: #75849a;
+  font-size: 9px;
+}

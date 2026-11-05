@@ -1,1 +1,66 @@
-.entity-selection{gap:7px}.entity-selection>details{position:relative;min-width:0}.entity-source-picker{flex:0 0 93px}.entity-ref-picker{flex:1}.entity-selection summary{list-style:none;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px solid #e4e5ea;border-radius:18px;background:#fff;padding:6px 10px;min-height:31px}.entity-selection details>div{position:absolute;top:100%;left:0;min-width:100%;width:max-content;max-width:370px;border:1px solid #e4e5ea;border-radius:9px;background:white;padding:5px;z-index:8;box-shadow:0 4px 18px #17234220}.entity-selection details button{display:block;width:100%;border:0;background:#fff;text-align:left;padding:9px;font-size:13px}.entity-selection details button:hover{background:#edf4ff}.entity-selection details span{display:block;padding:10px;font-size:12px;color:#9299ac}.entity-ref-hint{font-size:12px;color:#9299ac;line-height:1.6;margin:8px 0}.entity-ref-hint.invalid{color:#ff4d4f}
+.entity-selection {
+  gap: 7px;
+}
+.entity-selection > details {
+  position: relative;
+  min-width: 0;
+}
+.entity-source-picker {
+  flex: 0 0 93px;
+}
+.entity-ref-picker {
+  flex: 1;
+}
+.entity-selection summary {
+  list-style: none;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid #e4e5ea;
+  border-radius: 18px;
+  background: #fff;
+  padding: 6px 10px;
+  min-height: 31px;
+}
+.entity-selection details > div {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  width: max-content;
+  max-width: 370px;
+  border: 1px solid #e4e5ea;
+  border-radius: 9px;
+  background: white;
+  padding: 5px;
+  z-index: 8;
+  box-shadow: 0 4px 18px #17234220;
+}
+.entity-selection details button {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: #fff;
+  text-align: left;
+  padding: 9px;
+  font-size: 13px;
+}
+.entity-selection details button:hover {
+  background: #edf4ff;
+}
+.entity-selection details span {
+  display: block;
+  padding: 10px;
+  font-size: 12px;
+  color: #9299ac;
+}
+.entity-ref-hint {
+  font-size: 12px;
+  color: #9299ac;
+  line-height: 1.6;
+  margin: 8px 0;
+}
+.entity-ref-hint.invalid {
+  color: #ff4d4f;
+}

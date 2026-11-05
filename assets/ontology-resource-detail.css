@@ -1,1 +1,204 @@
-.ontology-detail-mask{position:fixed;z-index:1700;top:var(--prototype-entry-bar-height,0);right:0;bottom:0;left:0;background:rgba(22,34,50,.28);opacity:0;transition:opacity .2s}.ontology-detail-mask.open{opacity:1}.ontology-detail-drawer{position:absolute;top:0;right:0;bottom:0;width:min(430px,94vw);display:flex;flex-direction:column;background:#fff;box-shadow:-18px 0 48px rgba(28,43,65,.2);transform:translateX(102%);transition:transform .22s ease}.ontology-detail-mask.open .ontology-detail-drawer{transform:translateX(0)}.ontology-detail-drawer>header{height:66px;display:flex;align-items:center;padding:0 21px;border-bottom:1px solid #e1e7ee;background:#fff}.ontology-detail-drawer>header h2{margin:0;color:#20324a;font-size:14px}.ontology-detail-drawer>header button{width:31px;height:31px;margin-left:auto;border:0;border-radius:8px;background:#f1f4f8;color:#718095;font-size:20px;cursor:pointer}.ontology-detail-drawer>main{min-height:0;flex:1;overflow:auto;padding:17px 19px 28px;background:#fff}.ontology-detail-identity.concise{display:flex;align-items:center;gap:10px;padding:0}.ontology-detail-identity.concise>i{width:45px;height:45px;display:grid;place-items:center;flex:0 0 45px;border-radius:8px;background:#eaf3ff;color:#176ef3;font-size:10px;font-style:normal;font-weight:800}.ontology-detail-identity.concise>i.relation{background:#f0eaff;color:#7858cf}.ontology-detail-identity.concise>i.event{background:#fff4df;color:#bd780d}.ontology-detail-identity.concise>i.action{background:#e8f8f2;color:#148a67}.ontology-detail-identity.concise>i.flow{background:#fff0e8;color:#c96c34}.ontology-detail-identity.concise h3{margin:0 0 4px;color:#263950;font-size:12px}.ontology-detail-identity.concise small{color:#8a96a7;font-size:7px}.ontology-detail-action-type{display:flex;align-items:center;gap:14px;margin:17px 0 3px;padding:11px 13px;border:1px solid #e1e7ee;border-radius:7px;background:#f8fafc}.ontology-detail-action-type span{color:#8793a4;font-size:7px}.ontology-detail-action-type b{padding:4px 8px;border-radius:10px;background:#eaf3ff;color:#176ef3;font-size:8px}.ontology-detail-drawer>main>nav{height:45px;display:flex;align-items:flex-end;margin-top:10px;border-bottom:1px solid #dfe6ee}.ontology-detail-drawer>main>nav button{height:37px;padding:0 2px;border:0;border-bottom:2px solid #176ef3;background:transparent;color:#176ef3;font-size:9px;font-weight:800}.ontology-detail-attributes.concise{margin-top:10px}.ontology-detail-table{overflow:hidden;border:1px solid #e1e7ee;border-radius:6px}.ontology-detail-table>.head,.ontology-detail-table>div:not(.head){display:grid;grid-template-columns:42px minmax(145px,1.7fr) minmax(75px,1fr) 68px;align-items:center;gap:7px;padding:0 10px}.ontology-detail-table>.head{height:36px;background:#f5f7fa;color:#76859a}.ontology-detail-table>.head b{font-size:7px}.ontology-detail-table>div:not(.head){min-height:58px;border-top:1px solid #e8edf2;color:#53657d;font-size:7px}.ontology-detail-table>div:not(.head)>span:nth-child(2){display:grid;grid-template-columns:18px minmax(0,1fr);grid-template-rows:auto auto;align-items:center}.ontology-detail-table>div:not(.head)>span:nth-child(2)>i{grid-row:1/3;color:#3f4e64;font-size:9px;font-style:normal;font-weight:800}.ontology-detail-table>div:not(.head)>span:nth-child(2)>b,.ontology-detail-table>div:not(.head)>span:nth-child(2)>small{grid-column:2;display:block}.ontology-detail-table>div:not(.head)>span:nth-child(2)>b{color:#31445e;font-size:8px}.ontology-detail-table>div:not(.head)>span:nth-child(2)>small{margin-top:3px;color:#8c98a9;font-size:7px}.ontology-detail-table .strong{color:#20324a;font-weight:800}
+.ontology-detail-mask {
+  position: fixed;
+  z-index: 1700;
+  top: var(--prototype-entry-bar-height, 0);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(22, 34, 50, 0.28);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.ontology-detail-mask.open {
+  opacity: 1;
+}
+.ontology-detail-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(430px, 94vw);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: -18px 0 48px rgba(28, 43, 65, 0.2);
+  transform: translateX(102%);
+  transition: transform 0.22s ease;
+}
+.ontology-detail-mask.open .ontology-detail-drawer {
+  transform: translateX(0);
+}
+.ontology-detail-drawer > header {
+  height: 66px;
+  display: flex;
+  align-items: center;
+  padding: 0 21px;
+  border-bottom: 1px solid #e1e7ee;
+  background: #fff;
+}
+.ontology-detail-drawer > header h2 {
+  margin: 0;
+  color: #20324a;
+  font-size: 14px;
+}
+.ontology-detail-drawer > header button {
+  width: 31px;
+  height: 31px;
+  margin-left: auto;
+  border: 0;
+  border-radius: 8px;
+  background: #f1f4f8;
+  color: #718095;
+  font-size: 20px;
+  cursor: pointer;
+}
+.ontology-detail-drawer > main {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  padding: 17px 19px 28px;
+  background: #fff;
+}
+.ontology-detail-identity.concise {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+}
+.ontology-detail-identity.concise > i {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 45px;
+  border-radius: 8px;
+  background: #eaf3ff;
+  color: #176ef3;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 800;
+}
+.ontology-detail-identity.concise > i.relation {
+  background: #f0eaff;
+  color: #7858cf;
+}
+.ontology-detail-identity.concise > i.event {
+  background: #fff4df;
+  color: #bd780d;
+}
+.ontology-detail-identity.concise > i.action {
+  background: #e8f8f2;
+  color: #148a67;
+}
+.ontology-detail-identity.concise > i.flow {
+  background: #fff0e8;
+  color: #c96c34;
+}
+.ontology-detail-identity.concise h3 {
+  margin: 0 0 4px;
+  color: #263950;
+  font-size: 12px;
+}
+.ontology-detail-identity.concise small {
+  color: #8a96a7;
+  font-size: 7px;
+}
+.ontology-detail-action-type {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 17px 0 3px;
+  padding: 11px 13px;
+  border: 1px solid #e1e7ee;
+  border-radius: 7px;
+  background: #f8fafc;
+}
+.ontology-detail-action-type span {
+  color: #8793a4;
+  font-size: 7px;
+}
+.ontology-detail-action-type b {
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: #eaf3ff;
+  color: #176ef3;
+  font-size: 8px;
+}
+.ontology-detail-drawer > main > nav {
+  height: 45px;
+  display: flex;
+  align-items: flex-end;
+  margin-top: 10px;
+  border-bottom: 1px solid #dfe6ee;
+}
+.ontology-detail-drawer > main > nav button {
+  height: 37px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 2px solid #176ef3;
+  background: transparent;
+  color: #176ef3;
+  font-size: 9px;
+  font-weight: 800;
+}
+.ontology-detail-attributes.concise {
+  margin-top: 10px;
+}
+.ontology-detail-table {
+  overflow: hidden;
+  border: 1px solid #e1e7ee;
+  border-radius: 6px;
+}
+.ontology-detail-table > .head,
+.ontology-detail-table > div:not(.head) {
+  display: grid;
+  grid-template-columns: 42px minmax(145px, 1.7fr) minmax(75px, 1fr) 68px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px;
+}
+.ontology-detail-table > .head {
+  height: 36px;
+  background: #f5f7fa;
+  color: #76859a;
+}
+.ontology-detail-table > .head b {
+  font-size: 7px;
+}
+.ontology-detail-table > div:not(.head) {
+  min-height: 58px;
+  border-top: 1px solid #e8edf2;
+  color: #53657d;
+  font-size: 7px;
+}
+.ontology-detail-table > div:not(.head) > span:nth-child(2) {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+}
+.ontology-detail-table > div:not(.head) > span:nth-child(2) > i {
+  grid-row: 1/3;
+  color: #3f4e64;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 800;
+}
+.ontology-detail-table > div:not(.head) > span:nth-child(2) > b,
+.ontology-detail-table > div:not(.head) > span:nth-child(2) > small {
+  grid-column: 2;
+  display: block;
+}
+.ontology-detail-table > div:not(.head) > span:nth-child(2) > b {
+  color: #31445e;
+  font-size: 8px;
+}
+.ontology-detail-table > div:not(.head) > span:nth-child(2) > small {
+  margin-top: 3px;
+  color: #8c98a9;
+  font-size: 7px;
+}
+.ontology-detail-table .strong {
+  color: #20324a;
+  font-weight: 800;
+}
