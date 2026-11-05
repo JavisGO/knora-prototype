@@ -1,0 +1,224 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>本体管理 · 业务流程画布</title><link rel="stylesheet" href="assets/prototype-back-entry.css"><link rel="stylesheet" href="assets/kb-bridge.css?v=20261019sidebar"><link rel="stylesheet" href="assets/ontology-workbench-v2.css?v=20261019sidebar"><link rel="stylesheet" href="assets/ontology-modules.css?v=20261019sidebar"><script src="assets/ontology-sidebar-shared.js?v=20261019sidebar"></script><script src="assets/prototype-back-entry.js" defer></script><style>
+*{box-sizing:border-box}body{position:relative;width:2048px;transform-origin:0 0;margin:0;font:14px -apple-system,BlinkMacSystemFont,'Microsoft Yahei',sans-serif;color:#172342;overflow:hidden}button,input,select{font:inherit;color:inherit}button{cursor:pointer}button:hover{filter:brightness(.96)}header{height:48px;border-bottom:1px solid #f0f1f5;display:flex;align-items:center;padding:0 22px;gap:22px;background:white}header b{font-size:17px}.blue{color:#0754ff}.brand{font-size:28px;color:#ff842d}.spacer{flex:1}aside{position:absolute;top:48px;bottom:0;width:250px;border-right:1px solid #f0f1f5;background:white;padding-top:16px}nav>button{display:flex;align-items:center;gap:12px;width:calc(100% - 8px);border:0;background:white;text-align:left;margin:8px 2px;padding:11px 25px;height:50px}nav>button.active{background:#e7f2ff;color:#0754ff;border-radius:28px;height:38px;margin:18px 2px}nav>button i{font-style:normal;color:#646d86;font-size:19px;width:20px}.toolbar{position:absolute;left:250px;right:0;top:48px;height:62px;display:flex;align-items:center;padding:0 24px;gap:15px;white-space:nowrap;border-bottom:1px solid #f1f2f6}.toolbar strong{font-size:16px}.logo{background:linear-gradient(135deg,#0868ff,#9e65ff);color:white;font-size:25px;font-weight:bold;padding:2px 9px;border-radius:5px}.muted{color:#9299ac;font-size:12px}.btn{border:1px solid #95afff;background:white;border-radius:20px;height:30px;padding:0 16px;color:#1759ff}.btn.primary{background:#0754ff;color:white;border-color:#0754ff}.circle{border:1px solid #dedfe7;border-radius:50%;background:white;width:32px;height:32px}.canvas{position:absolute;left:250px;right:0;top:110px;bottom:0;background-color:#f5f6f8;background-image:radial-gradient(#dce0e7 .6px,transparent .6px);background-size:4px 4px;overflow:hidden}.add{position:absolute;z-index:2;left:25px;top:25px;background:#0754ff;color:white;border:0;border-radius:50%;width:36px;height:36px;font-size:28px}.world{position:absolute;width:1800px;height:1050px;transform-origin:0 0}.node{position:absolute;width:104px;background:white;border:1px solid #e8eaf0;border-radius:5px;box-shadow:0 1px 2px #18274708;font-size:6px;cursor:pointer;color:#182342;user-select:none}.node.selected{border-color:#487bff;box-shadow:0 0 0 1px #becdff}.node .head{min-height:21px;display:flex;align-items:center;gap:3px;padding:5px}.icon{display:inline-flex;align-items:center;justify-content:center;color:white;background:#00bf41;border-radius:2px;width:10px;height:10px;font-size:7px;flex-shrink:0}.node small{margin-left:auto;font-size:6px}.node .row{background:#f5f6f9;border-radius:3px;margin:3px 6px;padding:2px 3px;color:#69758a}.node:before,.node:after{content:'';width:5px;height:6px;background:#0754ff;position:absolute;top:50%;border-radius:4px}.node:before{left:-4px}.node:after{right:-4px}.group{position:absolute;left:975px;top:172px;width:420px;height:250px;border:1px solid #e5e7ee;background:#ffffff80;border-radius:5px;font-size:6px}.group b{display:block;background:#fff9ec;padding:5px}.minimap{position:absolute;bottom:25px;left:38px;width:174px;height:106px;background:white;padding:20px;opacity:.95}.zoom{position:absolute;left:45%;bottom:6px;display:flex;align-items:center;gap:12px;background:white;border-radius:22px;padding:6px 12px;box-shadow:0 2px 8px #182a4410}.zoom button{background:none;border:0;color:#788198;font-size:20px;padding:0}.drawer{position:absolute;top:20px;right:13px;bottom:0;width:490px;background:white;box-shadow:-10px 0 26px #20304318;border-radius:16px 16px 0 0;overflow:auto;z-index:3}.drawer-head{padding:16px 15px;background:linear-gradient(100deg,#f0fff6,white);border-bottom:1px solid #f3f3f5}.drawer-title{display:flex;gap:10px;align-items:center;font-size:18px;font-weight:700;color:#08152c}.drawer-title .icon{width:26px;height:26px;font-size:19px}.drawer-title button{background:none;border:0;color:#6f7790;font-size:22px}.desc{margin-top:14px;width:100%;border:0;background:transparent;outline:none;font-size:13px}.form{padding:16px 20px 30px}label.section{display:block;font-size:12px;font-weight:600;margin:0 0 9px}.form select,.form input:not([type=radio]){height:31px;border:1px solid #e4e5ea;border-radius:18px;background:white;padding:0 12px;width:100%;outline:none}.form input:focus{border-color:#6593ff}.block{margin-bottom:17px}.entity{background:#f5f6f9;border-radius:11px;padding:9px}.flex{display:flex;gap:9px;align-items:center}.flex>*{min-width:0}.flex select{flex:1}.textbtn{border:0;background:transparent;white-space:nowrap;padding:4px 8px}.subtitle{margin:10px 0 7px}.radios{display:flex;gap:15px;align-items:center;margin:8px 0 14px}.radios label{display:flex;align-items:center;gap:6px}input[type=radio]{accent-color:#1764ff;margin:0;width:17px;height:17px}.condition{display:flex;gap:7px;align-items:center;margin-bottom:10px}.and{font-size:12px;color:#1764ff}.condbody{background:white;padding:8px;border-radius:10px;flex:1}.condbody .flex+ .flex{border-top:1px solid #f0f1f4;margin-top:8px;padding-top:8px}.plus{width:100%;background:#f5f6f9;border:0;color:#8992a6;border-radius:20px;height:31px}.whitebox{background:white;border-radius:10px;padding:10px 12px}.whitebox .subtitle:first-child{margin-top:0}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}.output{display:grid;grid-template-columns:140px 1fr;gap:5px;margin-bottom:5px}.output select{background:#f5f6f8;color:#b5b7bf}.palette{position:absolute;left:20px;top:72px;width:230px;background:white;z-index:4;border-radius:10px;box-shadow:0 3px 20px #20304320;padding:15px}.palette button{display:block;width:100%;padding:9px;text-align:left;border:0;background:white}.palette button:hover{background:#edf4ff}.toast{position:fixed;top:65px;left:50%;transform:translateX(-50%);background:white;box-shadow:0 4px 20px #1b31452a;padding:12px 25px;border-radius:8px;z-index:20}.modal{position:fixed;inset:0;background:#0004;display:grid;place-items:center;z-index:10}.modal article{background:white;border-radius:12px;padding:25px;width:460px}.modal textarea{width:100%;height:100px;margin:15px 0;border:1px solid #ddd;border-radius:6px;padding:10px}[hidden]{display:none!important}
+.semantic-properties{appearance:none;cursor:pointer}.semantic-properties.is-placeholder{color:#9299ac}.semantic-properties option{color:#172342}.semantic-properties:focus{border-color:#1764ff;box-shadow:0 0 0 2px #1764ff30;outline:none}.whitebox .subtitle{margin-top:12px;margin-bottom:8px}.whitebox .twocol .subtitle{margin-top:12px}.location-file{position:relative;display:flex;flex:1;min-width:0}.form .location-file input{padding-right:76px}.location-file>span{position:absolute;right:9px;top:5px;background:#f5f6f9;border-radius:14px;padding:2px 9px;font-size:13px;pointer-events:none}
+
+.location-rows{display:grid;gap:9px}.location-row>[aria-label="定位方式"]{flex:0 0 82px}.location-row .location-file{flex:1}.form .location-file select{padding-right:58px;appearance:none}.location-file select.is-placeholder{color:#9299ac}.location-file select option{color:#172342}.location-row .remove-location{padding:3px;width:22px;flex:0 0 22px;color:#7d879b}.location-row .remove-location:disabled{opacity:.3;cursor:default}.add-location{color:#1764ff;font-size:13px;padding:8px 0 0}.location-file>span{font-size:12px;right:8px;top:6px;padding:1px 6px}
+
+.location-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.whitebox .location-heading>.subtitle{margin:0}.location-combination{position:relative;font-size:12px}.location-combination summary{list-style:none;cursor:pointer;padding:5px 10px;border:1px solid #e4e5ea;border-radius:18px;background:#fff}.location-combination>div{position:absolute;top:100%;right:0;min-width:110px;padding:4px;background:white;box-shadow:0 4px 14px #17234220;border:1px solid #e4e5ea;border-radius:8px;z-index:5}.location-combination button{display:block;width:100%;border:0;background:white;text-align:left;padding:8px;border-radius:5px;font-size:12px}.location-combination button[aria-pressed=true]{background:#edf4ff;color:#1764ff}.location-combination-note{font-size:12px;line-height:1.6;color:#9299ac;margin:8px 0 10px}
+</style><header><span class="blue">▦</span><span class="brand">⬢</span><b>本体管理</b><span class="spacer"></span><span class="blue">◎　♟　⬆</span><b style="font-size:14px">企业管理员</b></header><aside><nav id="nav"></nav><div style="position:absolute;bottom:12px;left:115px;color:#768099">☷</div></aside><div class="toolbar"><button class="circle" id="back">←</button><span class="logo">K</span><strong>【场景 2】索赔配件分析_报错</strong><span class="muted">▣ 任务式</span><span class="muted saved" id="saved">最近保存：2026-05-08 12:03:20</span><span class="spacer"></span><button class="btn" id="features">▦ 功能</button><button class="btn" id="debug">⊙ 调试运行</button><button class="btn" id="newversion">▣ 保存新版本</button><button class="btn primary" id="save">▣ 仅保存</button><select class="btn" id="version"><option>V1　　BOT版本</option></select><button class="circle" id="more">···</button></div><main class="canvas"><button class="add" id="add">+</button><div class="palette" id="palette" hidden></div><div class="world" id="world"><svg width="1800" height="1050" style="position:absolute" id="edges"></svg><div class="group"><b>▣ Batch processing</b><div style="padding:5px;color:#8790a0">输出：[ 批处理结果.152599 ]</div></div><div id="nodes"></div></div><div class="minimap"><svg width="140" height="65"><path d="M0 40 L35 35 L65 20 L125 17" stroke="#eee" fill="none"/><g fill="#9444ff"><rect x="4" y="38" width="9" height="5"/><rect x="35" y="27" width="9" height="5"/><rect x="43" y="58" width="9" height="5"/></g><g fill="#0655ff"><rect x="65" y="20" width="9" height="5"/><rect x="112" y="16" width="9" height="5"/></g><rect x="80" y="10" width="47" height="22" fill="#ffc400"/><path d="M83 15h12m5 0h10m-25 9h15" stroke="#00bd50"/></svg></div><div class="zoom"><button id="minus" aria-label="缩小">⊖</button><span id="scale">36%</span><button id="plus" aria-label="放大">⊕</button><span style="color:#ddd">│</span><button id="fit" aria-label="适应画布">▦</button><button id="lock" aria-label="锁定画布">♙</button><button id="reopen" aria-label="打开配置">▣</button></div><section class="drawer" id="drawer"><div class="drawer-head"><div class="drawer-title"><span class="icon">◔</span><span id="nodeTitle">PartNumber Position</span><span class="spacer"></span><button id="nodeRun" aria-label="运行节点">⊙</button><button id="nodeMore" aria-label="节点操作">⋮</button><button id="close" aria-label="关闭配置">×</button></div><input class="desc" placeholder="添加节点描述" id="description"></div><div class="form"><div class="block"><label class="section">查询方式</label><select id="query"><option>实体查询</option></select></div><label class="section">实体选择</label><div id="entities"></div><button class="plus block" id="addEntity">⊕ 添加实体</button><label class="section">返回内容</label><div class="radios"><label><input type="radio" name="return" value="all" checked>全部</label><label><input type="radio" name="return" value="fields">指定对象属性</label></div><input id="fields" placeholder="请选择返回属性" hidden><label class="section" style="margin-top:20px">输出参数</label><div id="outputs"></div></div></section></main><div class="toast" id="toast" hidden></div><div class="modal" id="modal" hidden><article><div class="flex"><strong>调试运行</strong><span class="spacer"></span><button class="textbtn" id="modalClose">×</button></div><textarea id="testInput" placeholder="请输入测试内容"></textarea><button class="btn primary" id="run">运行</button><p id="result" class="muted">本地原型调试，未连接业务接口。</p></article></div>
+<script>
+function resizeReplica(){let ratio=window.innerWidth/2048;document.body.style.transform='scale('+ratio+')';document.body.style.height=(window.innerHeight/ratio)+'px'}resizeReplica();window.addEventListener('resize',resizeReplica);const $=id=>document.getElementById(id);const menuGroups=[['项目构建入口',[['aigo','AI','本体自动构建'],['template','模','行业本体模板']]],['语义图谱',[['graph','图','语义图谱'],['entity','01','业务对象'],['relation','02','业务关联'],['event','03','事实明细']]],['业务知识',[['knowledge','04','知识库'],['dataset','05','数据集']]],['业务行为与逻辑',[['action','06','业务操作与行为'],['rule','07','业务规则'],['flow','08','业务流程'],['tool','09','工具与模型']]],['智能应用',[['skill','10','技能'],['reasoning','11','智能体'],['ui','12','用户界面']]]];$('nav').innerHTML=menuGroups.map(group=>`<section class="editor-nav-group"><small>${group[0]}</small>${group[1].map(item=>`<button data-module="${item[0]}" class="${item[0]==='flow'?'active':''}"><i>${item[1]}</i><span>${item[2]}</span></button>`).join('')}</section>`).join('');$('nav').onclick=e=>{const button=e.target.closest('[data-module]');if(!button)return;if(button.dataset.module==='flow'){toast('当前位于业务流程画布');return}const params=new URLSearchParams(location.search),project=params.get('project')||localStorage.getItem('knora:lastProject')||'personal';location.href='knowledge-base-management.html?project='+encodeURIComponent(project)+'&module='+encodeURIComponent(button.dataset.module)};
+let nodes=[['Intent recognition',28,565,'#a345ff',['输入：用户输入','输出：LLM结果.151929','模型：gpt-5.4']],['Conditional judgment',185,565,'#00b6d9',['IF','LLM结果.151929 等于 2','ELSE']],['Subject recognition',375,405,'#a345ff',['输入：用户输入','输出：PartNumber_Location','模型：gpt-5.4']],['PartNumber Position',550,450,'#00be43',[]],['PN-Claim Relation Mining',705,453,'#00be43',[]],['Claim Number Position',820,314,'#1455ff',['输入：拓展结果.115257','输出：claimNumbers','异常时　终止流程']],['Claim Position',995,272,'#00be43',[]],['Dealer mining',1145,230,'#00be43',[]],['HU-TU mining',1145,275,'#00be43',[]],['ClaimDoc mining',1145,330,'#00be43',[]],['数据集',250,778,'#00bac6',['输入：用户输入','数据集：场景 2 索赔配件分析','输出：拓展结果.151968']],['自然语言解读',450,805,'#a345ff',['输入：拓展结果.151970','输出：Analysis results','模型：gpt-5.4']]];let selected=3,zoom=1,locked=false,links=[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[6,8],[6,9],[1,10],[10,11]],newFlowMode=new URLSearchParams(location.search).get('new')==='1';if(newFlowMode){nodes=[];links=[];selected=-1}
+function render(){ $('nodes').innerHTML=nodes.map((n,i)=>`<div class="node ${i===selected?'selected':''}" data-i="${i}" style="left:${n[1]}px;top:${n[2]}px"><div class="head"><span class="icon" style="background:${n[3]}">▣</span><b>${n[0]}</b><small>⊙ ⋮</small></div>${n[4].map(r=>`<div class="row">${r}</div>`).join('')}</div>`).join('');$('edges').innerHTML=links.map(([a,b])=>{let p=nodes[a],q=nodes[b],x=p[1]+104,y=p[2]+(p[4].length?34:11),xx=q[1],yy=q[2]+(q[4].length?34:11);return `<path d="M${x},${y} C${x+65},${y} ${xx-65},${yy} ${xx},${yy}" stroke="${a===2||a===3?'#477aff':'#c4c8d0'}" fill="none" stroke-width="1.1"/><circle cx="${(x+xx)/2}" cy="${(y+yy)/2}" r="2" fill="#858ca0"/>`}).join('')+(links.length?`<path d="M809 464 Q1100 460 1440 445 M554 839 Q1120 830 1520 530" fill="none" stroke="#c4c8d0"/>`:'');}
+$('nodes').onclick=e=>{const el=e.target.closest('.node');if(!el)return;selected=+el.dataset.i;$('nodeTitle').textContent=nodes[selected][0];$('drawer').hidden=false;render()};$('nodes').onpointerdown=e=>{const el=e.target.closest('.node');if(!el||locked)return;let i=+el.dataset.i,x=e.clientX,y=e.clientY,ox=nodes[i][1],oy=nodes[i][2];el.setPointerCapture(e.pointerId);el.onpointermove=v=>{nodes[i][1]=ox+(v.clientX-x)/zoom;nodes[i][2]=oy+(v.clientY-y)/zoom;el.style.left=nodes[i][1]+'px';el.style.top=nodes[i][2]+'px'};el.onpointerup=()=>{el.onpointermove=null;requestAnimationFrame(render)}};
+// 本地原型示例：实体选项的 data-semantic-properties 表示已构建语义检索的属性；正式接入时由实体配置提供。
+function refreshSemanticProperties(div){
+  const entitySelect=div.querySelector('[aria-label="实体"]');
+  const propertiesSelect=div.querySelector('.semantic-properties');
+  if(!entitySelect||!propertiesSelect)return;
+  let properties=[];
+  try{properties=JSON.parse(entitySelect.selectedOptions[0]?.dataset.semanticProperties||'[]')}catch{}
+  if(!Array.isArray(properties))properties=[];
+  properties=properties.filter(p=>typeof p==='string'&&p.trim());
+  const previous=propertiesSelect.value;
+  propertiesSelect.replaceChildren();
+  const placeholder=new Option('请选择检索属性','');placeholder.disabled=true;propertiesSelect.add(placeholder);
+  if(properties.length){
+    propertiesSelect.add(new Option('默认属性','__semantic_default__'));
+    properties.forEach(p=>propertiesSelect.add(new Option(p,p)));
+    propertiesSelect.value=properties.includes(previous)||previous==='__semantic_default__'?previous:'';
+  }else{
+    const empty=new Option('当前实体未构建语义检索','');
+    empty.value='__empty__';empty.disabled=true;propertiesSelect.add(empty);propertiesSelect.value='';
+  }
+  propertiesSelect.classList.toggle('is-placeholder',!propertiesSelect.value);
+}
+function syncEntitySearchMode(div){
+  const mode=div.querySelector('.radios input:checked')?.value||'semantic';
+  div.querySelector('.conditions').hidden=mode==='semantic';
+  div.querySelector('.addCondition').hidden=mode==='semantic';
+  div.querySelector('.whitebox').hidden=mode==='exact';
+}
+// 定位引用逐条匹配同一实体；先按阈值组合，按实体唯一标识去重、统一排序，最后截取最大条目数。
+// all: 各条件均达标，以最低相似度降序；any: 至少一个条件达标，以最高相似度降序。候选召回不由最终条目数限制。
+const locationVariables=[['ClaimPDF','文件'],['PartNumber_Location','文本'],['claimNumbers','数组'],['用户输入','文本']];
+function updateLocationRows(div){
+  const rows=[...div.querySelectorAll('.location-row')];
+  const chosen=rows.map(row=>row.querySelector('[aria-label="定位变量"]').value);
+  rows.forEach(row=>{
+    const select=row.querySelector('[aria-label="定位变量"]'),value=select.value;
+    [...select.options].forEach(o=>o.disabled=!!o.value&&o.value!==value&&chosen.includes(o.value));
+    row.querySelector('.remove-location').disabled=rows.length===1;
+    row.querySelector('.location-file>span').textContent=locationVariables.find(v=>v[0]===value)?.[1]||'';
+    select.classList.toggle('is-placeholder',!value);
+  });
+}
+function addLocationRow(div,value=''){
+  const row=document.createElement('div');row.className='flex location-row';
+  const mode=document.createElement('select');mode.setAttribute('aria-label','定位方式');mode.add(new Option('引用','引用'));row.append(mode);
+  const wrap=document.createElement('span');wrap.className='location-file';
+  const select=document.createElement('select');select.setAttribute('aria-label','定位变量');
+  select.add(new Option('请选择变量',''));
+  locationVariables.forEach(([name,type])=>select.add(new Option((type==='文件'?'▧ ':'')+name,name)));
+  // 保留旧配置中已有的引用。
+  if(value&&!locationVariables.some(v=>v[0]===value))select.add(new Option(value,value));
+  select.value=value;wrap.append(select,document.createElement('span'));row.append(wrap);
+  const remove=document.createElement('button');remove.type='button';remove.className='textbtn remove-location';remove.setAttribute('aria-label','移除定位条件');remove.textContent='⊖';row.append(remove);
+  div.querySelector('.location-rows').append(row);updateLocationRows(div);
+}
+function prepareLocationRows(div){
+  const box=div.querySelector('.whitebox');
+  if(!box.querySelector('.location-rows')){
+    const old=box.querySelector('.flex'),oldInput=old.querySelector('input');
+    const value=(oldInput?.value||'').replace(/^[▧▣]\s*/,'');
+    const rows=document.createElement('div');rows.className='location-rows';old.replaceWith(rows);
+    const add=document.createElement('button');add.type='button';add.className='textbtn add-location';add.textContent='＋ 添加定位条件';rows.after(add);
+    addLocationRow(div,value);
+  }
+  if(!box.querySelector('.location-combination')){
+    const title=box.querySelector('.subtitle');
+    const header=document.createElement('div');header.className='location-heading';title.replaceWith(header);header.append(title);
+    const mode=document.createElement('details');mode.className='location-combination';mode.dataset.mode='all';
+    mode.innerHTML='<summary aria-label="定位条件组合方式">满足全部 ▾</summary><div><button type="button" data-location-mode="all">满足全部</button><button type="button" data-location-mode="any">满足任一</button></div>';
+    header.append(mode);
+    const note=document.createElement('p');note.className='location-combination-note';box.querySelector('.add-location').after(note);
+    const limit=box.querySelector('[aria-label="引用上限"]');if(limit){limit.setAttribute('aria-label','最大条目数');limit.previousElementSibling.textContent='最大条目数';limit.step='1';limit.title='组合、去重和排序后的最终返回数量上限'}
+  }
+  refreshLocationCombination(div);
+  updateLocationRows(div);
+}
+function refreshLocationCombination(div){
+  const mode=div.querySelector('.location-combination');if(!mode)return;
+  const any=mode.dataset.mode==='any';mode.querySelector('summary').textContent=(any?'满足任一':'满足全部')+' ▾';
+  mode.querySelectorAll('[data-location-mode]').forEach(button=>button.setAttribute('aria-pressed',button.dataset.locationMode===mode.dataset.mode));
+  div.querySelector('.location-combination-note').textContent=any?'同一实体至少一条引用达标；合并去重，按最高相似度排序后返回前 N 条。':'同一实体的每条引用均须达标；按最低相似度排序后返回前 N 条。';
+}
+function entity(){const div=document.createElement('div');div.className='entity block';div.innerHTML=`<div class="flex"><select aria-label="实体"><option data-semantic-properties='["配件编号(外部)"]'>Part</option></select><button class="textbtn removeEntity">⊖ 移除</button></div><div class="subtitle">检索类型</div><div class="radios"><label><input type="radio" name="search${Date.now()}" value="semantic" checked>语义</label><label><input type="radio" name="search${Date.now()}" value="exact">精确</label><label><input type="radio" name="search${Date.now()}" value="mixed">混合</label></div><div class="conditions"></div><button class="plus addCondition" style="text-align:left;margin-bottom:10px">⊕ 添加条件</button><div class="whitebox"><div class="subtitle">定位条件</div><div class="flex"><select style="flex:0 0 108px" aria-label="定位方式"><option>引用</option><option>输入</option></select><span class="location-file"><input value="▧ ClaimPDF" placeholder="请选择变量" aria-label="定位变量"><span>文件⌄</span></span></div><div class="subtitle">检索属性</div><select class="semantic-properties" aria-label="检索属性"></select><div class="twocol"><div><div class="subtitle">引用上限</div><input type="number" min="1" value="10" aria-label="引用上限"></div><div><div class="subtitle">最低相关度</div><input type="number" min="0" max="1" step="0.1" value="0.4" aria-label="最低相关度"></div></div></div>`;let name='search'+Math.random();div.querySelectorAll('[type=radio]').forEach(r=>r.name=name);$('entities').append(div);condition(div);refreshSemanticProperties(div);syncEntitySearchMode(div);prepareLocationRows(div);}
+function condition(div){const c=document.createElement('div');c.className='condition';c.innerHTML=`<span class="and">AND⊏</span><div class="condbody"><div class="flex"><select aria-label="条件属性"><option>配件编号(外部)</option></select><select aria-label="条件运算"><option>等于</option><option>包含</option><option>不等于</option></select><button class="textbtn removeCondition" aria-label="删除条件">♜</button></div><div class="flex"><select style="flex:0 0 85px" aria-label="条件来源"><option>引用</option><option>输入</option></select><input value="Tₜ PartNumber_Location" aria-label="条件值"><span style="font-size:12px;white-space:nowrap">文本⌄</span></div></div>`;div.querySelector('.conditions').append(c)}
+$('entities').onclick=e=>{if(e.target.closest('.removeEntity'))e.target.closest('.entity').remove();if(e.target.closest('.addCondition'))condition(e.target.closest('.entity'));if(e.target.closest('.removeCondition'))e.target.closest('.condition').remove()};$('addEntity').onclick=entity;['拓展结果.115125','查询是否成功.115127','查询错误信息.115129','查询的配件','配件.115139'].forEach((v,i)=>{$('outputs').insertAdjacentHTML('beforeend',`<div class="output"><select aria-label="输出类型" disabled><option>${i<3?'Tₜ 文本':i===3?'◎ 实体引用...':'₁₂₃ 数组'}</option></select><input value="${v}" aria-label="输出参数"></div>`)});document.querySelectorAll('[name=return]').forEach(r=>r.onchange=()=>$('fields').hidden=r.value==='all');
+function toast(t){$('toast').textContent=t;$('toast').hidden=false;clearTimeout(window.tt);window.tt=setTimeout(()=>$('toast').hidden=true,2500)}function scale(){ $('world').style.transform=`scale(${zoom})`;$('scale').textContent=Math.round(36*zoom)+'%'}$('minus').onclick=()=>{zoom=Math.max(.4,zoom-.1);scale()};$('plus').onclick=()=>{zoom=Math.min(2,zoom+.1);scale()};$('fit').onclick=()=>{zoom=1;scale()};$('lock').onclick=()=>{locked=!locked;toast(locked?'画布已锁定':'画布已解锁')};$('close').onclick=()=>$('drawer').hidden=true;$('reopen').onclick=()=>$('drawer').hidden=false;$('add').onclick=()=>$('palette').hidden=!$('palette').hidden;['大语言模型（LLM）','知识库检索','本体数据推理','条件选择','代码执行','批处理','Action执行'].forEach(t=>{$('palette').insertAdjacentHTML('beforeend',`<button>${t}</button>`)});$('palette').onclick=e=>{if(e.target.tagName==='BUTTON'){nodes.push([e.target.textContent,500,250,'#00be43',[]]);render();$('palette').hidden=true;toast('已添加节点')}};
+function save(){const fields=[...document.querySelectorAll('.form input,.form select,.desc')].map(e=>({v:e.value,c:e.checked}));localStorage.setItem(('aigo-replica-v1:'+ (new URLSearchParams(location.search).get('flow')||'default')),JSON.stringify({nodes,fields,entities:$('entities').innerHTML}));$('saved').textContent='最近保存：'+new Date().toLocaleString('zh-CN',{hour12:false});toast('已保存到本机浏览器')}$('save').onclick=save;$('newversion').onclick=()=>{const n=$('version').options.length+1;$('version').add(new Option('V'+n+'　　BOT版本'));$('version').selectedIndex=n-1;save()};$('debug').onclick=$('nodeRun').onclick=()=>{$('modal').hidden=false};$('modalClose').onclick=()=>$('modal').hidden=true;$('run').onclick=()=>{$('result').textContent=$('testInput').value?'本地校验完成。业务查询结果需连接接口后获取。':'请先输入测试内容。'};$('features').onclick=()=>{$('palette').hidden=!$('palette').hidden};$('more').onclick=()=>toast('本地原型 · 配置与节点支持本机保存');$('nodeMore').onclick=()=>toast('拖动节点可调整位置，点击节点可切换选择');$('back').onclick=()=>{const params=new URLSearchParams(location.search),project=params.get('project')||localStorage.getItem('knora:lastProject')||'personal';location.href='knowledge-base-management.html?project='+encodeURIComponent(project)+'&module=flow'};if(!newFlowMode){entity();try{let d=JSON.parse(localStorage.getItem(('aigo-replica-v1:'+ (new URLSearchParams(location.search).get('flow')||'default'))));if(d){nodes=d.nodes;$('entities').innerHTML=d.entities;[...document.querySelectorAll('.form input,.form select,.desc')].forEach((e,i)=>{if(d.fields[i]){e.value=d.fields[i].v;if(e.type==='radio')e.checked=d.fields[i].c}})}}catch{}}else{$('drawer').hidden=true;document.querySelector('.group').hidden=true;document.querySelector('.minimap').hidden=true;document.querySelector('.zoom').hidden=true;$('reopen').hidden=true;$('saved').textContent='尚未保存'}document.querySelectorAll('#entities .entity').forEach(div=>{
+  const entitySelect=div.querySelector('[aria-label="实体"]');
+  if(entitySelect&&entitySelect.value==='Part'&&!entitySelect.selectedOptions[0].hasAttribute('data-semantic-properties'))entitySelect.selectedOptions[0].dataset.semanticProperties=JSON.stringify(['配件编号(外部)']);
+  const oldInput=div.querySelector('input[placeholder="请选择检索属性"]');
+  if(oldInput){const select=document.createElement('select');select.className='semantic-properties';select.setAttribute('aria-label','检索属性');oldInput.replaceWith(select)}
+  const locationInput=div.querySelector('.whitebox input[placeholder="请选择变量"]');
+  if(locationInput&&!locationInput.closest('.location-file')){
+    const wrap=document.createElement('span');wrap.className='location-file';locationInput.replaceWith(wrap);wrap.append(locationInput);
+    if(!locationInput.value)locationInput.value='▧ ClaimPDF';
+    const type=document.createElement('span');type.textContent='文件⌄';wrap.append(type);
+  }
+  refreshSemanticProperties(div);
+  syncEntitySearchMode(div);
+  prepareLocationRows(div);
+});
+$('entities').addEventListener('click',e=>{
+  const div=e.target.closest('.entity');if(!div)return;
+  const choice=e.target.closest('[data-location-mode]');
+  if(choice){const mode=choice.closest('.location-combination');mode.dataset.mode=choice.dataset.locationMode;mode.open=false;refreshLocationCombination(div)}
+  if(e.target.closest('.add-location'))addLocationRow(div);
+  if(e.target.closest('.remove-location')&&div.querySelectorAll('.location-row').length>1){e.target.closest('.location-row').remove();updateLocationRows(div)}
+});
+$('entities').addEventListener('change',e=>{if(e.target.matches('.location-row [aria-label="定位变量"]'))updateLocationRows(e.target.closest('.entity'))});
+$('entities').addEventListener('change',e=>{const div=e.target.closest('.entity');if(!div)return;if(e.target.matches('[aria-label="实体"]'))refreshSemanticProperties(div);if(e.target.matches('.radios input'))syncEntitySearchMode(div);if(e.target.matches('.semantic-properties'))e.target.classList.toggle('is-placeholder',!e.target.value)});
+render();
+</script>
+<style>
+aside{padding:9px 10px 18px!important;overflow:auto!important;background:#fbfcfe!important;border-right:1px solid #e2e8f0!important}
+#nav .editor-nav-group{display:block!important;padding:0 0 8px!important;border:0!important}
+#nav .editor-nav-group+.editor-nav-group{margin-top:4px!important;padding-top:8px!important;border-top:1px solid #edf1f6!important}
+#nav .editor-nav-group>small{display:block!important;padding:2px 10px 6px!important;color:#9aa5b5!important;font:700 9px/1.45 "Microsoft YaHei","PingFang SC",sans-serif!important;letter-spacing:.1em!important}
+#nav .editor-nav-group button{width:100%!important;min-height:48px!important;height:auto!important;display:flex!important;align-items:center!important;gap:11px!important;margin:2px 0!important;padding:7px 10px!important;border:0!important;border-radius:9px!important;background:transparent!important;color:#69768a!important;text-align:left!important;font:400 12px/1.45 "Microsoft YaHei","PingFang SC",sans-serif!important}
+#nav .editor-nav-group button:hover{background:#f0f5fc!important;color:#0967f4!important}
+#nav .editor-nav-group button i{width:34px!important;height:34px!important;display:grid!important;place-items:center!important;flex:0 0 34px!important;border-radius:8px!important;background:#eef2f7!important;color:#8290a4!important;font-size:10px!important;font-style:normal!important;font-weight:700!important}
+#nav .editor-nav-group button span{min-width:0!important;font-size:12px!important;line-height:1.45!important}
+#nav .editor-nav-group button.active{min-height:48px!important;margin:2px 0!important;border-radius:9px!important;background:#eaf3ff!important;color:#0967f4!important;font-weight:700!important}
+#nav .editor-nav-group button.active i{background:#fff!important;color:#0967f4!important}
+#nav .editor-nav-group:first-child button[data-module="aigo"]{min-height:58px!important;padding:8px 10px!important;border:1px solid #cfe0fb!important;background:linear-gradient(135deg,#f7fbff,#edf5ff)!important}
+#nav .editor-nav-group:first-child button[data-module="aigo"] i{background:linear-gradient(135deg,#0c70ef,#5a5ee7)!important;color:#fff!important}
+</style>
+</html>
+
+<script>
+(function(){var params=new URLSearchParams(location.search),name=params.get('flowName');if(name){document.querySelector('.toolbar strong').textContent=name;document.title='业务流程 · '+name}document.getElementById('back').title='返回业务流程列表';})();
+</script>
+
+<link rel="stylesheet" href="assets/logic-knowledge-retrieval.css?v=20261019merge">
+<script src="assets/logic-knowledge-retrieval.js?v=20261021-empty-flow"></script>
+<link rel="stylesheet" href="assets/logic-relation-expansion.css?v=20261019">
+<script src="assets/logic-relation-expansion.js?v=20261019"></script>
+
+<link rel="stylesheet" href="assets/logic-relation-parameters.css?v=20261023merge">
+<script src="assets/logic-relation-parameters.js?v=20261023merge"></script>
+
+<link rel="stylesheet" href="assets/logic-action-node.css?v=20261022-action-node-v3">
+<script src="assets/logic-action-node.js?v=20261022-action-node-v3"></script>
+
+<style>.editor-ontology-side .ontology-module span{font-size:9px}</style>
+<script>
+(function unifyOntologySidebar(){
+  var side=document.querySelector('aside'),groups=document.querySelectorAll('#nav .editor-nav-group');
+  if(!side||!groups.length)return;
+  side.classList.add('ontology-side','editor-ontology-side');
+  groups.forEach(function(group,index){
+    group.classList.add(index===0?'ontology-menu-entry':'ontology-menu-group');
+    var title=group.querySelector(':scope > small');if(title)title.classList.add('ontology-menu-group-title');
+    group.querySelectorAll('button[data-module]').forEach(function(button){
+      button.classList.add('ontology-module');
+      if(button.dataset.module==='aigo')button.classList.add('ontology-module-aigo');
+      if(button.dataset.module==='template')button.classList.add('ontology-module-template');
+    });
+  });
+})();
+</script>
+
+<!-- The canvas and the workbench use the same ontology sidebar component. -->
+<style>
+.flow-ontology-side{top:48px!important;bottom:0!important;width:var(--flow-sidebar-width)!important;min-height:0!important;padding:0!important;overflow:hidden!important;background:#fbfcfe!important;border-right:1px solid #e2e8f0!important}
+.flow-ontology-side #nav{width:var(--flow-sidebar-base-width,224px);height:calc(100vh - 48px);display:flex;min-height:0;flex-direction:column;padding:9px 10px 0;overflow:auto;transform:scale(var(--flow-sidebar-inverse,1));transform-origin:0 0;background:#fbfcfe}
+.flow-ontology-side #nav .ontology-menu-group:last-of-type{padding-bottom:12px}
+.flow-ontology-side .ontology-sidebar-toggle{flex:0 0 52px}
+.flow-ontology-side.is-collapsed #nav{padding:9px 8px 0;overflow:hidden}
+.flow-ontology-side.is-collapsed .ontology-menu-group-title,.flow-ontology-side.is-collapsed .ontology-module span,.flow-ontology-side.is-collapsed .ontology-module em{display:none}
+.flow-ontology-side.is-collapsed .ontology-module{justify-content:center;padding:6px}
+.flow-ontology-side.is-collapsed .ontology-sidebar-toggle{width:calc(100% + 16px);margin:auto -8px 0}
+.toolbar,.canvas{left:var(--flow-sidebar-width)!important}
+</style>
+<script>
+(function useSharedOntologySidebar(){
+  var side=document.querySelector('aside'),nav=document.getElementById('nav');
+  if(!side||!nav||!window.KnoraOntologySidebar)return;
+  side.classList.remove('editor-ontology-side');
+  side.classList.add('ontology-side','flow-ontology-side');
+  Array.from(side.children).forEach(function(child){if(child!==nav)child.remove()});
+  window.KnoraOntologySidebar.render(nav,'flow');
+  nav.insertAdjacentHTML('beforeend','<button class="ontology-sidebar-toggle" type="button" aria-label="收起本体管理菜单" title="收起菜单"><span aria-hidden="true"><i></i><i></i><i></i></span><em>收起菜单</em></button>');
+  var collapsed=false,toggle=nav.querySelector('.ontology-sidebar-toggle');
+  function syncSidebar(){
+    var ratio=Math.max(window.innerWidth/2048,.01),base=collapsed?72:224;
+    document.documentElement.style.setProperty('--flow-sidebar-inverse',String(1/ratio));
+    document.documentElement.style.setProperty('--flow-sidebar-base-width',base+'px');
+    document.documentElement.style.setProperty('--flow-sidebar-width',(base/ratio)+'px');
+  }
+  toggle.addEventListener('click',function(){
+    collapsed=!collapsed;side.classList.toggle('is-collapsed',collapsed);toggle.classList.toggle('is-collapsed',collapsed);
+    toggle.setAttribute('aria-label',collapsed?'展开本体管理菜单':'收起本体管理菜单');toggle.title=collapsed?'展开菜单':'收起菜单';syncSidebar();
+  });
+  window.addEventListener('resize',syncSidebar);syncSidebar();
+})();
+</script>
+
+
+
+<link rel="stylesheet" href="assets/logic-entity-reference.css?v=20261023merge">
+<script src="assets/logic-entity-reference.js?v=20261023merge"></script>
+<link rel="stylesheet" href="assets/flow-evaluation-entry.css?v=20261102">
+<script src="assets/flow-evaluation-entry.js?v=20261102"></script>
+<link rel="stylesheet" href="assets/flow-batch-preparation.css?v=20261102">
+<script src="assets/vendor/xlsx.full.min.js"></script>
+<script src="assets/flow-batch-preparation.js?v=20261102"></script>
+<link rel="stylesheet" href="assets/flow-batch-tasks.css?v=20261102">
+<script src="assets/flow-batch-tasks.js?v=20261102"></script>
+<script>
+(function(){var debug=document.getElementById('debug');if(!debug||document.getElementById('flowEvaluation'))return;var button=document.createElement('button');button.className='btn';button.id='flowEvaluation';button.dataset.flowPreparation='';button.textContent='评测';debug.insertAdjacentElement('afterend',button)})();
+</script>

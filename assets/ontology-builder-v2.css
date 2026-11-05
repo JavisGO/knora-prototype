@@ -1,0 +1,106 @@
+.aigo2-input-guide {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 11px;
+  border: 1px solid #cfe0f7;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #f2f7ff, #f7f4ff);
+}
+
+.aigo2-input-guide > i {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #7256dd, #267eea);
+  color: #fff;
+  font-size: 6px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.aigo2-input-guide b { display: block; font-size: 7px; }
+.aigo2-input-guide p { margin: 3px 0 0; color: #718097; font-size: 5.7px; line-height: 1.55; }
+
+.aigo2-agent-boundary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px dashed #b9c9df;
+  border-radius: 8px;
+  background: #f7f9fc;
+}
+
+.aigo2-agent-boundary > i {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: #e9f3ff;
+  color: #176fd9;
+  font-style: normal;
+}
+
+.aigo2-agent-boundary b,
+.aigo2-agent-boundary small { display: block; }
+.aigo2-agent-boundary b { font-size: 6.5px; }
+.aigo2-agent-boundary small { margin-top: 2px; color: #8793a6; font-size: 5.5px; }
+
+.aigo2-generation-decision {
+  position: relative;
+  flex: 0 0 auto;
+  margin: 9px 11px 0;
+  padding: 10px;
+  border: 1px solid #dce3ed;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fff, #f8faff);
+}
+
+.aigo2-generation-decision > header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.aigo2-generation-decision > header > div { min-width: 0; flex: 1; }
+.aigo2-generation-decision > header b,
+.aigo2-generation-decision > header small { display: block; }
+.aigo2-generation-decision > header b { font-size: 7.5px; }
+.aigo2-generation-decision > header small { margin-top: 2px; color: #8793a6; font-size: 5.5px; }
+.aigo2-generation-decision > header > em {
+  padding: 3px 6px;
+  border-radius: 8px;
+  background: #fff0e4;
+  color: #b9602e;
+  font-size: 5.5px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.aigo2-generation-decision .aigo2-mode-switch { margin-bottom: 0; }
+.aigo2-mode-switch button { position: relative; }
+.aigo2-mode-switch button > strong {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  padding: 2px 4px;
+  border-radius: 6px;
+  background: #e7f7ef;
+  color: #0a805e;
+  font-size: 4.8px;
+}
+
+.aigo2-review-strategy { grid-template-columns: 1fr 1fr; margin-bottom: 10px; }
+.aigo2-review-strategy button { min-height: 76px; }
+.aigo2-page-v2 .aigo2-result-view { min-height: 220px; }
+
+@media (max-width: 680px) {
+  .aigo2-review-strategy { grid-template-columns: 1fr; }
+}

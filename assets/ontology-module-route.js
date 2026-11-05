@@ -1,0 +1,1 @@
+(function(){var module=document.documentElement.dataset.module||'aigo',query=new URLSearchParams(location.search);query.set('module',module);location.replace('knowledge-base-management.html?'+query.toString())})();

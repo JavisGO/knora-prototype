@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knora 原型查看入口</title>
+  <link rel="stylesheet" href="assets/prototype-index-pages.css">
+</head>
+<body class="index-page">
+  <main class="index-shell">
+    <header class="index-header">
+      <div class="brand-mark" aria-hidden="true">K</div>
+      <div>
+        <p class="eyebrow">KNORA PRODUCT BLUEPRINT</p>
+        <h1>Knora 原型查看入口</h1>
+        <p class="page-lead">选择需要查看的内容。</p>
+      </div>
+    </header>
+
+    <nav class="entry-grid" aria-label="原型查看入口">
+      <a class="entry-card entry-card-primary" href="portal-home.html?role=superadmin">
+        <span class="entry-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5h-5l-3.8 3.2a.75.75 0 0 1-1.2-.58V16h-3A1.5 1.5 0 0 1 4 14.5v-9Z"/><path d="M8 8h8M8 12h5"/></svg>
+        </span>
+        <span class="entry-copy">
+          <strong>查看原型</strong>
+          <span>进入当前 Knora 产品蓝图原型</span>
+        </span>
+        <span class="entry-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="entry-card" href="pending-design-features.html">
+        <span class="entry-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7 3.5h10A1.5 1.5 0 0 1 18.5 5v14A1.5 1.5 0 0 1 17 20.5H7A1.5 1.5 0 0 1 5.5 19V5A1.5 1.5 0 0 1 7 3.5Z"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg>
+        </span>
+        <span class="entry-copy">
+          <strong>待设计功能列表</strong>
+          <span>查看设计分工与功能排期</span>
+        </span>
+        <span class="entry-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="entry-card" href="prototype-version-history.html">
+        <span class="entry-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 6.5a5.5 5.5 0 1 1-5.1 3.45"/><path d="M3.8 6.8v4h4M12 9v3.5l2.5 1.5"/></svg>
+        </span>
+        <span class="entry-copy">
+          <strong>原型版本更新记录</strong>
+          <span>查看原型版本迭代记录</span>
+        </span>
+        <span class="entry-arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
+
+    <section class="role-entry-section" aria-labelledby="roleEntryTitle">
+      <header>
+        <div>
+          <p class="eyebrow">ROLE PERSPECTIVES</p>
+          <h2 id="roleEntryTitle">专用角色视角</h2>
+          <p>使用同一套主原型，按角色展示可访问模块、数据范围与可操作功能。</p>
+        </div>
+        <span>5 个角色</span>
+      </header>
+      <div class="role-entry-grid">
+        <a class="role-entry-card personal" href="portal-home.html?role=personal">
+          <i>个</i><span><b>个人用户</b><small>检索、个人资源、已授权资源、收藏与最近访问</small></span><em>进入视角 →</em>
+        </a>
+        <a class="role-entry-card knowledge-admin" href="portal-home.html?role=knowledge-admin">
+          <i>知</i><span><b>知识管理员</b><small>增加空间治理、资源管理、审批待办与运营看板</small></span><em>进入视角 →</em>
+        </a>
+        <a class="role-entry-card aibp" href="portal-home.html?role=aibp">
+          <i>AI</i><span><b>AIBP</b><small>增加项目创建、项目管理、资源申请与项目资源查看</small></span><em>进入视角 →</em>
+        </a>
+        <a class="role-entry-card knowledge-bp" href="knowledge-base-management.html?module=aigo&amp;role=knowledge-bp">
+          <i>BP</i><span><b>知识BP</b><small>默认进入本体平台，可使用本体、经纶与知识门户基础能力</small></span><em>进入视角 →</em>
+        </a>
+        <a class="role-entry-card data-bp" href="portal-home.html?role=data-bp">
+          <i>数</i><span><b>数据BP</b><small>增加数据源连接、库表选择与单空间分配能力</small></span><em>进入视角 →</em>
+        </a>
+      </div>
+    </section>
+  </main>
+  <link rel="stylesheet" href="assets/global-ai-assistant.css?v=20261102">
+  <script src="assets/global-ai-assistant.js?v=20261102"></script>
+</body>
+</html>

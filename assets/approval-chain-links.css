@@ -1,0 +1,20 @@
+.approval-chain-modal{z-index:2600!important}
+.approval-chain-modal .approval-v2-modal>header>div>span{display:block;margin-bottom:5px;color:#176ef3;font-size:8px}
+.approval-chain-modal .approval-v2-resource{flex:1}
+.approval-chain-no-record{min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.approval-chain-no-record i{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#edf4ff;color:#176ef3;font-size:22px;font-style:normal}
+.approval-chain-no-record h3{margin:14px 0 0;font-size:14px;color:#243653}
+.approval-chain-no-record p{margin:8px 0 0;color:#8190a4;font-size:9px}
+.approval-chain-data-list .data-resource-head,.approval-chain-data-list .data-resource-row{grid-template-columns:38px minmax(260px,2.1fr) 85px minmax(140px,1fr) 130px 90px 130px}
+.approval-chain-readonly{display:flex;align-items:center;gap:5px;justify-content:flex-end;padding-right:7px}
+.approval-chain-readonly>.approval-chain-button{height:26px;padding:0 8px;border:1px solid #bcd4f6;border-radius:13px;background:#fff;color:#176ef3;font-size:7px;white-space:nowrap;cursor:pointer}
+.ontology-object-actions:has(.approval-chain-button){flex-wrap:wrap;padding:5px 0}
+.resource-generic-list article:has(.approval-chain-button){grid-template-columns:35px minmax(180px,1fr) 70px 55px 48px 48px 70px}
+.pv2-resource-list .pv2-document-head.owned,.pv2-resource-list .pv2-document-row.owned{grid-template-columns:minmax(260px,1fr) 105px 90px 100px}
+.pv2-resource-list .pv2-document-row.owned>.approval-chain-button,.project-approval-actions>.approval-chain-button{height:26px;padding:0 9px;border:1px solid #bcd4f6;border-radius:13px;background:#fff;color:#176ef3;font-size:7px;white-space:nowrap;cursor:pointer}
+.pv2-resource-list .pv2-document-row.owned>.approval-chain-button{justify-self:start}
+.pv2-resource-list .project-data-head,.pv2-resource-list .project-data-row{grid-template-columns:36px minmax(210px,1.6fr) 75px minmax(115px,1fr) minmax(115px,1fr) 85px 170px}
+.project-approval-actions{display:flex;align-items:center;gap:4px;justify-content:flex-end;padding-right:7px}
+.project-approval-actions>button[data-project-data-detail]{flex:none}
+@media(max-width:900px){.pv2-resource-list .pv2-document-head.owned,.pv2-resource-list .pv2-document-row.owned{grid-template-columns:minmax(200px,1fr) 82px 70px 88px}.project-approval-actions{flex-wrap:wrap}.resource-generic-list article:has(.approval-chain-button){grid-template-columns:35px minmax(150px,1fr) 65px 50px 45px 45px 68px}}
+@media(max-width:720px){.approval-chain-data-list .data-resource-head,.approval-chain-data-list .data-resource-row{grid-template-columns:34px minmax(210px,1fr) 78px 130px}}

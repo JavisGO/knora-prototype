@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>待设计功能列表</title>
+  <link rel="stylesheet" href="assets/prototype-index-pages.css">
+</head>
+<body class="content-page">
+  <header class="topbar">
+    <a class="back-link" href="index.html" aria-label="返回原型查看入口">
+      <span aria-hidden="true">←</span> 返回入口
+    </a>
+    <div class="topbar-title">
+      <div class="mini-brand" aria-hidden="true">K</div>
+      <span>Knora 产品蓝图</span>
+    </div>
+  </header>
+
+  <main class="content-shell feature-list-shell">
+    <div class="page-heading page-heading-with-actions">
+      <div>
+        <p class="eyebrow">DESIGN BACKLOG</p>
+        <h1>待设计功能列表</h1>
+        <p class="editor-hint">可直接编辑并写回本 HTML 文件；首次保存时请选择或确认覆盖当前的 pending-design-features.html。</p>
+      </div>
+      <div class="editor-toolbar" aria-label="列表编辑工具">
+        <button class="toolbar-button" id="edit-list" type="button">编辑列表</button>
+        <button class="toolbar-button edit-only" id="add-row" type="button">新增条目</button>
+        <button class="toolbar-button toolbar-button-primary edit-only" id="save-list" type="button">保存到 HTML</button>
+        <button class="toolbar-button edit-only" id="cancel-edit" type="button">取消</button>
+        <button class="toolbar-button" id="export-data" type="button">导出 JSON</button>
+        <label class="toolbar-button file-button" for="import-data">导入 JSON</label>
+        <input class="visually-hidden" id="import-data" type="file" accept="application/json,.json">
+      </div>
+    </div>
+
+    <p class="save-status" id="save-status" role="status" aria-live="polite"></p>
+
+    <section class="list-filters" aria-label="任务列表筛选">
+      <div class="filter-item">
+        <label for="filter-date">时间</label>
+        <select id="filter-date"><option value="">全部时间</option><option value="10.12">10.12</option><option value="10.13">10.13</option><option value="10.15">10.15</option><option value="10.16">10.16</option><option value="10.19">10.19</option><option value="10.20">10.20</option><option value="10.21">10.21</option><option value="10.22">10.22</option><option value="10.23">10.23</option></select>
+      </div>
+      <div class="filter-item">
+        <label for="filter-source">来源</label>
+        <select id="filter-source"><option value="">全部来源</option><option value="功能清单">功能清单</option><option value="bug列表">bug列表</option><option value="沟通反馈">沟通反馈</option></select>
+      </div>
+      <div class="filter-item">
+        <label for="filter-status">状态</label>
+        <select id="filter-status"><option value="">全部状态</option><option value="待启动">待启动</option><option value="进行中">进行中</option><option value="已完成">已完成</option></select>
+      </div>
+      <button class="filter-reset" id="reset-filters" type="button">重置筛选</button>
+      <span class="filter-result" id="filter-result" aria-live="polite">显示 34 / 34 条</span>
+    </section>
+
+    <div class="table-frame" role="region" aria-label="待设计功能列表" tabindex="0">
+      <table class="feature-table">
+        <colgroup>
+          <col class="col-platform">
+          <col class="col-group">
+          <col class="col-description">
+          <col class="col-date">
+          <col class="col-source">
+          <col class="col-status">
+          <col class="col-bug">
+          <col class="col-action edit-only">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">平台模块</th>
+            <th scope="col">模块分组</th>
+            <th scope="col">功能设计描述</th>
+            <th scope="col">设计完成排期</th>
+            <th scope="col">来源</th>
+            <th scope="col">状态</th>
+            <th scope="col">相关bug编号</th>
+            <th class="edit-only" scope="col">操作</th>
+          </tr>
+        </thead>
+        <tbody><tr data-index="0"><td class="platform-cell" data-key="platform">知识门户</td><td class="group-cell" data-key="group">资源管理</td><td class="description-cell" data-key="description">本体的资源管理和共享授权机制
+（包括行列权限，行列权限模板、不同业务域、部门和项目的打通机制）
+此功能同时解决本体最小共识和属性滤镜（动态视图）的需求</td><td class="date-cell" data-key="date">10.16</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="1"><td class="platform-cell" data-key="platform">知识门户</td><td class="group-cell" data-key="group">资源管理</td><td class="description-cell" data-key="description">增加XML数据的接入功能（类似本地上传excel）</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="2"><td class="platform-cell" data-key="platform">知识门户</td><td class="group-cell" data-key="group">资源管理</td><td class="description-cell" data-key="description">文档资源中增加视频类文件</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="3"><td class="platform-cell" data-key="platform">知识门户</td><td class="group-cell" data-key="group">资源管理</td><td class="description-cell" data-key="description">文档版本与归档</td><td class="date-cell" data-key="date">10.13</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="4"><td class="platform-cell" data-key="platform">知识门户</td><td class="group-cell" data-key="group">资源管理</td><td class="description-cell" data-key="description">数据资源连接的同步策略配置</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-bug">bug列表</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug">#27</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="5"><td class="platform-cell" data-key="platform">知识门户</td><td class="group-cell" data-key="group">质量中心</td><td class="description-cell" data-key="description">过期知识、待复核知识、纠错反馈、重复知识
+先和客户确认业务需求</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="6"><td class="platform-cell" data-key="platform">知识门户</td><td class="group-cell" data-key="group">运营看板</td><td class="description-cell" data-key="description">包括各类统计分析</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-progress">进行中</span></td><td class="bug-cell" data-key="bug">#36</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="7"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体自动构建</td><td class="description-cell" data-key="description">设计升级，
+客户反馈：
+缺失与已有本体模型的边界、缺失提示词模板、缺失轮次、缺失溯源</td><td class="date-cell" data-key="date">10.19</td><td data-key="source"><span class="source-tag source-feedback">沟通反馈</span></td><td class="status-cell" data-key="status"><span class="status-tag status-progress">进行中</span></td><td class="bug-cell" data-key="bug">#24</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="8"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理</td><td class="description-cell" data-key="description">各类元素的共享和授权机制（如何发布到资源，如何申请到项目）</td><td class="date-cell" data-key="date">10.16</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="9"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理</td><td class="description-cell" data-key="description">本体发布与映射流程优化</td><td class="date-cell" data-key="date">10.20</td><td data-key="source"><span class="source-tag source-bug">bug列表</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug">#126
+#86</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="10"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理</td><td class="description-cell" data-key="description">本体不入库虚拟化的功能设计</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-bug">bug列表</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug">#19</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="11"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理</td><td class="description-cell" data-key="description">本体版本管理</td><td class="date-cell" data-key="date">10.21</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="12"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理</td><td class="description-cell" data-key="description">本体变更影响分析功能</td><td class="date-cell" data-key="date">10.21</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="13"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理</td><td class="description-cell" data-key="description">图谱数据质量评估</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-progress">进行中</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="14"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-知识库</td><td class="description-cell" data-key="description">知识库不需要共享到空间，调整权限机制</td><td class="date-cell" data-key="date">10.12</td><td data-key="source"><span class="source-tag source-feedback">沟通反馈</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="15"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-知识库</td><td class="description-cell" data-key="description">知识库版面还原与分片预览功能确认</td><td class="date-cell" data-key="date">10.12</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="16"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-知识库</td><td class="description-cell" data-key="description">知识库分片配置自定义功能</td><td class="date-cell" data-key="date">10.19</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug">#103</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="17"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-统一规则</td><td class="description-cell" data-key="description">统一规则引擎与应用</td><td class="date-cell" data-key="date">10.15</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="18"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-行为</td><td class="description-cell" data-key="description">触发审批与通知流程的更新</td><td class="date-cell" data-key="date">10.21</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="19"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-行为</td><td class="description-cell" data-key="description">重要动作二次确认功能</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="20"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-行为</td><td class="description-cell" data-key="description">Action回滚与模拟执行</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="21"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-行为</td><td class="description-cell" data-key="description">Action的审计日志</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="22"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-流程</td><td class="description-cell" data-key="description">本体推理节点语义筛选增强（实体多属性，关系拓展语义筛选）</td><td class="date-cell" data-key="date">10.21</td><td data-key="source"><span class="source-tag source-feedback">沟通反馈</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="23"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-流程</td><td class="description-cell" data-key="description">知识库节点关于目录和标签的筛选配置
+同时考虑知识库内编目的问题</td><td class="date-cell" data-key="date">10.19</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="24"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-工具</td><td class="description-cell" data-key="description">MCP能力优化
+客户反馈：[问题]
+
+创建MCP服务，现在的是托管MCP服务？
+
+那么就缺失创建MCP服务的能力。
+
+如果是创建，那么基础url应该是平台提供的，用户只需要填写MCP服务名称
+
+[步骤]
+
+[结果]
+
+[期望]
+
+区分托管和创建</td><td class="date-cell" data-key="date">10.19</td><td data-key="source"><span class="source-tag source-bug">bug列表</span></td><td class="status-cell" data-key="status"><span class="status-tag status-progress">进行中</span></td><td class="bug-cell" data-key="bug">#82</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="25"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-智能体</td><td class="description-cell" data-key="description">智能体运行态样式优化，溯源到具体内容
+客户反馈：缺少溯源（知识和文档都没有），现在做的引用文档不是一回事</td><td class="date-cell" data-key="date">10.15</td><td data-key="source"><span class="source-tag source-feedback">沟通反馈</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="26"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-智能体</td><td class="description-cell" data-key="description">FAQ模式的智能体功能封装</td><td class="date-cell" data-key="date">10.20</td><td data-key="source"><span class="source-tag source-feedback">沟通反馈</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug">#23</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="27"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-智能体</td><td class="description-cell" data-key="description">知识库模式的智能体功能封装</td><td class="date-cell" data-key="date">10.16</td><td data-key="source"><span class="source-tag source-feedback">沟通反馈</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="28"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-智能体</td><td class="description-cell" data-key="description">智能体配置知识库时基于目录和标签的筛选配置</td><td class="date-cell" data-key="date">10.16</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="29"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-智能体</td><td class="description-cell" data-key="description">根因分析、趋势洞察、综合决策分析等业务智能体如何设计
+需要与客户探讨确认</td><td class="date-cell" data-key="date">10.22</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-pending">待启动</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="30"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">本体管理-智能体</td><td class="description-cell" data-key="description">智能体记忆的可见可管可溯</td><td class="date-cell" data-key="date">10.21</td><td data-key="source"><span class="source-tag source-bug">bug列表</span></td><td class="status-cell" data-key="status"><span class="status-tag status-progress">进行中</span></td><td class="bug-cell" data-key="bug">#74</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="31"><td class="platform-cell" data-key="platform">本体平台</td><td class="group-cell" data-key="group">经纶-非结构化</td><td class="description-cell" data-key="description">完整的文本抽取功能，包括抽取、溯源、确认、融合、发布为数据表、可视化展示等
+
+包括文档与数据库文本字段</td><td class="date-cell" data-key="date">10.21</td><td data-key="source"><span class="source-tag source-feature">功能清单</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug">#104
+#102
+#86
+#38
+#37</td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="32"><td class="platform-cell" data-key="platform">通用</td><td class="group-cell" data-key="group">不同角色切换</td><td class="description-cell" data-key="description">不同角色的原型切换</td><td class="date-cell" data-key="date">10.16</td><td data-key="source"><span class="source-tag source-feedback">沟通反馈</span></td><td class="status-cell" data-key="status"><span class="status-tag status-completed">已完成</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr><tr data-index="33"><td class="platform-cell" data-key="platform">通用</td><td class="group-cell" data-key="group">uums角色权限梳理</td><td class="description-cell" data-key="description">角色权限梳理</td><td class="date-cell" data-key="date">10.23</td><td data-key="source"><span class="source-tag source-feedback">沟通反馈</span></td><td class="status-cell" data-key="status"><span class="status-tag status-progress">进行中</span></td><td class="bug-cell" data-key="bug"></td><td class="row-action edit-only"><button type="button" class="delete-row">删除</button></td></tr></tbody>
+      </table>
+    </div>
+  </main>
+  <script id="pending-design-data" type="application/json">[
+  {
+    "platform": "知识门户",
+    "group": "资源管理",
+    "description": "本体的资源管理和共享授权机制\n（包括行列权限，行列权限模板、不同业务域、部门和项目的打通机制）\n此功能同时解决本体最小共识和属性滤镜（动态视图）的需求",
+    "date": "10.16",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "知识门户",
+    "group": "资源管理",
+    "description": "增加XML数据的接入功能（类似本地上传excel）",
+    "date": "10.23",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "知识门户",
+    "group": "资源管理",
+    "description": "文档资源中增加视频类文件",
+    "date": "10.23",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "知识门户",
+    "group": "资源管理",
+    "description": "文档版本与归档",
+    "date": "10.13",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "知识门户",
+    "group": "资源管理",
+    "description": "数据资源连接的同步策略配置",
+    "date": "10.23",
+    "source": "bug列表",
+    "status": "已完成",
+    "bug": "#27"
+  },
+  {
+    "platform": "知识门户",
+    "group": "质量中心",
+    "description": "过期知识、待复核知识、纠错反馈、重复知识\n先和客户确认业务需求",
+    "date": "10.23",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "知识门户",
+    "group": "运营看板",
+    "description": "包括各类统计分析",
+    "date": "10.23",
+    "source": "功能清单",
+    "status": "进行中",
+    "bug": "#36"
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体自动构建",
+    "description": "设计升级，\n客户反馈：\n缺失与已有本体模型的边界、缺失提示词模板、缺失轮次、缺失溯源",
+    "date": "10.19",
+    "source": "沟通反馈",
+    "status": "进行中",
+    "bug": "#24"
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理",
+    "description": "各类元素的共享和授权机制（如何发布到资源，如何申请到项目）",
+    "date": "10.16",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理",
+    "description": "本体发布与映射流程优化",
+    "date": "10.20",
+    "source": "bug列表",
+    "status": "已完成",
+    "bug": "#126\n#86"
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理",
+    "description": "本体不入库虚拟化的功能设计",
+    "date": "10.23",
+    "source": "bug列表",
+    "status": "已完成",
+    "bug": "#19"
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理",
+    "description": "本体版本管理",
+    "date": "10.21",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理",
+    "description": "本体变更影响分析功能",
+    "date": "10.21",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理",
+    "description": "图谱数据质量评估",
+    "date": "10.23",
+    "source": "功能清单",
+    "status": "进行中",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-知识库",
+    "description": "知识库不需要共享到空间，调整权限机制",
+    "date": "10.12",
+    "source": "沟通反馈",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-知识库",
+    "description": "知识库版面还原与分片预览功能确认",
+    "date": "10.12",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-知识库",
+    "description": "知识库分片配置自定义功能",
+    "date": "10.19",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": "#103"
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-统一规则",
+    "description": "统一规则引擎与应用",
+    "date": "10.15",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-行为",
+    "description": "触发审批与通知流程的更新",
+    "date": "10.21",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-行为",
+    "description": "重要动作二次确认功能",
+    "date": "10.23",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-行为",
+    "description": "Action回滚与模拟执行",
+    "date": "10.23",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-行为",
+    "description": "Action的审计日志",
+    "date": "10.23",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-流程",
+    "description": "本体推理节点语义筛选增强（实体多属性，关系拓展语义筛选）",
+    "date": "10.21",
+    "source": "沟通反馈",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-流程",
+    "description": "知识库节点关于目录和标签的筛选配置\n同时考虑知识库内编目的问题",
+    "date": "10.19",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-工具",
+    "description": "MCP能力优化\n客户反馈：[问题]\n\n创建MCP服务，现在的是托管MCP服务？\n\n那么就缺失创建MCP服务的能力。\n\n如果是创建，那么基础url应该是平台提供的，用户只需要填写MCP服务名称\n\n[步骤]\n\n[结果]\n\n[期望]\n\n区分托管和创建",
+    "date": "10.19",
+    "source": "bug列表",
+    "status": "进行中",
+    "bug": "#82"
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-智能体",
+    "description": "智能体运行态样式优化，溯源到具体内容\n客户反馈：缺少溯源（知识和文档都没有），现在做的引用文档不是一回事",
+    "date": "10.15",
+    "source": "沟通反馈",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-智能体",
+    "description": "FAQ模式的智能体功能封装",
+    "date": "10.20",
+    "source": "沟通反馈",
+    "status": "已完成",
+    "bug": "#23"
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-智能体",
+    "description": "知识库模式的智能体功能封装",
+    "date": "10.16",
+    "source": "沟通反馈",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-智能体",
+    "description": "智能体配置知识库时基于目录和标签的筛选配置",
+    "date": "10.16",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-智能体",
+    "description": "根因分析、趋势洞察、综合决策分析等业务智能体如何设计\n需要与客户探讨确认",
+    "date": "10.22",
+    "source": "功能清单",
+    "status": "待启动",
+    "bug": ""
+  },
+  {
+    "platform": "本体平台",
+    "group": "本体管理-智能体",
+    "description": "智能体记忆的可见可管可溯",
+    "date": "10.21",
+    "source": "bug列表",
+    "status": "进行中",
+    "bug": "#74"
+  },
+  {
+    "platform": "本体平台",
+    "group": "经纶-非结构化",
+    "description": "完整的文本抽取功能，包括抽取、溯源、确认、融合、发布为数据表、可视化展示等\n\n包括文档与数据库文本字段",
+    "date": "10.21",
+    "source": "功能清单",
+    "status": "已完成",
+    "bug": "#104\n#102\n#86\n#38\n#37"
+  },
+  {
+    "platform": "通用",
+    "group": "不同角色切换",
+    "description": "不同角色的原型切换",
+    "date": "10.16",
+    "source": "沟通反馈",
+    "status": "已完成",
+    "bug": ""
+  },
+  {
+    "platform": "通用",
+    "group": "uums角色权限梳理",
+    "description": "角色权限梳理",
+    "date": "10.23",
+    "source": "沟通反馈",
+    "status": "进行中",
+    "bug": ""
+  }
+]</script>
+  <script src="assets/html-source-editor.js?v=20261012"></script>
+  <script>
+    (() => {
+      const STORAGE_KEY = "knora-v3-pending-design-features";
+      const table = document.querySelector(".feature-table");
+      const tbody = table.tBodies[0];
+      const editButton = document.getElementById("edit-list");
+      const addButton = document.getElementById("add-row");
+      const saveButton = document.getElementById("save-list");
+      const cancelButton = document.getElementById("cancel-edit");
+      const exportButton = document.getElementById("export-data");
+      const importInput = document.getElementById("import-data");
+      const status = document.getElementById("save-status");
+      const dateFilter = document.getElementById("filter-date");
+      const sourceFilter = document.getElementById("filter-source");
+      const statusFilter = document.getElementById("filter-status");
+      const resetFiltersButton = document.getElementById("reset-filters");
+      const filterResult = document.getElementById("filter-result");
+      let editing = false;
+      let editSnapshot = [];
+
+      const text = (value) => String(value ?? "").trim();
+      const STATUS_OPTIONS = ["待启动", "进行中", "已完成"];
+
+      function defaultStatus(date) {
+        const normalized = text(date);
+        if (normalized && normalized <= "10.12") return "已完成";
+        if (normalized && normalized <= "10.14") return "进行中";
+        return "待启动";
+      }
+
+      function normalizeRow(item) {
+        const date = text(item.date);
+        const currentStatus = text(item.status);
+        return {
+          platform: text(item.platform),
+          group: text(item.group),
+          description: text(item.description),
+          date,
+          source: text(item.source),
+          status: STATUS_OPTIONS.includes(currentStatus) ? currentStatus : defaultStatus(date),
+          bug: text(item.bug)
+        };
+      }
+
+      function readInitialRows() {
+        let platform = "";
+        let group = "";
+        return Array.from(tbody.rows).map((row) => {
+          const cells = Array.from(row.cells);
+          let cursor = 0;
+          if (cells[cursor] && cells[cursor].classList.contains("platform-cell")) {
+            platform = text(cells[cursor].innerText);
+            cursor += 1;
+          }
+          if (cells[cursor] && cells[cursor].classList.contains("group-cell")) {
+            group = text(cells[cursor].innerText);
+            cursor += 1;
+          }
+          return {
+            platform,
+            group,
+            description: text(cells[cursor]?.innerText),
+            date: text(cells[cursor + 1]?.innerText),
+            source: text(cells[cursor + 2]?.innerText),
+            status: defaultStatus(cells[cursor + 1]?.innerText),
+            bug: text(cells[cursor + 3]?.innerText)
+          };
+        });
+      }
+
+      const initialRows = readInitialRows();
+
+      function loadRows() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (Array.isArray(saved) && saved.length) return saved.map(normalizeRow);
+        } catch (error) {
+          // Continue with the data embedded in the HTML file.
+        }
+        try {
+          const embedded = JSON.parse(document.getElementById("pending-design-data")?.textContent || "[]");
+          if (Array.isArray(embedded) && embedded.length) return embedded.map(normalizeRow);
+        } catch (error) {
+          // Fall back to the original table when opening an older copy.
+        }
+        return initialRows.map(normalizeRow);
+      }
+
+      let rows = loadRows();
+
+      function sourceClass(value) {
+        if (value === "沟通反馈") return "source-feedback";
+        if (value === "bug列表") return "source-bug";
+        return "source-feature";
+      }
+
+      function statusClass(value) {
+        if (value === "已完成") return "status-completed";
+        if (value === "进行中") return "status-progress";
+        return "status-pending";
+      }
+
+      function cell(tag, value, className, key) {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        if (key) element.dataset.key = key;
+        if (editing) {
+          element.contentEditable = "true";
+          element.spellcheck = false;
+          element.textContent = value;
+        } else if (key === "source") {
+          const badge = document.createElement("span");
+          badge.className = `source-tag ${sourceClass(value)}`;
+          badge.textContent = value;
+          element.appendChild(badge);
+        } else {
+          element.textContent = value;
+        }
+        return element;
+      }
+
+      function statusCell(value) {
+        const element = document.createElement("td");
+        element.className = "status-cell";
+        element.dataset.key = "status";
+        if (editing) {
+          const select = document.createElement("select");
+          select.className = "status-editor";
+          STATUS_OPTIONS.forEach((optionValue) => {
+            const option = document.createElement("option");
+            option.value = optionValue;
+            option.textContent = optionValue;
+            option.selected = optionValue === value;
+            select.appendChild(option);
+          });
+          element.appendChild(select);
+        } else {
+          const badge = document.createElement("span");
+          badge.className = `status-tag ${statusClass(value)}`;
+          badge.textContent = value;
+          element.appendChild(badge);
+        }
+        return element;
+      }
+
+      function updateFilterOptions(select, values, defaultLabel) {
+        const selected = select.value;
+        select.replaceChildren();
+        const allOption = document.createElement("option");
+        allOption.value = "";
+        allOption.textContent = defaultLabel;
+        select.appendChild(allOption);
+        values.forEach((value) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = value;
+          select.appendChild(option);
+        });
+        select.value = values.includes(selected) ? selected : "";
+      }
+
+      function refreshFilterOptions() {
+        const unique = (key) => [...new Set(rows.map((item) => text(item[key])).filter(Boolean))];
+        updateFilterOptions(dateFilter, unique("date").sort((a, b) => a.localeCompare(b, "zh-CN", { numeric: true })), "全部时间");
+        updateFilterOptions(sourceFilter, unique("source"), "全部来源");
+        updateFilterOptions(statusFilter, STATUS_OPTIONS.filter((value) => unique("status").includes(value)), "全部状态");
+      }
+
+      function visibleRows() {
+        return rows.map((item, index) => ({ item, index })).filter(({ item }) => {
+          return (!dateFilter.value || item.date === dateFilter.value)
+            && (!sourceFilter.value || item.source === sourceFilter.value)
+            && (!statusFilter.value || item.status === statusFilter.value);
+        });
+      }
+
+      function render() {
+        document.body.classList.toggle("is-editing", editing);
+        refreshFilterOptions();
+        tbody.replaceChildren();
+        const filteredRows = visibleRows();
+        filteredRows.forEach(({ item, index }) => {
+          const row = document.createElement("tr");
+          row.dataset.index = String(index);
+          row.append(
+            cell("td", item.platform, "platform-cell", "platform"),
+            cell("td", item.group, "group-cell", "group"),
+            cell("td", item.description, "description-cell", "description"),
+            cell("td", item.date, "date-cell", "date"),
+            cell("td", item.source, "", "source"),
+            statusCell(item.status),
+            cell("td", item.bug, "bug-cell", "bug")
+          );
+          const action = document.createElement("td");
+          action.className = "row-action edit-only";
+          const remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "delete-row";
+          remove.textContent = "删除";
+          remove.addEventListener("click", () => {
+            syncFromTable();
+            rows.splice(index, 1);
+            render();
+          });
+          action.appendChild(remove);
+          row.appendChild(action);
+          tbody.appendChild(row);
+        });
+        if (!filteredRows.length) {
+          const emptyRow = document.createElement("tr");
+          emptyRow.className = "empty-filter-row";
+          const emptyCell = document.createElement("td");
+          emptyCell.colSpan = editing ? 8 : 7;
+          emptyCell.textContent = "没有符合当前筛选条件的任务。";
+          emptyRow.appendChild(emptyCell);
+          tbody.appendChild(emptyRow);
+        }
+        filterResult.textContent = `显示 ${filteredRows.length} / ${rows.length} 条`;
+        editButton.hidden = editing;
+      }
+
+      function syncFromTable() {
+        Array.from(tbody.rows).filter((row) => row.dataset.index).forEach((row) => {
+          const index = Number(row.dataset.index);
+          const value = (key) => text(row.querySelector(`[data-key="${key}"]`)?.innerText);
+          rows[index] = normalizeRow({
+            platform: value("platform"),
+            group: value("group"),
+            description: value("description"),
+            date: value("date"),
+            source: value("source"),
+            status: row.querySelector('[data-key="status"] select')?.value || value("status"),
+            bug: value("bug")
+          });
+        });
+      }
+
+      function setStatus(message) {
+        status.textContent = message;
+        window.clearTimeout(setStatus.timer);
+        setStatus.timer = window.setTimeout(() => { status.textContent = ""; }, 3600);
+      }
+
+      editButton.addEventListener("click", () => {
+        editSnapshot = JSON.parse(JSON.stringify(rows));
+        editing = true;
+        render();
+      });
+
+      addButton.addEventListener("click", () => {
+        syncFromTable();
+        dateFilter.value = "";
+        sourceFilter.value = "";
+        statusFilter.value = "";
+        rows.push({ platform: "", group: "", description: "", date: "", source: "功能清单", status: "待启动", bug: "" });
+        render();
+        const lastRow = tbody.rows[tbody.rows.length - 1];
+        lastRow?.querySelector('[data-key="platform"]')?.focus();
+        lastRow?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+
+      saveButton.addEventListener("click", async () => {
+        syncFromTable();
+        editing = false;
+        render();
+        try {
+          saveButton.disabled = true;
+          const result = await window.KnoraHtmlFileStore.save({
+            elementId: "pending-design-data",
+            data: rows,
+            fileName: "pending-design-features.html"
+          });
+          localStorage.removeItem(STORAGE_KEY);
+          setStatus(result.mode === "file"
+            ? `已将 ${rows.length} 条记录写入 ${result.fileName}。`
+            : "浏览器不支持直接写入，已生成新版 HTML；请用下载文件替换原文件。");
+        } catch (error) {
+          setStatus(error?.name === "AbortError" ? "已取消文件保存。" : "保存失败，请确认文件未被其他程序占用后重试。");
+        } finally {
+          saveButton.disabled = false;
+        }
+      });
+
+      cancelButton.addEventListener("click", () => {
+        rows = editSnapshot;
+        editing = false;
+        render();
+        setStatus("已取消本次编辑。");
+      });
+
+      [dateFilter, sourceFilter, statusFilter].forEach((filter) => {
+        filter.addEventListener("change", () => {
+          if (editing) syncFromTable();
+          render();
+        });
+      });
+
+      resetFiltersButton.addEventListener("click", () => {
+        if (editing) syncFromTable();
+        dateFilter.value = "";
+        sourceFilter.value = "";
+        statusFilter.value = "";
+        render();
+      });
+
+      exportButton.addEventListener("click", () => {
+        if (editing) syncFromTable();
+        const blob = new Blob([JSON.stringify(rows, null, 2)], { type: "application/json;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `Knora待设计功能列表-${new Date().toISOString().slice(0, 10)}.json`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        setStatus("已导出当前列表 JSON 备份。");
+      });
+
+      importInput.addEventListener("change", async () => {
+        const file = importInput.files?.[0];
+        if (!file) return;
+        try {
+          const imported = JSON.parse(await file.text());
+          if (!Array.isArray(imported)) throw new Error("invalid data");
+          rows = imported.map(normalizeRow);
+          editing = true;
+          render();
+          setStatus(`已导入 ${rows.length} 条记录，请点击“保存到 HTML”完成文件写入。`);
+        } catch (error) {
+          setStatus("导入失败：请选择由本页面导出的 JSON 文件。");
+        } finally {
+          importInput.value = "";
+        }
+      });
+
+      render();
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="assets/global-ai-assistant.css?v=20261102">
+<script src="assets/global-ai-assistant.js?v=20261102"></script>
+</body></html>

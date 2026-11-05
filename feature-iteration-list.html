@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Knora v4 · 功能迭代清单</title>
+  <link rel="stylesheet" href="assets/feature-iteration-list.css">
+  <link rel="stylesheet" href="assets/prototype-back-entry.css">
+  <script src="assets/prototype-back-entry.js" defer></script>
+</head>
+<body>
+  <a class="prototype-back-entry" href="index.html" aria-label="返回原型入口" title="返回原型入口"><span>入口</span></a>
+  <header class="page-header">
+    <a class="brand" href="portal-home.html" aria-label="返回知识门户首页"><span>K</span><b>Knora v4</b></a>
+    <div>
+      <h1>功能迭代清单</h1>
+      <p>按功能模块汇总各月迭代内容；点击功能可打开对应原型页面。</p>
+    </div>
+    <a class="home-link" href="portal-home.html">返回原型首页</a>
+  </header>
+
+  <main class="page-shell">
+    <nav class="month-nav" aria-label="月份导航">
+      <span>月份</span>
+      <a href="#month-2026-09">2026 年 9 月</a>
+      <a href="#month-2026-10">2026 年 10 月</a>
+    </nav>
+
+    <section class="month-section" id="month-2026-09">
+      <header class="month-heading">
+        <div><span>2026</span><b>9 月</b></div>
+        <p>13 项功能</p>
+      </header>
+
+      <section class="platform-group">
+        <h2>知识门户</h2>
+
+        <section class="module-group">
+          <h3>我的工作台</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-mine.html?roadmap=mine-approvals">
+              <span class="feature-path">我的审批待办</span>
+              <b>我的审批待办</b>
+              <p>展示用户的审批待办事项并执行，包括资源共享审核和资源申请审核。</p>
+            </a>
+            <a class="feature-item" href="portal-mine.html?roadmap=mine-approvals">
+              <span class="feature-path">我的审批待办</span>
+              <b>待我审核</b>
+              <p>展示当前用户需要审核的任务。</p>
+            </a>
+            <a class="feature-item" href="portal-resources.html?type=document&amp;space=%E4%B8%AA%E4%BA%BA%E7%A9%BA%E9%97%B4&amp;roadmap=doc-share-scheduled">
+              <span class="feature-path">资源管理 · 个人空间 · 文档共享</span>
+              <b>预审核与定时发布</b>
+              <p>审批完成后，可按发起者指定的时间发布资源。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>资源管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-resources.html?roadmap=space-organization">
+              <span class="feature-path">空间组织管理</span>
+              <b>空间组织管理</b>
+              <p>管理企业空间、组织空间及其层级目录。</p>
+            </a>
+            <a class="feature-item" href="portal-resources.html?roadmap=space-approval">
+              <span class="feature-path">审批机制管理</span>
+              <b>审核流程配置</b>
+              <p>配置资源共享、申请等场景的审批路径。</p>
+            </a>
+            <a class="feature-item" href="portal-resources.html?type=document&amp;space=%E9%87%87%E8%B4%AD%E7%BB%84">
+              <span class="feature-path">文档资源管理</span>
+              <b>公共空间文档上传</b>
+              <p>空间成员在公共空间内上传并管理文档资源。</p>
+            </a>
+            <a class="feature-item" href="portal-resources.html?type=document&amp;space=%E9%87%87%E8%B4%AD%E7%BB%84">
+              <span class="feature-path">文档资源管理</span>
+              <b>公共空间文件目录</b>
+              <p>在公共空间内创建文件夹，并按目录查看与维护文档。</p>
+            </a>
+            <a class="feature-item" href="portal-resources.html?type=document&amp;space=%E9%87%87%E8%B4%AD%E7%BB%84&amp;roadmap=doc-authorize">
+              <span class="feature-path">资源管理 · 文档资源 · 授权</span>
+              <b>文档权限管理</b>
+              <p>按资源空间目录授权，并与检索、知识库等使用权限打通。</p>
+            </a>
+            <a class="feature-item" href="portal-resources.html?type=data&amp;space=%E4%B8%AA%E4%BA%BA%E7%A9%BA%E9%97%B4&amp;roadmap=table-authorize&amp;target=personal-table">
+              <span class="feature-path">资源管理 · 个人空间 · 数据表授权</span>
+              <b>个人数据资源授权</b>
+              <p>对个人空间中的数据库、数据表及字段范围进行授权。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>项目管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-projects.html?roadmap=project-create">
+              <span class="feature-path">项目管理</span>
+              <b>项目创建</b>
+              <p>新建项目并设置项目基础信息与所在资源空间。</p>
+            </a>
+            <a class="feature-item" href="portal-projects.html?project=purchase-project&amp;roadmap=project-members">
+              <span class="feature-path">项目管理</span>
+              <b>项目成员管理</b>
+              <p>维护项目成员及成员在项目内的角色。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>标签管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-tags.html?roadmap=tag-system-upgrade">
+              <span class="feature-path">标签管理</span>
+              <b>标签体系升级</b>
+              <p>统一标签类型、标签子集、标签及其权限管理。</p>
+            </a>
+          </div>
+        </section>
+      </section>
+
+      <section class="platform-group">
+        <h2>本体平台</h2>
+        <section class="module-group">
+          <h3>知识库管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="knowledge-base-management.html?module=aigo">
+              <span class="feature-path">本体管理 · 项目列表</span>
+              <b>知识库基于项目管理</b>
+              <p>知识库随项目创建、配置和使用，资源范围继承项目权限。</p>
+            </a>
+          </div>
+        </section>
+      </section>
+    </section>
+
+    <section class="month-section" id="month-2026-10">
+      <header class="month-heading">
+        <div><span>2026</span><b>10 月</b></div>
+        <p>21 项功能</p>
+      </header>
+
+      <section class="platform-group">
+        <h2>知识门户</h2>
+
+        <section class="module-group">
+          <h3>我的工作台</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-mine.html?roadmap=mine-favorites">
+              <span class="feature-path">我的工作台</span>
+              <b>我的收藏</b>
+              <p>按资源类型查看用户收藏的文档、数据资源等内容。</p>
+            </a>
+            <a class="feature-item" href="portal-mine.html?roadmap=mine-approvals">
+              <span class="feature-path">我的审批待办</span>
+              <b>我发起的</b>
+              <p>查看当前用户发起的审批申请及处理进度。</p>
+            </a>
+            <a class="feature-item" href="portal-mine.html?roadmap=mine-approvals">
+              <span class="feature-path">我的审批待办</span>
+              <b>审批记录</b>
+              <p>查看已处理审批及其资源范围、审批意见与结果。</p>
+            </a>
+            <a class="feature-item" href="portal-mine.html?roadmap=mine-recent">
+              <span class="feature-path">我的工作台</span>
+              <b>最近访问</b>
+              <p>展示用户最近访问过的各类知识资源。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>知识查询</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-home.html?roadmap=global-search">
+              <span class="feature-path">文档智能检索 + 问答</span>
+              <b>知识查询－文档检索</b>
+              <p>通过综合检索入口搜索文档，并进入分类结果页查看。</p>
+            </a>
+            <a class="feature-item" href="portal-home.html?roadmap=global-search">
+              <span class="feature-path">文档智能检索 + 问答</span>
+              <b>知识查询－条件搜索</b>
+              <p>按资源目录、标签和文档类型等条件筛选查询结果。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>资源管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-resources.html?type=document&amp;space=%E9%87%87%E8%B4%AD%E7%BB%84&amp;roadmap=doc-authorize">
+              <span class="feature-path">资源管理 · 文档资源 · 授权</span>
+              <b>文档权限管理</b>
+              <p>支持部门管理员与自定义角色对空间文档进行授权管理。</p>
+            </a>
+            <a class="feature-item" href="portal-resources.html?type=data&amp;space=%E9%87%87%E8%B4%AD%E7%BB%84&amp;roadmap=new-source">
+              <span class="feature-path">资源管理 · 新增数据源</span>
+              <b>公共数据资源权限管理－数据接入与分配</b>
+              <p>数据管理员接入数据源，并将库表资源分配到公共空间。</p>
+            </a>
+            <a class="feature-item" href="portal-resources.html?type=data&amp;space=%E9%87%87%E8%B4%AD%E7%BB%84&amp;roadmap=table-authorize">
+              <span class="feature-path">资源管理 · 公共空间 · 数据表授权</span>
+              <b>公共数据资源权限管理－库表与字段授权</b>
+              <p>部门管理员按数据库、数据表或字段范围授权空间成员使用。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>项目管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-projects.html?project=purchase-project&amp;roadmap=apply-resource">
+              <span class="feature-path">项目管理 · 申请资源</span>
+              <b>资源申请与审批</b>
+              <p>项目成员申请文档或数据资源，并沿审批链路完成授权。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>标签管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-resources.html?type=document&amp;space=%E9%87%87%E8%B4%AD%E7%BB%84&amp;roadmap=doc-tag">
+              <span class="feature-path">资源管理 · 文档打标</span>
+              <b>统一平台标签管理</b>
+              <p>知识门户与本体平台共用同一套标签体系及可见、可用权限。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>文档管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="portal-document-detail.html?doc=doc-risk&amp;roadmap=document-version">
+              <span class="feature-path">文档版本</span>
+              <b>文档版本管理</b>
+              <p>支持文档更新、历史版本查看以及预览页中的版本管理。</p>
+            </a>
+          </div>
+        </section>
+      </section>
+
+      <section class="platform-group">
+        <h2>本体平台</h2>
+
+        <section class="module-group">
+          <h3>本体管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="knowledge-base-management.html?module=aigo">
+              <span class="feature-path">本体管理</span>
+              <b>本体基于项目管理</b>
+              <p>从项目进入本体工作台，在项目范围内构建和维护本体。</p>
+            </a>
+            <div class="feature-item no-link" aria-label="实体语义检索升级，本轮不提供跳转">
+              <span class="feature-path">逻辑流程本体推理节点能力升级</span>
+              <b>实体语义检索升级</b>
+              <p>在业务对象中增强实体语义检索与结果查看能力。</p>
+              <em>暂不跳转</em>
+            </div>
+            <div class="feature-item no-link" aria-label="关系挖掘升级，本轮不提供跳转">
+              <span class="feature-path">逻辑流程本体推理节点能力升级</span>
+              <b>关系挖掘升级</b>
+              <p>在业务关联中增强关系发现、确认及图谱呈现能力。</p>
+              <em>暂不跳转</em>
+            </div>
+          </div>
+        </section>
+
+        <section class="module-group">
+          <h3>知识库管理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="knowledge-base-management.html?project=insight&amp;module=knowledge&amp;kb=i1">
+              <span class="feature-path">本体管理 · 知识库 · 配置详情</span>
+              <b>文档解析还原</b>
+              <p>在单篇文档中查看原始版面、解析内容及来源位置。</p>
+            </a>
+            <a class="feature-item" href="knowledge-base-management.html?project=insight&amp;module=knowledge&amp;kb=i1">
+              <span class="feature-path">本体管理 · 知识库 · 配置详情</span>
+              <b>文档分片</b>
+              <p>配置解析器、分片层级、长度及父子分片关系等策略。</p>
+            </a>
+          </div>
+        </section>
+      </section>
+
+      <section class="platform-group">
+        <h2>经纶</h2>
+        <section class="module-group">
+          <h3>非结构化处理</h3>
+          <div class="feature-list">
+            <a class="feature-item" href="jinglun.html?view=project-extraction">
+              <span class="feature-path">非结构化处理</span>
+              <b>非结构化文档抽取</b>
+              <p>创建并运行非结构化文档抽取任务。</p>
+            </a>
+            <a class="feature-item" href="jinglun.html?view=project-extraction">
+              <span class="feature-path">经纶 · 非结构化处理</span>
+              <b>数据库表长文本字段抽取</b>
+              <p>配置长文本字段抽取流程、节点参数及运行过程。</p>
+            </a>
+          </div>
+        </section>
+      </section>
+
+      <section class="platform-group">
+        <h2>综合</h2>
+        <section class="module-group">
+          <h3>用户管理</h3>
+          <div class="feature-list">
+            <div class="feature-item no-link" aria-label="不同角色功能清单，不提供原型跳转">
+              <span class="feature-path">角色与功能管理</span>
+              <b>不同角色功能清单</b>
+              <p>梳理不同平台角色对应的功能范围。本项仅展示清单，不跳转原型。</p>
+              <em>无跳转</em>
+            </div>
+            <a class="feature-item" href="portal-home.html?roadmap=tenant-switch">
+              <span class="feature-path">用户管理</span>
+              <b>租户切换</b>
+              <p>从用户菜单切换租户，并同步更新空间根目录。</p>
+            </a>
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <footer class="page-footer">Knora 产品蓝图原型 v4 · 功能迭代清单</footer>
+</body>
+</html>

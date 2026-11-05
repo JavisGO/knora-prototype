@@ -1,0 +1,33 @@
+/* Unified granted-record view for all resource authorization dialogs. */
+.auth-unified-dialog:has(>.auth-unified-pane.active){width:min(1160px,95vw)!important;min-height:min(590px,88vh)}
+.auth-unified-dialog>.auth-unified-pane.active{flex:1;min-height:0;overflow:auto!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:#fff!important}
+.auth-unified-source{display:none!important}
+.auth-unified-output{padding:18px 22px 24px;color:#26364f;font-size:12px}
+.auth-unified-tools{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.auth-unified-tools select,.auth-unified-search{height:36px;box-sizing:border-box;border:1px solid #dbe4ee;border-radius:20px;background:#fff;color:#34455e;font:inherit}
+.auth-unified-tools select{width:170px;padding:0 12px;cursor:pointer}
+.auth-unified-search{width:260px;display:flex;align-items:center;overflow:hidden}
+.auth-unified-search input{width:100%;min-width:0;height:100%;padding:0 12px;border:0;outline:none;background:transparent;color:inherit;font:inherit}
+.auth-unified-search input::placeholder{color:#9da9b8}
+.auth-unified-search>span{height:100%;width:36px;display:grid;place-items:center;border-left:1px solid #e2e9f0;color:#5c6e85;font-size:20px}
+.auth-unified-table{overflow:auto;border:1px solid #edf0f4;border-radius:7px;background:#fff}
+.auth-unified-grid{display:grid;grid-template-columns:minmax(150px,1.35fr) minmax(115px,1fr) minmax(92px,.7fr) minmax(80px,.65fr) minmax(88px,.7fr) minmax(145px,1.15fr) minmax(65px,.55fr);align-items:center;min-width:850px}
+.auth-unified-grid>*{min-width:0;padding:0 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.auth-unified-head{min-height:41px;background:#f7f9fb;color:#26364f;border-bottom:1px solid #e5eaf1}
+.auth-unified-head b{font-size:12px;font-weight:600;border-right:1px solid #e6ebf2}
+.auth-unified-head b:last-child{border-right:0}
+.auth-unified-row{min-height:52px;border-bottom:1px solid #edf1f5;color:#394c65}
+.auth-unified-record:last-child .auth-unified-row{border-bottom:0}
+.auth-unified-resource{font-weight:600;color:#26364f}
+.auth-unified-permission{color:#176ef3}
+.auth-unified-action button,.auth-unified-detail button{padding:4px 7px;border:0;border-radius:4px;background:transparent;color:#176ef3;font:inherit;cursor:pointer}
+.auth-unified-action button:hover,.auth-unified-detail button:hover{background:#edf5ff}
+.auth-unified-detail{display:flex;align-items:center;gap:8px;min-height:39px;padding:4px 10px 4px 18px;border-bottom:1px solid #edf1f5;background:#f9fbfe;color:#63738a;font-size:11px}
+.auth-unified-detail[hidden],.auth-unified-record[hidden],.auth-unified-empty[hidden]{display:none!important}
+.auth-unified-detail>span{margin-right:auto}
+.auth-unified-empty{min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#98a5b7}
+.auth-unified-empty>span{font-size:39px;line-height:1}
+.auth-unified-empty p{margin:8px 0 0}
+@media(max-width:900px){.auth-unified-output{padding:14px}.auth-unified-tools select{width:145px}.auth-unified-search{width:min(250px,55vw)}}
+
+.mine-share-modal.auth-unified-dialog:has([data-share-pane="view"].active)>footer{display:none}

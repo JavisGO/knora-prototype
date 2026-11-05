@@ -1,0 +1,105 @@
+:root {
+  --prototype-entry-bar-height: 36px;
+}
+
+body.has-prototype-entry-bar {
+  box-sizing: border-box !important;
+  padding-top: var(--prototype-entry-bar-height) !important;
+}
+
+body.has-prototype-entry-bar > .shell,
+body.has-prototype-entry-bar > .app,
+body.has-prototype-entry-bar > #root {
+  height: calc(100vh - var(--prototype-entry-bar-height)) !important;
+  min-height: 0 !important;
+}
+
+body.has-prototype-entry-bar > .top + .app {
+  height: calc(100vh - 68px - var(--prototype-entry-bar-height)) !important;
+}
+
+body.has-prototype-entry-bar .page-header {
+  top: var(--prototype-entry-bar-height) !important;
+}
+
+/* Keep fixed drawers and dialogs below the shared prototype entry bar. */
+body.has-prototype-entry-bar > .spm-modal-mask,
+body.has-prototype-entry-bar > .spm-drawer-mask,
+body.has-prototype-entry-bar > .mine-v2-modal-mask,
+body.has-prototype-entry-bar > .data-admin-mask,
+body.has-prototype-entry-bar > .data-detail-mask,
+body.has-prototype-entry-bar > .modal-mask,
+body.has-prototype-entry-bar > .tagv15-mask,
+body.has-prototype-entry-bar > .pr-request-mask,
+body.has-prototype-entry-bar > .dv2-modal-mask,
+body.has-prototype-entry-bar > .dv2-drawer-mask,
+body.has-prototype-entry-bar > .backdrop,
+body.has-prototype-entry-bar > .kb-review-overlay,
+body.has-prototype-entry-bar > .kb-personal-auth-mask {
+  top: var(--prototype-entry-bar-height) !important;
+}
+
+body.has-prototype-entry-bar > .dv2-drawer {
+  top: var(--prototype-entry-bar-height) !important;
+}
+
+.prototype-entry-bar {
+  position: fixed;
+  z-index: 10050;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--prototype-entry-bar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-bottom: 1px solid #e6ebf2;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(35, 53, 84, 0.04);
+}
+
+.prototype-back-entry {
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: #718096;
+  background: transparent;
+  font: 600 12px/1 "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  text-decoration: none;
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.prototype-back-entry::before {
+  content: "←";
+  font-size: 14px;
+}
+
+.prototype-back-entry span {
+  white-space: nowrap;
+}
+
+.prototype-back-entry:hover,
+.prototype-back-entry:focus-visible {
+  border-color: #d5e3f7;
+  color: #1769f5;
+  background: #f3f7fe;
+}
+
+.prototype-back-entry:focus-visible {
+  outline: 2px solid rgba(23, 105, 245, 0.2);
+  outline-offset: 1px;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --prototype-entry-bar-height: 34px;
+  }
+
+  .prototype-entry-bar {
+    padding: 0 8px;
+  }
+}

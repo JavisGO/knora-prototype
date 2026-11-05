@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+
+# 验证与临时产物
+_qa/
+qa/
+tmp/
+/_qa-rule.png
+/rule-*-verification.png
+/_datasource_*.png
+
+# 浏览器缓存，可能含登录信息
+_datasource_chrome_profile*/

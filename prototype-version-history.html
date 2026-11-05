@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>原型版本更新记录</title>
+  <link rel="stylesheet" href="assets/prototype-index-pages.css?v=20261012">
+</head>
+<body class="content-page">
+  <header class="topbar">
+    <a class="back-link" href="index.html" aria-label="返回原型查看入口">
+      <span aria-hidden="true">←</span> 返回入口
+    </a>
+    <div class="topbar-title">
+      <div class="mini-brand" aria-hidden="true">K</div>
+      <span>Knora 产品蓝图</span>
+    </div>
+  </header>
+
+  <main class="content-shell version-shell">
+    <div class="page-heading page-heading-with-actions">
+      <div>
+        <p class="eyebrow">VERSION HISTORY</p>
+        <h1>原型版本更新记录</h1>
+        <p class="editor-hint">可直接编辑并写回本 HTML 文件；首次保存时请选择或确认覆盖当前的 prototype-version-history.html。</p>
+      </div>
+      <div class="editor-toolbar" aria-label="版本记录编辑工具">
+        <button class="toolbar-button" id="edit-list" type="button">编辑记录</button>
+        <button class="toolbar-button edit-only" id="add-row" type="button">新增记录</button>
+        <button class="toolbar-button toolbar-button-primary edit-only" id="save-list" type="button">保存到 HTML</button>
+        <button class="toolbar-button edit-only" id="cancel-edit" type="button">取消</button>
+        <button class="toolbar-button" id="export-data" type="button">导出 JSON</button>
+        <label class="toolbar-button file-button" for="import-data">导入 JSON</label>
+        <input class="visually-hidden" id="import-data" type="file" accept="application/json,.json">
+      </div>
+    </div>
+    <p class="save-status" id="save-status" role="status" aria-live="polite"></p>
+    <section class="version-records" aria-label="版本更新记录">
+      <table class="version-table">
+        <thead>
+          <tr><th>日期</th><th>模块</th><th>更新内容</th><th class="edit-only">操作</th></tr>
+        </thead>
+        <tbody><tr><td class="date-cell" data-key="date" rowspan="5">2026.10.21</td><td class="" data-key="module">经纶 · 非结构化处理</td><td class="" data-key="content">升级文档与数据库长文本字段抽取，完善任务内的来源配置、抽取规则、运行、结果查看与校验流程，并取消对流程管理的依赖。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · FAQ</td><td class="" data-key="content">新增 FAQ 管理与智能体 FAQ 配置能力，支持按场景目录维护 FAQ、选择实例并用于智能体问答。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 智能体配置</td><td class="" data-key="content">新建及配置智能体统一直接进入深度推理 ReAct 配置页，不再选择智能体类型；补充适用场景、FAQ、知识库、本体、工具与技能等配置。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 实体映射构建</td><td class="" data-key="content">优化实体构建的多源表增量添加、删除和字段映射，补充 Join/Union 关联、属性融合规则、映射结果查询及物理/虚拟发布过程。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 发布变更影响</td><td class="" data-key="content">已有实体从列表发布前新增变更影响分析，展示受影响的关系、事件、Action、流程、智能体及相关使用用户，再确认发布。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="date-cell" data-key="date" rowspan="4">2026.10.20</td><td class="" data-key="module">知识门户-我的</td><td class="" data-key="content">将被授权的agent和action在首页进行展示，并通过跳转到我的查看和使用全部agent和action</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 项目资源发布</td><td class="" data-key="content">实体、关系、事件、Action 与智能体统一支持发布到项目所属空间；发布目标由项目归属固定，不再选择空间目录，并展示空间管理员审批链。审批后资源同步进入知识门户对应空间的本体或智能体资源目录。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 实体版本</td><td class="" data-key="content">统一实体卡片操作并移除实体直接授权；历史版本支持切换版本并查看属性类型、名称与 API 名称、索引、主键、标题等只读结构信息。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 实体构建与发布流程</td><td class="" data-key="content">新增实体与设置复用同一套分步流程，完善属性定义、项目数据表字段复制、多源映射、结果查询、构建阶段、同步数据及重新跑数等发布操作。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="date-cell" data-key="date" rowspan="5">2026.10.19</td><td class="" data-key="module">知识门户 · 公共空间文档上传</td><td class="" data-key="content">更新公共空间上传文件弹窗与后续交互，支持立即或定时发布、手动或定时归档，并保留自动解析及解析档位配置。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 知识库文件夹</td><td class="" data-key="content">知识库文档管理新增文件夹体系，支持新建、重命名、移动、删除文件夹，以及选择目标文件夹上传和管理文档。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 知识库文档导入</td><td class="" data-key="content">重构知识库文档导入为分步流程：第一步选择文档，第二步配置解析方式、分片策略与内容增强选项。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 流程视图</td><td class="" data-key="content">业务流程卡片支持进入可编辑流程画布，并完善知识库检索节点的文档知识库选择、目录范围、标签筛选和检索参数配置。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">经纶 · 非结构化抽取与流程管理</td><td class="" data-key="content">完整升级文档抽取与数据库长文本字段抽取，补充任务创建、来源与抽取目标配置、结果查看及运行记录；流程管理新增长文本抽取算子与流程配置、验证、运行能力，并实现流程运行结果回传抽取任务的跨模块闭环。
+抽取后结果的校验、融合等功能设计仍在进行中</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="date-cell" data-key="date" rowspan="2">2026.10.16</td><td class="" data-key="module">原型入口 · 专用角色视角</td><td class="" data-key="content">新增个人用户、知识管理员、AIBP、知识BP、数据BP五类角色展示入口；基于统一主原型区分可见模块、空间角色、资源数据与操作权限，并保留超管完整功能入口。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 角色目录与项目权限</td><td class="" data-key="content">修复知识管理员空间目录切换后的层级展示并统一角色视角目录样式；明确项目成员仅可查看及申请项目资源，不可编辑项目、添加成员或调整成员角色。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="date-cell" data-key="date" rowspan="8">2026.10.15</td><td class="" data-key="module">知识门户 · 分层授权与资源可见性</td><td class="" data-key="content">重构公共空间授权范围：文档、数据表支持全企业用户与角色授权，本体、智能体按本空间及下级空间授权；企业组织树全量可见，并按资源类型区分列表可见与详情鉴权。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 资源发布与向上级移交</td><td class="" data-key="content">个人资源发布到空间及数据源库表分配改为单空间；公共空间资源新增向上级移交及批量操作，按上级路径单选目标并展示资源发布审批链，原授权关系保持不变。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 项目资源申请与行权限</td><td class="" data-key="content">项目可按所属空间、全部下级空间及上级路径申请资源；新增实体、关系、事件本体申请并明确对象级审批规则，数据表保留字段缩减审批；数据表与本体行权限支持批量导入值映射。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 智能体</td><td class="" data-key="content">更新知识库问答智能体的知识库选择与筛选配置，运行态增加文档分片级溯源引用、引用定位、执行链路及生成文件预览；同步更新深度思考（Deep React）智能体的知识库选择配置。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 业务规则</td><td class="" data-key="content">升级业务规则引擎，完善规则集与规则两层管理，以及规则配置、脚本撰写、AI 创建和统一编辑能力。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 文档历史版本</td><td class="" data-key="content">升级文档历史版本及详情交互，支持版本记录下钻、复制新版本、上传更新、编辑未发布版本和提交发布审批。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 本体资源与 Action</td><td class="" data-key="content">更新本体资源的分类展示、详情查看及授权功能；已授权 Action 可在首页“我的 Action”中按空间查看，并填写参数后执行。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 数据行权限</td><td class="" data-key="content">为数据表及本体实体、关系、事件新增行权限配置，支持字段与用户属性比较、值映射及脚本方式定义数据访问规则。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="date-cell" data-key="date" rowspan="2">2026.10.13</td><td class="" data-key="module">本体管理 · 业务规则</td><td class="" data-key="content">深化规则集内的规则配置：支持本体、项目数据表、文本与文档判断对象；支持组合条件、语义分析、工具调用与决策输出，并统一生成可编辑规则。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 我的工作台</td><td class="" data-key="content">调整审批待办入口优先级：我的审批待办在“我的”中前置，首页审批待办入口同步移动到最近访问之前。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="date-cell" data-key="date" rowspan="6">2026.10.12</td><td class="" data-key="module">知识门户 · 文档资源</td><td class="" data-key="content">新增文档归档与取消归档操作，并展示文档检索状态。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 文档版本</td><td class="" data-key="content">更新历史版本入口及下钻交互，支持查看版本记录与版本发布流程。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 文档详情</td><td class="" data-key="content">文档标题直接进入预览与编辑页；更新页面内编辑、文档更新、保存新版本和发布版本等交互。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 知识库</td><td class="" data-key="content">更新知识库文档的版面还原与分片预览设计。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">知识门户 · 数据源管理</td><td class="" data-key="content">拆分已连接数据源的编辑、分配、同步和删除操作：编辑采用单页维护；分配直接进入选表与选空间；同步仅验证密码并展示同步状态。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr><tr><td class="" data-key="module">本体管理 · 知识库权限</td><td class="" data-key="content">移除个人与公共项目知识库的共享入口；个人项目知识库保留按用户授权，并统一查看已授权信息与新增授权交互。</td><td class="row-action edit-only"><button type="button" class="move-row">上移</button><button type="button" class="move-row">下移</button><button type="button" class="delete-row">删除</button></td></tr></tbody>
+      </table>
+    </section>
+  </main>
+  <script id="prototype-version-data" type="application/json">[
+  {
+    "date": "2026.10.27",
+    "module": "本体管理 · 智能体记忆",
+    "content": "新增智能体记忆机制配置，支持设置私有记忆与公共记忆的启用、读取和写入方式，并查看、管理记忆数据及调用记录。"
+  },
+  {
+    "date": "2026.10.27",
+    "module": "实体看板 · 查询结果",
+    "content": "实体看板新增检索结果页，支持文字检索、实体类型与数据结果切换、关系下钻，以及只读 Cypher 查询与参数化运行。"
+  },
+  {
+    "date": "2026.10.25",
+    "module": "知识门户 · 本地数据源",
+    "content": "新增 XML、视频等本地数据源类型，扩展本地数据接入范围。"
+  },
+  {
+    "date": "2026.10.25",
+    "module": "经纶 · 非结构化抽取",
+    "content": "新增抽取结果校验与融合功能，支持对抽取结果进行校验、修正和融合处理。"
+  },
+  {
+    "date": "2026.10.25",
+    "module": "本体管理 · 知识库分片预览",
+    "content": "分片预览新增图片和表格 Tab，支持图表类型纠正、图像识别、解析内容校正与分片同步，并增加人工确认入库和 AI 文档审核。"
+  },
+  {
+    "date": "2026.10.25",
+    "module": "本体管理 · 知识库上传配置",
+    "content": "知识库上传新增知识库编目、人工确认后入库和 AI 审核配置。"
+  },
+  {
+    "date": "2026.10.25",
+    "module": "知识门户 · 纠错反馈",
+    "content": "新增文档查看纠错反馈、通知纠错反馈，以及“我的-审批”中的纠错反馈处理。"
+  },
+  {
+    "date": "2026.10.25",
+    "module": "本体管理 · 知识库 MCP",
+    "content": "新增知识库 MCP 发布能力，支持将知识库发布为 MCP。"
+  },
+  {
+    "date": "2026.10.22",
+    "module": "本体管理 · Action 审批确认",
+    "content": "重构 Action 配置并新增第 4 步人工确认审批：支持审批开关、顺序审批节点、租户组织用户多选或参数引用、条件触发、全部或任意人通过，以及审批时参数只读或可修改。"
+  },
+  {
+    "date": "2026.10.22",
+    "module": "实体看板 · Action 二次确认",
+    "content": "在实体看板补充 Action 运行与审批通知示例；针对不同 Action 展示参数可修改或只读的二次确认样式，并支持确认或拒绝。"
+  },
+  {
+    "date": "2026.10.22",
+    "module": "本体管理 · Action 日志与回滚",
+    "content": "Action 执行弹窗支持查看当前用户的执行历史，Action 管理卡片支持查看全部执行日志；运行记录可查看详情并选择版本回滚。"
+  },
+  {
+    "date": "2026.10.22",
+    "module": "本体管理 · 流程 Action 节点",
+    "content": "升级流程画布 Action 节点样式与配置：选择项目 Action、按固定参数逐项或对象方式传值、输入或引用参数，并支持等待或异步执行机制。"
+  },
+  {
+    "date": "2026.10.22",
+    "module": "知识门户 · 数据源同步机制",
+    "content": "已连接数据源新增同步机制设置：支持开启定时同步、按分钟、小时或每日指定时间配置调度时段，以及全量或增量策略、增量识别字段和运行记录、失败重试。"
+  },
+  {
+    "date": "2026.10.21",
+    "module": "经纶 · 非结构化处理",
+    "content": "升级文档与数据库长文本字段抽取，完善任务内的来源配置、抽取规则、运行、结果查看与校验流程，并取消对流程管理的依赖。"
+  },
+  {
+    "date": "2026.10.21",
+    "module": "本体管理 · FAQ",
+    "content": "新增 FAQ 管理与智能体 FAQ 配置能力，支持按场景目录维护 FAQ、选择实例并用于智能体问答。"
+  },
+  {
+    "date": "2026.10.21",
+    "module": "本体管理 · 智能体配置",
+    "content": "新建及配置智能体统一直接进入深度推理 ReAct 配置页，不再选择智能体类型；补充适用场景、FAQ、知识库、本体、工具与技能等配置。"
+  },
+  {
+    "date": "2026.10.21",
+    "module": "本体管理 · 实体映射构建",
+    "content": "优化实体构建的多源表增量添加、删除和字段映射，补充 Join/Union 关联、属性融合规则、映射结果查询及物理/虚拟发布过程。"
+  },
+  {
+    "date": "2026.10.21",
+    "module": "本体管理 · 发布变更影响",
+    "content": "已有实体从列表发布前新增变更影响分析，展示受影响的关系、事件、Action、流程、智能体及相关使用用户，再确认发布。"
+  },
+  {
+    "date": "2026.10.20",
+    "module": "知识门户-我的",
+    "content": "将被授权的agent和action在首页进行展示，并通过跳转到我的查看和使用全部agent和action"
+  },
+  {
+    "date": "2026.10.20",
+    "module": "本体管理 · 项目资源发布",
+    "content": "实体、关系、事件、Action 与智能体统一支持发布到项目所属空间；发布目标由项目归属固定，不再选择空间目录，并展示空间管理员审批链。审批后资源同步进入知识门户对应空间的本体或智能体资源目录。"
+  },
+  {
+    "date": "2026.10.20",
+    "module": "本体管理 · 实体版本",
+    "content": "统一实体卡片操作并移除实体直接授权；历史版本支持切换版本并查看属性类型、名称与 API 名称、索引、主键、标题等只读结构信息。"
+  },
+  {
+    "date": "2026.10.20",
+    "module": "本体管理 · 实体构建与发布流程",
+    "content": "新增实体与设置复用同一套分步流程，完善属性定义、项目数据表字段复制、多源映射、结果查询、构建阶段、同步数据及重新跑数等发布操作。"
+  },
+  {
+    "date": "2026.10.19",
+    "module": "知识门户 · 公共空间文档上传",
+    "content": "更新公共空间上传文件弹窗与后续交互，支持立即或定时发布、手动或定时归档，并保留自动解析及解析档位配置。"
+  },
+  {
+    "date": "2026.10.19",
+    "module": "本体管理 · 知识库文件夹",
+    "content": "知识库文档管理新增文件夹体系，支持新建、重命名、移动、删除文件夹，以及选择目标文件夹上传和管理文档。"
+  },
+  {
+    "date": "2026.10.19",
+    "module": "本体管理 · 知识库文档导入",
+    "content": "重构知识库文档导入为分步流程：第一步选择文档，第二步配置解析方式、分片策略与内容增强选项。"
+  },
+  {
+    "date": "2026.10.19",
+    "module": "本体管理 · 流程视图",
+    "content": "业务流程卡片支持进入可编辑流程画布，并完善知识库检索节点的文档知识库选择、目录范围、标签筛选和检索参数配置。"
+  },
+  {
+    "date": "2026.10.19",
+    "module": "经纶 · 非结构化抽取与流程管理",
+    "content": "完整升级文档抽取与数据库长文本字段抽取，补充任务创建、来源与抽取目标配置、结果查看及运行记录；流程管理新增长文本抽取算子与流程配置、验证、运行能力，并实现流程运行结果回传抽取任务的跨模块闭环。\n抽取后结果的校验、融合等功能设计仍在进行中"
+  },
+  {
+    "date": "2026.10.16",
+    "module": "原型入口 · 专用角色视角",
+    "content": "新增个人用户、知识管理员、AIBP、知识BP、数据BP五类角色展示入口；基于统一主原型区分可见模块、空间角色、资源数据与操作权限，并保留超管完整功能入口。"
+  },
+  {
+    "date": "2026.10.16",
+    "module": "知识门户 · 角色目录与项目权限",
+    "content": "修复知识管理员空间目录切换后的层级展示并统一角色视角目录样式；明确项目成员仅可查看及申请项目资源，不可编辑项目、添加成员或调整成员角色。"
+  },
+  {
+    "date": "2026.10.15",
+    "module": "知识门户 · 分层授权与资源可见性",
+    "content": "重构公共空间授权范围：文档、数据表支持全企业用户与角色授权，本体、智能体按本空间及下级空间授权；企业组织树全量可见，并按资源类型区分列表可见与详情鉴权。"
+  },
+  {
+    "date": "2026.10.15",
+    "module": "知识门户 · 资源发布与向上级移交",
+    "content": "个人资源发布到空间及数据源库表分配改为单空间；公共空间资源新增向上级移交及批量操作，按上级路径单选目标并展示资源发布审批链，原授权关系保持不变。"
+  },
+  {
+    "date": "2026.10.15",
+    "module": "知识门户 · 项目资源申请与行权限",
+    "content": "项目可按所属空间、全部下级空间及上级路径申请资源；新增实体、关系、事件本体申请并明确对象级审批规则，数据表保留字段缩减审批；数据表与本体行权限支持批量导入值映射。"
+  },
+  {
+    "date": "2026.10.15",
+    "module": "本体管理 · 智能体",
+    "content": "更新知识库问答智能体的知识库选择与筛选配置，运行态增加文档分片级溯源引用、引用定位、执行链路及生成文件预览；同步更新深度思考（Deep React）智能体的知识库选择配置。"
+  },
+  {
+    "date": "2026.10.15",
+    "module": "本体管理 · 业务规则",
+    "content": "升级业务规则引擎，完善规则集与规则两层管理，以及规则配置、脚本撰写、AI 创建和统一编辑能力。"
+  },
+  {
+    "date": "2026.10.15",
+    "module": "知识门户 · 文档历史版本",
+    "content": "升级文档历史版本及详情交互，支持版本记录下钻、复制新版本、上传更新、编辑未发布版本和提交发布审批。"
+  },
+  {
+    "date": "2026.10.15",
+    "module": "知识门户 · 本体资源与 Action",
+    "content": "更新本体资源的分类展示、详情查看及授权功能；已授权 Action 可在首页“我的 Action”中按空间查看，并填写参数后执行。"
+  },
+  {
+    "date": "2026.10.15",
+    "module": "知识门户 · 数据行权限",
+    "content": "为数据表及本体实体、关系、事件新增行权限配置，支持字段与用户属性比较、值映射及脚本方式定义数据访问规则。"
+  },
+  {
+    "date": "2026.10.13",
+    "module": "本体管理 · 业务规则",
+    "content": "深化规则集内的规则配置：支持本体、项目数据表、文本与文档判断对象；支持组合条件、语义分析、工具调用与决策输出，并统一生成可编辑规则。"
+  },
+  {
+    "date": "2026.10.13",
+    "module": "知识门户 · 我的工作台",
+    "content": "调整审批待办入口优先级：我的审批待办在“我的”中前置，首页审批待办入口同步移动到最近访问之前。"
+  },
+  {
+    "date": "2026.10.12",
+    "module": "知识门户 · 文档资源",
+    "content": "新增文档归档与取消归档操作，并展示文档检索状态。"
+  },
+  {
+    "date": "2026.10.12",
+    "module": "知识门户 · 文档版本",
+    "content": "更新历史版本入口及下钻交互，支持查看版本记录与版本发布流程。"
+  },
+  {
+    "date": "2026.10.12",
+    "module": "知识门户 · 文档详情",
+    "content": "文档标题直接进入预览与编辑页；更新页面内编辑、文档更新、保存新版本和发布版本等交互。"
+  },
+  {
+    "date": "2026.10.12",
+    "module": "本体管理 · 知识库",
+    "content": "更新知识库文档的版面还原与分片预览设计。"
+  },
+  {
+    "date": "2026.10.12",
+    "module": "知识门户 · 数据源管理",
+    "content": "拆分已连接数据源的编辑、分配、同步和删除操作：编辑采用单页维护；分配直接进入选表与选空间；同步仅验证密码并展示同步状态。"
+  },
+  {
+    "date": "2026.10.12",
+    "module": "本体管理 · 知识库权限",
+    "content": "移除个人与公共项目知识库的共享入口；个人项目知识库保留按用户授权，并统一查看已授权信息与新增授权交互。"
+  }
+]</script>
+  <script src="assets/html-source-editor.js?v=20261012"></script>
+  <script>
+    (() => {
+      const table = document.querySelector(".version-table");
+      const tbody = table.tBodies[0];
+      const editButton = document.getElementById("edit-list");
+      const addButton = document.getElementById("add-row");
+      const saveButton = document.getElementById("save-list");
+      const cancelButton = document.getElementById("cancel-edit");
+      const exportButton = document.getElementById("export-data");
+      const importInput = document.getElementById("import-data");
+      const status = document.getElementById("save-status");
+      const REQUIRED_RECORDS = [{
+        date: "2026.10.27",
+        module: "本体管理 · 智能体记忆",
+        content: "新增智能体记忆机制配置，支持设置私有记忆与公共记忆的启用、读取和写入方式，并查看、管理记忆数据及调用记录。"
+      }, {
+        date: "2026.10.27",
+        module: "实体看板 · 查询结果",
+        content: "实体看板新增检索结果页，支持文字检索、实体类型与数据结果切换、关系下钻，以及只读 Cypher 查询与参数化运行。"
+      }, {
+        date: "2026.10.25",
+        module: "知识门户 · 本地数据源",
+        content: "新增 XML、视频等本地数据源类型，扩展本地数据接入范围。"
+      }, {
+        date: "2026.10.25",
+        module: "经纶 · 非结构化抽取",
+        content: "新增抽取结果校验与融合功能，支持对抽取结果进行校验、修正和融合处理。"
+      }, {
+        date: "2026.10.25",
+        module: "本体管理 · 知识库分片预览",
+        content: "分片预览新增图片和表格 Tab，支持图表类型纠正、图像识别、解析内容校正与分片同步，并增加人工确认入库和 AI 文档审核。"
+      }, {
+        date: "2026.10.25",
+        module: "本体管理 · 知识库上传配置",
+        content: "知识库上传新增知识库编目、人工确认后入库和 AI 审核配置。"
+      }, {
+        date: "2026.10.25",
+        module: "知识门户 · 纠错反馈",
+        content: "新增文档查看纠错反馈、通知纠错反馈，以及“我的-审批”中的纠错反馈处理。"
+      }, {
+        date: "2026.10.25",
+        module: "本体管理 · 知识库 MCP",
+        content: "新增知识库 MCP 发布能力，支持将知识库发布为 MCP。"
+      }, {
+        date: "2026.10.22",
+        module: "本体管理 · Action 审批确认",
+        content: "重构 Action 配置并新增第 4 步人工确认审批：支持审批开关、顺序审批节点、租户组织用户多选或参数引用、条件触发、全部或任意人通过，以及审批时参数只读或可修改。"
+      }, {
+        date: "2026.10.22",
+        module: "实体看板 · Action 二次确认",
+        content: "在实体看板补充 Action 运行与审批通知示例；针对不同 Action 展示参数可修改或只读的二次确认样式，并支持确认或拒绝。"
+      }, {
+        date: "2026.10.22",
+        module: "本体管理 · Action 日志与回滚",
+        content: "Action 执行弹窗支持查看当前用户的执行历史，Action 管理卡片支持查看全部执行日志；运行记录可查看详情并选择版本回滚。"
+      }, {
+        date: "2026.10.22",
+        module: "本体管理 · 流程 Action 节点",
+        content: "升级流程画布 Action 节点样式与配置：选择项目 Action、按固定参数逐项或对象方式传值、输入或引用参数，并支持等待或异步执行机制。"
+      }, {
+        date: "2026.10.22",
+        module: "知识门户 · 数据源同步机制",
+        content: "已连接数据源新增同步机制设置：支持开启定时同步、按分钟、小时或每日指定时间配置调度时段，以及全量或增量策略、增量识别字段和运行记录、失败重试。"
+      }, {
+        date: "2026.10.21",
+        module: "经纶 · 非结构化处理",
+        content: "升级文档与数据库长文本字段抽取，完善任务内的来源配置、抽取规则、运行、结果查看与校验流程，并取消对流程管理的依赖。"
+      }, {
+        date: "2026.10.21",
+        module: "本体管理 · FAQ",
+        content: "新增 FAQ 管理与智能体 FAQ 配置能力，支持按场景目录维护 FAQ、选择实例并用于智能体问答。"
+      }, {
+        date: "2026.10.21",
+        module: "本体管理 · 智能体配置",
+        content: "新建及配置智能体统一直接进入深度推理 ReAct 配置页，不再选择智能体类型；补充适用场景、FAQ、知识库、本体、工具与技能等配置。"
+      }, {
+        date: "2026.10.21",
+        module: "本体管理 · 实体映射构建",
+        content: "优化实体构建的多源表增量添加、删除和字段映射，补充 Join/Union 关联、属性融合规则、映射结果查询及物理/虚拟发布过程。"
+      }, {
+        date: "2026.10.21",
+        module: "本体管理 · 发布变更影响",
+        content: "已有实体从列表发布前新增变更影响分析，展示受影响的关系、事件、Action、流程、智能体及相关使用用户，再确认发布。"
+      }, {
+        date: "2026.10.20",
+        module: "本体管理 · 项目资源发布",
+        content: "实体、关系、事件、Action 与智能体统一支持发布到项目所属空间；发布目标由项目归属固定，不再选择空间目录，并展示空间管理员审批链。审批后资源同步进入知识门户对应空间的本体或智能体资源目录。"
+      }, {
+        date: "2026.10.20",
+        module: "本体管理 · 实体版本",
+        content: "统一实体卡片操作并移除实体直接授权；历史版本支持切换版本并查看属性类型、名称与 API 名称、索引、主键、标题等只读结构信息。"
+      }, {
+        date: "2026.10.20",
+        module: "本体管理 · 实体构建与发布流程",
+        content: "新增实体与设置复用同一套分步流程，完善属性定义、项目数据表字段复制、多源映射、结果查询、构建阶段、同步数据及重新跑数等发布操作。"
+      }, {
+        date: "2026.10.19",
+        module: "知识门户 · 公共空间文档上传",
+        content: "更新公共空间上传文件弹窗与后续交互，支持立即或定时发布、手动或定时归档，并保留自动解析及解析档位配置。"
+      }, {
+        date: "2026.10.19",
+        module: "本体管理 · 知识库文件夹",
+        content: "知识库文档管理新增文件夹体系，支持新建、重命名、移动、删除文件夹，以及选择目标文件夹上传和管理文档。"
+      }, {
+        date: "2026.10.19",
+        module: "本体管理 · 知识库文档导入",
+        content: "重构知识库文档导入为分步流程：第一步选择文档，第二步配置解析方式、分片策略与内容增强选项。"
+      }, {
+        date: "2026.10.19",
+        module: "本体管理 · 流程视图",
+        content: "业务流程卡片支持进入可编辑流程画布，并完善知识库检索节点的文档知识库选择、目录范围、标签筛选和检索参数配置。"
+      }, {
+        date: "2026.10.19",
+        module: "经纶 · 非结构化抽取与流程管理",
+        content: "完整升级文档抽取与数据库长文本字段抽取，补充任务创建、来源与抽取目标配置、结果查看及运行记录；流程管理新增长文本抽取算子与流程配置、验证、运行能力，并实现流程运行结果回传抽取任务的跨模块闭环。"
+      }, {
+        date: "2026.10.16",
+        module: "原型入口 · 专用角色视角",
+        content: "新增个人用户、知识管理员、AIBP、知识BP、数据BP五类角色展示入口；基于统一主原型区分可见模块、空间角色、资源数据与操作权限，并保留超管完整功能入口。"
+      }, {
+        date: "2026.10.16",
+        module: "知识门户 · 角色目录与项目权限",
+        content: "修复知识管理员空间目录切换后的层级展示并统一角色视角目录样式；明确项目成员仅可查看及申请项目资源，不可编辑项目、添加成员或调整成员角色。"
+      }, {
+        date: "2026.10.15",
+        module: "知识门户 · 分层授权与资源可见性",
+        content: "重构公共空间授权范围：文档、数据表支持全企业用户与角色授权，本体、智能体按本空间及下级空间授权；企业组织树全量可见，并按资源类型区分列表可见与详情鉴权。"
+      }, {
+        date: "2026.10.15",
+        module: "知识门户 · 资源发布与向上级移交",
+        content: "个人资源发布到空间及数据源库表分配改为单空间；公共空间资源新增向上级移交及批量操作，按上级路径单选目标并展示资源发布审批链，原授权关系保持不变。"
+      }, {
+        date: "2026.10.15",
+        module: "知识门户 · 项目资源申请与行权限",
+        content: "项目可按所属空间、全部下级空间及上级路径申请资源；新增实体、关系、事件本体申请并明确对象级审批规则，数据表保留字段缩减审批；数据表与本体行权限支持批量导入值映射。"
+      }, {
+        date: "2026.10.15",
+        module: "本体管理 · 智能体",
+        content: "更新知识库问答智能体的知识库选择与筛选配置，运行态增加文档分片级溯源引用、引用定位、执行链路及生成文件预览；同步更新深度思考（Deep React）智能体的知识库选择配置。"
+      }, {
+        date: "2026.10.15",
+        module: "本体管理 · 业务规则",
+        content: "升级业务规则引擎，完善规则集与规则两层管理，以及规则配置、脚本撰写、AI 创建和统一编辑能力。"
+      }, {
+        date: "2026.10.15",
+        module: "知识门户 · 文档历史版本",
+        content: "升级文档历史版本及详情交互，支持版本记录下钻、复制新版本、上传更新、编辑未发布版本和提交发布审批。"
+      }, {
+        date: "2026.10.15",
+        module: "知识门户 · 本体资源与 Action",
+        content: "更新本体资源的分类展示、详情查看及授权功能；已授权 Action 可在首页“我的 Action”中按空间查看，并填写参数后执行。"
+      }, {
+        date: "2026.10.15",
+        module: "知识门户 · 数据行权限",
+        content: "为数据表及本体实体、关系、事件新增行权限配置，支持字段与用户属性比较、值映射及脚本方式定义数据访问规则。"
+      }, {
+        date: "2026.10.13",
+        module: "本体管理 · 业务规则",
+        content: "深化规则集内的规则配置：支持本体、项目数据表、文本与文档判断对象；支持组合条件、语义分析、工具调用与决策输出，并统一生成可编辑规则。"
+      }, {
+        date: "2026.10.13",
+        module: "知识门户 · 我的工作台",
+        content: "调整审批待办入口优先级：我的审批待办在“我的”中前置，首页审批待办入口同步移动到最近访问之前。"
+      }, {
+        date: "2026.10.12",
+        module: "知识门户 · 数据源管理",
+        content: "拆分已连接数据源的编辑、分配、同步和删除操作：编辑采用单页维护；分配直接进入选表与选空间；同步仅验证密码并展示同步状态。"
+      }, {
+        date: "2026.10.12",
+        module: "本体管理 · 知识库权限",
+        content: "移除个人与公共项目知识库的共享入口；个人项目知识库保留按用户授权，并统一查看已授权信息与新增授权交互。"
+      }];
+      let editing = false;
+      let editSnapshot = [];
+
+      const text = (value) => String(value ?? "").trim();
+
+      function readInitialRows() {
+        let date = "";
+        return Array.from(tbody.rows).map((row) => {
+          const cells = Array.from(row.cells);
+          let cursor = 0;
+          if (cells.length === 3) {
+            date = text(cells[0].innerText);
+            cursor = 1;
+          }
+          return {
+            date,
+            module: text(cells[cursor]?.innerText),
+            content: text(cells[cursor + 1]?.innerText)
+          };
+        });
+      }
+
+      const initialRows = readInitialRows();
+
+      function ensureRequiredRecord(items) {
+        const normalized = items.map((item) => ({
+          date: text(item.date),
+          module: text(item.module),
+          content: text(item.content)
+        }));
+        REQUIRED_RECORDS.forEach((required) => {
+          if (!normalized.some((item) => item.date === required.date && item.module === required.module)) {
+            const lastSameDate = normalized.reduce((found, item, index) => item.date === required.date ? index : found, -1);
+            normalized.splice(lastSameDate + 1, 0, { ...required });
+          }
+        });
+        return normalized;
+      }
+
+      function loadRows() {
+        try {
+          const embedded = JSON.parse(document.getElementById("prototype-version-data")?.textContent || "[]");
+          if (Array.isArray(embedded) && embedded.length) return ensureRequiredRecord(embedded);
+        } catch (error) {
+          // Fall back to the original table when opening an older copy.
+        }
+        return ensureRequiredRecord(initialRows);
+      }
+
+      let rows = loadRows();
+
+      function editableCell(value, key, className = "") {
+        const cell = document.createElement("td");
+        cell.className = className;
+        cell.dataset.key = key;
+        cell.textContent = value;
+        if (editing) {
+          cell.contentEditable = "true";
+          cell.spellcheck = false;
+        }
+        return cell;
+      }
+
+      function sameDateRun(index) {
+        let count = 1;
+        while (index + count < rows.length && rows[index + count].date === rows[index].date) count += 1;
+        return count;
+      }
+
+      function render() {
+        document.body.classList.toggle("is-editing", editing);
+        tbody.replaceChildren();
+        rows.forEach((item, index) => {
+          const row = document.createElement("tr");
+          if (editing) {
+            row.appendChild(editableCell(item.date, "date", "date-cell"));
+          } else if (index === 0 || rows[index - 1].date !== item.date) {
+            const dateCell = editableCell(item.date, "date", "date-cell");
+            dateCell.rowSpan = sameDateRun(index);
+            row.appendChild(dateCell);
+          }
+          row.append(
+            editableCell(item.module, "module"),
+            editableCell(item.content, "content")
+          );
+          const action = document.createElement("td");
+          action.className = "row-action edit-only";
+          const moveUp = document.createElement("button");
+          moveUp.type = "button";
+          moveUp.className = "move-row";
+          moveUp.textContent = "上移";
+          moveUp.disabled = index === 0;
+          moveUp.addEventListener("click", () => {
+            syncFromTable();
+            if (index <= 0) return;
+            [rows[index - 1], rows[index]] = [rows[index], rows[index - 1]];
+            render();
+          });
+          const moveDown = document.createElement("button");
+          moveDown.type = "button";
+          moveDown.className = "move-row";
+          moveDown.textContent = "下移";
+          moveDown.disabled = index === rows.length - 1;
+          moveDown.addEventListener("click", () => {
+            syncFromTable();
+            if (index >= rows.length - 1) return;
+            [rows[index], rows[index + 1]] = [rows[index + 1], rows[index]];
+            render();
+          });
+          const remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "delete-row";
+          remove.textContent = "删除";
+          remove.addEventListener("click", () => {
+            syncFromTable();
+            rows.splice(index, 1);
+            render();
+          });
+          action.append(moveUp, moveDown, remove);
+          row.appendChild(action);
+          tbody.appendChild(row);
+        });
+        editButton.hidden = editing;
+      }
+
+      function syncFromTable() {
+        if (!editing) return;
+        rows = Array.from(tbody.rows).map((row) => {
+          const value = (key) => text(row.querySelector(`[data-key="${key}"]`)?.innerText);
+          return { date: value("date"), module: value("module"), content: value("content") };
+        });
+      }
+
+      function setStatus(message) {
+        status.textContent = message;
+        window.clearTimeout(setStatus.timer);
+        setStatus.timer = window.setTimeout(() => { status.textContent = ""; }, 3600);
+      }
+
+      editButton.addEventListener("click", () => {
+        editSnapshot = JSON.parse(JSON.stringify(rows));
+        editing = true;
+        render();
+      });
+
+      addButton.addEventListener("click", () => {
+        syncFromTable();
+        rows.push({ date: "", module: "", content: "" });
+        render();
+        const lastRow = tbody.rows[tbody.rows.length - 1];
+        lastRow?.querySelector('[data-key="date"]')?.focus();
+        lastRow?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+
+      saveButton.addEventListener("click", async () => {
+        syncFromTable();
+        editing = false;
+        render();
+        try {
+          saveButton.disabled = true;
+          const result = await window.KnoraHtmlFileStore.save({
+            elementId: "prototype-version-data",
+            data: rows,
+            fileName: "prototype-version-history.html"
+          });
+          setStatus(result.mode === "file"
+            ? `已将 ${rows.length} 条版本记录写入 ${result.fileName}。`
+            : "浏览器不支持直接写入，已生成新版 HTML；请用下载文件替换原文件。");
+        } catch (error) {
+          setStatus(error?.name === "AbortError" ? "已取消文件保存。" : "保存失败，请确认文件未被其他程序占用后重试。");
+        } finally {
+          saveButton.disabled = false;
+        }
+      });
+
+      cancelButton.addEventListener("click", () => {
+        rows = editSnapshot;
+        editing = false;
+        render();
+        setStatus("已取消本次编辑。");
+      });
+
+      exportButton.addEventListener("click", () => {
+        if (editing) syncFromTable();
+        const blob = new Blob([JSON.stringify(rows, null, 2)], { type: "application/json;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `Knora原型版本更新记录-${new Date().toISOString().slice(0, 10)}.json`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        setStatus("已导出当前版本记录 JSON 备份。");
+      });
+
+      importInput.addEventListener("change", async () => {
+        const file = importInput.files?.[0];
+        if (!file) return;
+        try {
+          const imported = JSON.parse(await file.text());
+          if (!Array.isArray(imported)) throw new Error("invalid data");
+          rows = imported.map((item) => ({
+            date: text(item.date),
+            module: text(item.module),
+            content: text(item.content)
+          }));
+          editing = true;
+          render();
+          setStatus(`已导入 ${rows.length} 条版本记录，请点击“保存到 HTML”完成文件写入。`);
+        } catch (error) {
+          setStatus("导入失败：请选择由本页面导出的 JSON 文件。");
+        } finally {
+          importInput.value = "";
+        }
+      });
+
+      render();
+    })();
+  </script>
+
+
+
+
+<link rel="stylesheet" href="assets/global-ai-assistant.css?v=20261102">
+<script src="assets/global-ai-assistant.js?v=20261102"></script>
+</body></html>
+
