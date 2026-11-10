@@ -809,3 +809,41 @@
     justify-self: end;
   }
 }
+
+/* 项目详情内嵌的「项目首页」配置 */
+.pv2-home-config {
+  margin-top: 6px;
+}
+.ch-editor.ch-embedded {
+  max-width: none;
+  background: #fff;
+  border: 1px solid #e1e7ef;
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 4px;
+}
+.ch-editor.ch-embedded .ch-head {
+  background: transparent;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+}
+.ch-embedded .ch-head h2 {
+  font-size: 16px;
+  margin: 0;
+  white-space: nowrap;
+}
+.ch-embedded .ch-layout {
+  margin-top: 8px;
+}
+.ch-embedded .ch-layout > nav {
+  position: static;
+}
+.ch-embedded .ch-form section {
+  background: #fbfcfe;
+}
+.ch-embedded.ch-off .ch-layout,
+.ch-embedded.ch-off .ch-message {
+  display: none;
+}
