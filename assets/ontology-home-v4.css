@@ -1,1 +1,17 @@
-.portal-agent-card.v4-flow-card>i,.mine-app-list .v4-flow-mine>i.flow{background:#fff0e8;color:#c96c34}.mine-app-list .v4-flow-mine>i.flow{display:grid;place-items:center;font-style:normal;font-weight:800}.v4-flow-card{border-color:#f4d9c8}.v4-flow-card:hover{border-color:#e8ad8a}
+.portal-agent-card.v4-flow-card > i,
+.mine-app-list .v4-flow-mine > i.flow {
+  background: #fff0e8;
+  color: #c96c34;
+}
+.mine-app-list .v4-flow-mine > i.flow {
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  font-weight: 800;
+}
+.v4-flow-card {
+  border-color: #f4d9c8;
+}
+.v4-flow-card:hover {
+  border-color: #e8ad8a;
+}

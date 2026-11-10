@@ -1,1 +1,233 @@
-.mine-applications{min-height:590px;border:1px solid #e1e7ef;border-radius:12px;background:#fff;overflow:hidden}.mine-applications>header{height:78px;display:flex;align-items:center;padding:0 22px;border-bottom:1px solid #e6ebf2}.mine-applications>header h2{margin:0;color:#17243d;font-size:18px}.mine-applications>header p{margin:6px 0 0;color:#7b899d;font-size:11px}.mine-applications>header label{width:330px;height:36px;display:flex;align-items:center;margin-left:auto;border:1px solid #d9e1eb;border-radius:18px;padding:0 13px}.mine-applications>header label span{color:#738399}.mine-applications>header input{min-width:0;flex:1;border:0;outline:0;padding-left:9px}.mine-app-space-tabs{height:58px;display:flex;align-items:flex-end;gap:25px;padding:0 22px;border-bottom:1px solid #e7ecf2}.mine-app-space-tabs button{height:46px;border:0;border-bottom:3px solid transparent;background:#fff;color:#55657b}.mine-app-space-tabs button.active{border-bottom-color:#176ef3;color:#176ef3;font-weight:700}.mine-app-list{padding:18px 22px}.mine-app-list article{min-height:86px;display:grid;grid-template-columns:46px minmax(0,1fr) 80px 74px;align-items:center;gap:14px;padding:12px 16px;border:1px solid #e1e7ef;border-radius:10px;margin-bottom:12px}.mine-app-list article>i{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;background:#e9f1ff;color:#176ef3;font-style:normal;font-weight:800}.mine-app-list article>i.action{background:#e8faf1;color:#12a76c}.mine-app-list article b,.mine-app-list article small{display:block}.mine-app-list article small{margin-top:5px;color:#7b889b}.mine-app-list article p{margin:7px 0 0;color:#53627a}.mine-app-list article em{padding:4px 9px;border-radius:12px;background:#e8f8ef;color:#14a86b;font-style:normal;text-align:center}.mine-app-list article button,.mine-app-mask button{height:32px;border:1px solid #d7dfeb;border-radius:7px;background:#fff}.mine-app-list article button.primary,.mine-app-mask button.primary{border-color:#176ef3;background:#176ef3;color:#fff}.mine-app-empty{padding:80px;text-align:center;color:#8794a7}.mine-app-mask{position:fixed;inset:0;z-index:1600;display:grid;place-items:center;background:#17233d70}.mine-app-mask>section{width:560px;border-radius:14px;background:#fff;box-shadow:0 30px 80px #17233d50;overflow:hidden}.mine-app-mask header{height:68px;display:flex;align-items:center;padding:0 22px;border-bottom:1px solid #e4e9f0}.mine-app-mask header h2{margin:0;font-size:17px}.mine-app-mask header p{margin:5px 0 0;color:#8491a4}.mine-app-mask header button{margin-left:auto;border:0;font-size:22px}.mine-app-mask main{padding:20px 22px}.mine-app-mask main label{display:block;margin-bottom:16px}.mine-app-mask main label b{display:block;margin-bottom:8px}.mine-app-mask main i{color:#ef4f49}.mine-app-mask input,.mine-app-mask textarea{box-sizing:border-box;width:100%;border:1px solid #dce3ec;border-radius:8px;padding:10px}.mine-app-mask textarea{height:86px;resize:none}.mine-app-mask main>div:not(.mine-app-success){display:grid;grid-template-columns:90px 1fr 90px 1fr;padding:13px;border-radius:8px;background:#f5f8fc}.mine-app-mask footer{height:62px;display:flex;justify-content:flex-end;align-items:center;gap:10px;padding:0 22px;border-top:1px solid #e4e9f0}.mine-app-success{display:flex;flex-direction:column;align-items:center;padding:35px}.mine-app-success i{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:#e8f8ef;color:#12a76c;font-style:normal;font-size:25px}.mine-app-success b{margin-top:13px;font-size:16px}.mine-app-success span{margin-top:8px;color:#7d8a9d}
+.mine-applications {
+  min-height: 590px;
+  border: 1px solid #e1e7ef;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+.mine-applications > header {
+  height: 78px;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-bottom: 1px solid #e6ebf2;
+}
+.mine-applications > header h2 {
+  margin: 0;
+  color: #17243d;
+  font-size: 18px;
+}
+.mine-applications > header p {
+  margin: 6px 0 0;
+  color: #7b899d;
+  font-size: 11px;
+}
+.mine-applications > header label {
+  width: 330px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  border: 1px solid #d9e1eb;
+  border-radius: 18px;
+  padding: 0 13px;
+}
+.mine-applications > header label span {
+  color: #738399;
+}
+.mine-applications > header input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  padding-left: 9px;
+}
+.mine-app-space-tabs {
+  height: 58px;
+  display: flex;
+  align-items: flex-end;
+  gap: 25px;
+  padding: 0 22px;
+  border-bottom: 1px solid #e7ecf2;
+}
+.mine-app-space-tabs button {
+  height: 46px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: #fff;
+  color: #55657b;
+}
+.mine-app-space-tabs button.active {
+  border-bottom-color: #176ef3;
+  color: #176ef3;
+  font-weight: 700;
+}
+.mine-app-list {
+  padding: 18px 22px;
+}
+.mine-app-list article {
+  min-height: 86px;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 80px 74px;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border: 1px solid #e1e7ef;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.mine-app-list article > i {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #e9f1ff;
+  color: #176ef3;
+  font-style: normal;
+  font-weight: 800;
+}
+.mine-app-list article > i.action {
+  background: #e8faf1;
+  color: #12a76c;
+}
+.mine-app-list article b,
+.mine-app-list article small {
+  display: block;
+}
+.mine-app-list article small {
+  margin-top: 5px;
+  color: #7b889b;
+}
+.mine-app-list article p {
+  margin: 7px 0 0;
+  color: #53627a;
+}
+.mine-app-list article em {
+  padding: 4px 9px;
+  border-radius: 12px;
+  background: #e8f8ef;
+  color: #14a86b;
+  font-style: normal;
+  text-align: center;
+}
+.mine-app-list article button,
+.mine-app-mask button {
+  height: 32px;
+  border: 1px solid #d7dfeb;
+  border-radius: 7px;
+  background: #fff;
+}
+.mine-app-list article button.primary,
+.mine-app-mask button.primary {
+  border-color: #176ef3;
+  background: #176ef3;
+  color: #fff;
+}
+.mine-app-empty {
+  padding: 80px;
+  text-align: center;
+  color: #8794a7;
+}
+.mine-app-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 1600;
+  display: grid;
+  place-items: center;
+  background: #17233d70;
+}
+.mine-app-mask > section {
+  width: 560px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 30px 80px #17233d50;
+  overflow: hidden;
+}
+.mine-app-mask header {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  border-bottom: 1px solid #e4e9f0;
+}
+.mine-app-mask header h2 {
+  margin: 0;
+  font-size: 17px;
+}
+.mine-app-mask header p {
+  margin: 5px 0 0;
+  color: #8491a4;
+}
+.mine-app-mask header button {
+  margin-left: auto;
+  border: 0;
+  font-size: 22px;
+}
+.mine-app-mask main {
+  padding: 20px 22px;
+}
+.mine-app-mask main label {
+  display: block;
+  margin-bottom: 16px;
+}
+.mine-app-mask main label b {
+  display: block;
+  margin-bottom: 8px;
+}
+.mine-app-mask main i {
+  color: #ef4f49;
+}
+.mine-app-mask input,
+.mine-app-mask textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #dce3ec;
+  border-radius: 8px;
+  padding: 10px;
+}
+.mine-app-mask textarea {
+  height: 86px;
+  resize: none;
+}
+.mine-app-mask main > div:not(.mine-app-success) {
+  display: grid;
+  grid-template-columns: 90px 1fr 90px 1fr;
+  padding: 13px;
+  border-radius: 8px;
+  background: #f5f8fc;
+}
+.mine-app-mask footer {
+  height: 62px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 0 22px;
+  border-top: 1px solid #e4e9f0;
+}
+.mine-app-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 35px;
+}
+.mine-app-success i {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e8f8ef;
+  color: #12a76c;
+  font-style: normal;
+  font-size: 25px;
+}
+.mine-app-success b {
+  margin-top: 13px;
+  font-size: 16px;
+}
+.mine-app-success span {
+  margin-top: 8px;
+  color: #7d8a9d;
+}

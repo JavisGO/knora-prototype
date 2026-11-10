@@ -1,1 +1,137 @@
-.pdr-breadcrumb{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:12px;border-bottom:1px solid #e7edf5}.pdr-breadcrumb button,.pdr-row button{border:0;background:none;color:#1764ee;cursor:pointer;text-align:left}.pdr-note{padding:10px 12px;background:#f1f6ff;color:#647a97;font-size:11px;margin:8px}.pdr-all{display:flex;align-items:center;gap:8px;padding:8px 15px;font-size:12px}.pdr-row{display:flex;align-items:center;gap:12px;padding:12px 15px;border-bottom:1px solid #edf0f5;font-size:12px}.pdr-row>div{flex:1}.pdr-row small{display:block;color:#8c99aa;margin:5px 0}.pdr-row em,.pdr-target>em,.pdr-selected em{font-style:normal;color:#258c71;font-size:11px}.pdr-row input{accent-color:#1764ff}.pdr-row button{font:inherit}#pdrSummary{margin:12px 0;padding:12px;border:1px solid #dfe7f2;border-radius:8px;font-size:12px}#pdrSummary summary{cursor:pointer;color:#355d8b}.pdr-selected{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #edf0f5}.pdr-selected button,.pdr-record button{background:white;border:1px solid #dce5f0;color:#2865bd;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:11px}#pdrProject{margin:12px;padding:14px;border:1px solid #dce6f1;border-radius:10px;background:white}#pdrProject h3{margin:0 0 12px;font-size:14px}.pdr-record{border-top:1px solid #e5ebf3;margin:10px 0}.pdr-record header{display:flex;gap:14px;align-items:center;padding:12px 0;font-size:12px}.pdr-record header button{margin-left:auto}.pdr-target{padding:12px;background:#f8faff;margin:8px 0;border-radius:7px;font-size:12px}.pdr-target>em{margin-left:12px}.pdr-target details{padding:8px 0}.pdr-target summary{cursor:pointer}.pdr-children{padding-left:22px;border-left:1px solid #dfe8f3;margin-left:7px}.pdr-target p{margin:8px 0;color:#718299}
+.pdr-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+  border-bottom: 1px solid #e7edf5;
+}
+.pdr-breadcrumb button,
+.pdr-row button {
+  border: 0;
+  background: none;
+  color: #1764ee;
+  cursor: pointer;
+  text-align: left;
+}
+.pdr-note {
+  padding: 10px 12px;
+  background: #f1f6ff;
+  color: #647a97;
+  font-size: 11px;
+  margin: 8px;
+}
+.pdr-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  font-size: 12px;
+}
+.pdr-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-bottom: 1px solid #edf0f5;
+  font-size: 12px;
+}
+.pdr-row > div {
+  flex: 1;
+}
+.pdr-row small {
+  display: block;
+  color: #8c99aa;
+  margin: 5px 0;
+}
+.pdr-row em,
+.pdr-target > em,
+.pdr-selected em {
+  font-style: normal;
+  color: #258c71;
+  font-size: 11px;
+}
+.pdr-row input {
+  accent-color: #1764ff;
+}
+.pdr-row button {
+  font: inherit;
+}
+#pdrSummary {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid #dfe7f2;
+  border-radius: 8px;
+  font-size: 12px;
+}
+#pdrSummary summary {
+  cursor: pointer;
+  color: #355d8b;
+}
+.pdr-selected {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid #edf0f5;
+}
+.pdr-selected button,
+.pdr-record button {
+  background: white;
+  border: 1px solid #dce5f0;
+  color: #2865bd;
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 11px;
+}
+#pdrProject {
+  margin: 12px;
+  padding: 14px;
+  border: 1px solid #dce6f1;
+  border-radius: 10px;
+  background: white;
+}
+#pdrProject h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+.pdr-record {
+  border-top: 1px solid #e5ebf3;
+  margin: 10px 0;
+}
+.pdr-record header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 12px;
+}
+.pdr-record header button {
+  margin-left: auto;
+}
+.pdr-target {
+  padding: 12px;
+  background: #f8faff;
+  margin: 8px 0;
+  border-radius: 7px;
+  font-size: 12px;
+}
+.pdr-target > em {
+  margin-left: 12px;
+}
+.pdr-target details {
+  padding: 8px 0;
+}
+.pdr-target summary {
+  cursor: pointer;
+}
+.pdr-children {
+  padding-left: 22px;
+  border-left: 1px solid #dfe8f3;
+  margin-left: 7px;
+}
+.pdr-target p {
+  margin: 8px 0;
+  color: #718299;
+}
