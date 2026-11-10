@@ -68,16 +68,9 @@ body.has-prototype-entry-bar > .dv2-drawer {
   border-radius: 7px;
   color: #718096;
   background: transparent;
-  font:
-    600 12px/1 "Microsoft YaHei",
-    "PingFang SC",
-    Arial,
-    sans-serif;
+  font: 600 12px/1 "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
   text-decoration: none;
-  transition:
-    color 150ms ease,
-    border-color 150ms ease,
-    background 150ms ease;
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
 }
 
 .prototype-back-entry::before {

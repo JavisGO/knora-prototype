@@ -1,130 +1,15 @@
-.role-view-hidden,
-.role-view-hidden-control,
-.role-view-hidden-resource,
-.role-submitted-project-hidden {
-  display: none !important;
-}
-.role-perspective-badge {
-  max-width: 300px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 14px;
-  padding: 6px 10px;
-  border: 1px solid #cfe0fb;
-  border-radius: 10px;
-  background: #f4f8ff;
-  color: #1d5fbf;
-}
-.role-perspective-badge > i,
-.role-floating-badge > i {
-  width: 27px;
-  height: 27px;
-  display: grid;
-  place-items: center;
-  border-radius: 8px;
-  background: #e2edff;
-  color: #1769f5;
-  font-style: normal;
-  font-weight: 800;
-}
-.role-perspective-badge > span,
-.role-floating-badge > span {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-}
-.role-perspective-badge b,
-.role-floating-badge b {
-  font-size: 12px;
-}
-.role-perspective-badge small,
-.role-floating-badge small {
-  overflow: hidden;
-  color: #6f7f97;
-  font-size: 9px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.role-floating-badge {
-  position: fixed;
-  z-index: 9000;
-  right: 18px;
-  top: 58px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border: 1px solid #cfe0fb;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 10px 30px #23416f1c;
-  color: #1d5fbf;
-}
-.role-public-readonly .role-readonly-actions button {
-  display: none !important;
-}
-.role-public-readonly .role-readonly-actions button[data-data-detail],
-.role-public-readonly .role-readonly-actions button[data-ontology-detail],
-.role-public-readonly .role-readonly-actions button[data-doc-preview],
-.role-public-readonly .role-readonly-actions button[data-document-title],
-.role-public-readonly .role-readonly-actions button[data-role-doc-download],
-.role-public-readonly .role-readonly-actions a {
-  display: inline-flex !important;
-}
-.role-public-readonly .data-admin-menu,
-.role-public-readonly .ontology-batch-check,
-.role-public-readonly [data-data-select-all] {
-  display: none !important;
-}
-.role-public-readonly [data-data-select],
-.role-public-readonly [data-ontology-select],
-.role-public-readonly .pr2-resource-check {
-  visibility: hidden !important;
-}
-.role-public-readonly .pr2-command {
-  pointer-events: auto;
-}
-.role-public-readonly .pr2-command > button {
-  display: none !important;
-}
-.role-can-connect-data .ds-add-trigger {
-  display: inline-flex !important;
-}
-.role-managed-space-node:after,
-.role-authorized-space-node:after {
-  display: none !important;
-}
-.role-authorized-space-node > em {
-  background: #e7fff2 !important;
-  color: #18a971 !important;
-}
-.role-perspective-toast {
-  position: fixed;
-  z-index: 12000;
-  left: 50%;
-  bottom: 34px;
-  transform: translate(-50%, 14px);
-  padding: 10px 18px;
-  border-radius: 9px;
-  background: #14213d;
-  color: #fff;
-  box-shadow: 0 8px 28px #14213d3d;
-  font-size: 13px;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.18s ease;
-}
-.role-perspective-toast.show {
-  transform: translate(-50%, 0);
-  opacity: 1;
-}
-@media (max-width: 1100px) {
-  .role-perspective-badge small {
-    display: none;
-  }
-  .role-perspective-badge {
-    padding: 5px 7px;
-    margin: 0 6px;
-  }
-}
+.role-view-hidden,.role-view-hidden-control,.role-view-hidden-resource,.role-submitted-project-hidden{display:none!important}
+.role-perspective-badge{max-width:300px;display:flex;align-items:center;gap:8px;margin:0 14px;padding:6px 10px;border:1px solid #cfe0fb;border-radius:10px;background:#f4f8ff;color:#1d5fbf}
+.role-perspective-badge>i,.role-floating-badge>i{width:27px;height:27px;display:grid;place-items:center;border-radius:8px;background:#e2edff;color:#1769f5;font-style:normal;font-weight:800}
+.role-perspective-badge>span,.role-floating-badge>span{display:flex;min-width:0;flex-direction:column}.role-perspective-badge b,.role-floating-badge b{font-size:12px}.role-perspective-badge small,.role-floating-badge small{overflow:hidden;color:#6f7f97;font-size:9px;text-overflow:ellipsis;white-space:nowrap}
+.role-floating-badge{position:fixed;z-index:9000;right:18px;top:58px;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #cfe0fb;border-radius:10px;background:#fff;box-shadow:0 10px 30px #23416f1c;color:#1d5fbf}
+.role-public-readonly .role-readonly-actions button{display:none!important}
+.role-public-readonly .role-readonly-actions button[data-data-detail],.role-public-readonly .role-readonly-actions button[data-ontology-detail],.role-public-readonly .role-readonly-actions button[data-doc-preview],.role-public-readonly .role-readonly-actions button[data-document-title],.role-public-readonly .role-readonly-actions button[data-role-doc-download],.role-public-readonly .role-readonly-actions a{display:inline-flex!important}
+.role-public-readonly .data-admin-menu,.role-public-readonly .ontology-batch-check,.role-public-readonly [data-data-select-all]{display:none!important}
+.role-public-readonly [data-data-select],.role-public-readonly [data-ontology-select],.role-public-readonly .pr2-resource-check{visibility:hidden!important}
+.role-public-readonly .pr2-command{pointer-events:auto}.role-public-readonly .pr2-command>button{display:none!important}
+.role-can-connect-data .ds-add-trigger{display:inline-flex!important}
+.role-managed-space-node:after,.role-authorized-space-node:after{display:none!important}
+.role-authorized-space-node>em{background:#e7fff2!important;color:#18a971!important}
+.role-perspective-toast{position:fixed;z-index:12000;left:50%;bottom:34px;transform:translate(-50%,14px);padding:10px 18px;border-radius:9px;background:#14213d;color:#fff;box-shadow:0 8px 28px #14213d3d;font-size:13px;opacity:0;pointer-events:none;transition:.18s ease}.role-perspective-toast.show{transform:translate(-50%,0);opacity:1}
+@media(max-width:1100px){.role-perspective-badge small{display:none}.role-perspective-badge{padding:5px 7px;margin:0 6px}}

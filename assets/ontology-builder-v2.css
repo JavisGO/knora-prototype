@@ -22,16 +22,8 @@
   font-weight: 800;
 }
 
-.aigo2-input-guide b {
-  display: block;
-  font-size: 7px;
-}
-.aigo2-input-guide p {
-  margin: 3px 0 0;
-  color: #718097;
-  font-size: 5.7px;
-  line-height: 1.55;
-}
+.aigo2-input-guide b { display: block; font-size: 7px; }
+.aigo2-input-guide p { margin: 3px 0 0; color: #718097; font-size: 5.7px; line-height: 1.55; }
 
 .aigo2-agent-boundary {
   display: flex;
@@ -56,17 +48,9 @@
 }
 
 .aigo2-agent-boundary b,
-.aigo2-agent-boundary small {
-  display: block;
-}
-.aigo2-agent-boundary b {
-  font-size: 6.5px;
-}
-.aigo2-agent-boundary small {
-  margin-top: 2px;
-  color: #8793a6;
-  font-size: 5.5px;
-}
+.aigo2-agent-boundary small { display: block; }
+.aigo2-agent-boundary b { font-size: 6.5px; }
+.aigo2-agent-boundary small { margin-top: 2px; color: #8793a6; font-size: 5.5px; }
 
 .aigo2-generation-decision {
   position: relative;
@@ -85,22 +69,11 @@
   margin-bottom: 8px;
 }
 
-.aigo2-generation-decision > header > div {
-  min-width: 0;
-  flex: 1;
-}
+.aigo2-generation-decision > header > div { min-width: 0; flex: 1; }
 .aigo2-generation-decision > header b,
-.aigo2-generation-decision > header small {
-  display: block;
-}
-.aigo2-generation-decision > header b {
-  font-size: 7.5px;
-}
-.aigo2-generation-decision > header small {
-  margin-top: 2px;
-  color: #8793a6;
-  font-size: 5.5px;
-}
+.aigo2-generation-decision > header small { display: block; }
+.aigo2-generation-decision > header b { font-size: 7.5px; }
+.aigo2-generation-decision > header small { margin-top: 2px; color: #8793a6; font-size: 5.5px; }
 .aigo2-generation-decision > header > em {
   padding: 3px 6px;
   border-radius: 8px;
@@ -111,12 +84,8 @@
   white-space: nowrap;
 }
 
-.aigo2-generation-decision .aigo2-mode-switch {
-  margin-bottom: 0;
-}
-.aigo2-mode-switch button {
-  position: relative;
-}
+.aigo2-generation-decision .aigo2-mode-switch { margin-bottom: 0; }
+.aigo2-mode-switch button { position: relative; }
 .aigo2-mode-switch button > strong {
   position: absolute;
   right: 5px;
@@ -128,19 +97,10 @@
   font-size: 4.8px;
 }
 
-.aigo2-review-strategy {
-  grid-template-columns: 1fr 1fr;
-  margin-bottom: 10px;
-}
-.aigo2-review-strategy button {
-  min-height: 76px;
-}
-.aigo2-page-v2 .aigo2-result-view {
-  min-height: 220px;
-}
+.aigo2-review-strategy { grid-template-columns: 1fr 1fr; margin-bottom: 10px; }
+.aigo2-review-strategy button { min-height: 76px; }
+.aigo2-page-v2 .aigo2-result-view { min-height: 220px; }
 
 @media (max-width: 680px) {
-  .aigo2-review-strategy {
-    grid-template-columns: 1fr;
-  }
+  .aigo2-review-strategy { grid-template-columns: 1fr; }
 }
