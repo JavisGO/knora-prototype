@@ -1330,3 +1330,378 @@
   color: #b96d0f;
   cursor: pointer;
 }
+/* 实体映射：虚拟表与逐属性融合配置 */
+.eb-create-virtual {
+  margin-left: auto;
+}
+.eb-picker-empty {
+  padding: 24px;
+  color: #8b98ab;
+  text-align: center;
+  font-size: 8px;
+}
+.eb-virtual-symbol,
+.eb-virtual-node-icon {
+  background: #f1eaff !important;
+  color: #784dd0 !important;
+}
+.eb-virtual-dialog {
+  width: min(1380px, 94vw);
+  height: min(94vh, 1040px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 24px 75px #13284445;
+  overflow: hidden;
+}
+.eb-virtual-dialog > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.eb-virtual-dialog h2 {
+  margin: 0;
+  font-size: 16px;
+}
+.eb-virtual-dialog > main {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 18px 20px;
+}
+.eb-virtual-dialog > footer {
+  display: flex;
+  gap: 9px;
+  padding: 13px 20px;
+  border-top: 1px solid #e2e8f0;
+}
+.eb-virtual-meta {
+  display: grid;
+  gap: 11px;
+}
+.eb-virtual-meta label {
+  display: grid;
+  grid-template-columns: 115px 1fr;
+  align-items: start;
+  gap: 10px;
+  color: #34445a;
+  font-size: 9px;
+}
+.eb-virtual-meta b {
+  padding-top: 9px;
+}
+.eb-virtual-meta input,
+.eb-virtual-meta textarea,
+.eb-virtual-output-row input,
+.eb-virtual-output-row select {
+  width: 100%;
+  border: 1px solid #dbe3ee;
+  border-radius: 7px;
+  background: #fff;
+  color: #26364e;
+  font: inherit;
+}
+.eb-virtual-meta input {
+  height: 34px;
+  padding: 0 9px;
+}
+.eb-virtual-meta textarea {
+  height: 52px;
+  padding: 8px 9px;
+  resize: vertical;
+}
+.eb-virtual-section {
+  margin-top: 18px;
+  border-top: 1px solid #e2e8f0;
+}
+.eb-virtual-section > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+}
+.eb-virtual-section h3 {
+  margin: 0;
+  font-size: 10px;
+}
+.eb-virtual-section > header > div {
+  display: flex;
+  gap: 7px;
+}
+.eb-virtual-editor {
+  display: grid;
+  grid-template-columns: 32% 1fr;
+  min-height: 310px;
+  border: 1px solid #dce4ef;
+}
+.eb-virtual-editor aside {
+  border-right: 1px solid #dce4ef;
+  min-width: 0;
+}
+.eb-virtual-browser-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.eb-virtual-browser-tabs button {
+  height: 34px;
+  border: 0;
+  border-bottom: 1px solid #dce4ef;
+  background: #fff;
+  color: #6b7a90;
+  cursor: pointer;
+}
+.eb-virtual-browser-tabs button.active {
+  background: #126ff2;
+  color: #fff;
+}
+.eb-virtual-editor aside > .eb-input {
+  margin: 8px;
+  width: calc(100% - 16px);
+}
+.eb-virtual-browser-list {
+  max-height: 225px;
+  overflow: auto;
+  padding: 0 8px;
+}
+.eb-virtual-browser-list details {
+  margin: 5px 0;
+  font-size: 8px;
+}
+.eb-virtual-browser-list summary {
+  cursor: pointer;
+  padding: 5px;
+}
+.eb-virtual-browser-list small {
+  color: #8b97a7;
+  font-size: 6px;
+}
+.eb-virtual-browser-list button {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  border: 0;
+  background: #fff;
+  color: #354863;
+  text-align: left;
+  cursor: pointer;
+}
+.eb-virtual-browser-list button:hover {
+  background: #eef5ff;
+}
+.eb-virtual-sql {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.eb-virtual-sql label {
+  padding: 7px 12px;
+  border-bottom: 1px solid #e5eaf0;
+  font-size: 8px;
+  color: #708096;
+}
+.eb-virtual-sql textarea {
+  flex: 1;
+  min-height: 200px;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  outline: 0;
+  resize: vertical;
+  font:
+    12px/1.6 Consolas,
+    monospace;
+  color: #183456;
+}
+.eb-virtual-sql p {
+  margin: 0;
+  padding: 7px 12px;
+  border-top: 1px solid #edf0f4;
+  color: #62926b;
+  font-size: 7px;
+}
+.eb-virtual-sql p.error {
+  color: #d44848;
+}
+.eb-virtual-output-head,
+.eb-virtual-output-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 1fr 170px 45px;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+}
+.eb-virtual-output-head {
+  background: #f3f6fa;
+  color: #6d7c91;
+  font-size: 8px;
+}
+.eb-virtual-output-row {
+  border-bottom: 1px solid #edf0f4;
+  font-size: 8px;
+}
+.eb-virtual-output-row input,
+.eb-virtual-output-row select {
+  height: 29px;
+  padding: 0 7px;
+}
+.eb-virtual-output-row button {
+  border: 0;
+  background: transparent;
+  color: #da5252;
+  cursor: pointer;
+}
+.eb-property-fusion {
+  margin-bottom: 13px;
+}
+.eb-property-fusion > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.eb-property-fusion > header h3 {
+  margin: 0;
+  font-size: 9px;
+}
+.eb-property-fusion > header code {
+  margin-left: 6px;
+  color: #8b97a8;
+  font-size: 7px;
+  font-weight: 400;
+}
+.eb-property-fusion > header span {
+  color: #8b97a8;
+  font-size: 7px;
+}
+.eb-fusion-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.eb-fusion-sources span {
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #edf5ff;
+  color: #286fc4;
+  font-size: 7px;
+}
+.eb-fusion-sources span.virtual {
+  background: #f1eaff;
+  color: #784dd0;
+}
+/* 实体构建四步与保存/发布分离 */
+.eb-stepper {
+  grid-template-columns: repeat(4, 1fr);
+}
+.eb-step {
+  min-width: 0;
+}
+.eb-publish-note {
+  margin-top: 10px !important;
+  color: #72829a !important;
+}
+.eb-related-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 18px;
+}
+.eb-related-grid section {
+  border: 1px solid #e0e7f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.eb-related-grid section > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: #f6f9fc;
+}
+.eb-related-grid section > header b {
+  font-size: 9px;
+}
+.eb-related-grid section > header small {
+  font-size: 7px;
+  color: #8390a3;
+}
+.eb-related-grid label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+  border-top: 1px solid #edf0f4;
+  font-size: 8px;
+  color: #354760;
+  cursor: pointer;
+}
+.eb-related-grid input {
+  accent-color: #126ff2;
+}
+.eb-related-note {
+  margin: 0 18px 18px;
+  padding: 11px;
+  border-radius: 8px;
+  background: #f2f7ff;
+  color: #64758b;
+  font-size: 8px;
+}
+
+.eb-fusion-selection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid #dfe6ef;
+  border-radius: 9px;
+  background: #fff;
+}
+.eb-fusion-selection label,
+.eb-fusion-pick {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.eb-fusion-selection label {
+  font-size: 8px;
+  color: #34455e;
+}
+.eb-fusion-selection span {
+  margin-left: auto;
+  color: #708098;
+  font-size: 7px;
+}
+.eb-fusion-pick h3 {
+  margin: 0 !important;
+}
+.eb-fusion-pick input,
+.eb-fusion-selection input {
+  accent-color: #176fd9;
+}
+.eb-fusion-bulk {
+  margin-bottom: 12px;
+  padding: 13px;
+  border: 1px solid #9bc2f9;
+  border-radius: 9px;
+  background: #f4f9ff;
+}
+.eb-fusion-bulk[hidden] {
+  display: none;
+}
+.eb-fusion-bulk p {
+  font-size: 7px;
+  color: #74849b;
+}
+.eb-fusion-bulk > button {
+  margin-top: 6px;
+}
+.eb-fusion-selection button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

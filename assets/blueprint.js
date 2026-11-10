@@ -2982,13 +2982,10 @@
     }
     return (
       '<div class="entity-product-nav"><button class="active">⌂ 首页</button><span>›</span><button>⌕ 话题：产线预警单</button></div><main class="entity-search-stage">' +
-      '<section class="entity-query-card" id="entityQueryCard"><div class="entity-query-heading"><div><span class="entity-query-kicker">ENTITY EXPLORER</span><h1>实体检索与关系下钻</h1><p>在有权限的项目本体中，以自然语言或只读 Cypher 查询定位实体并沿关系继续探索。</p></div><span class="entity-query-scope">当前项目：新能源整车质量分析</span></div>' +
-      '<div class="entity-mode-row"><div class="entity-mode-switch"><button class="active" id="entityKeywordTab">文字检索</button><button id="entityCypherTab">Cypher 查询 <em>10月</em></button></div><span class="entity-readonly">openCypher 9 · 只读</span></div>' +
-      '<div class="entity-roadmap-note" id="entityRoadmapNote"><span>10 月上线</span><div><b>Cypher 查询本体数据</b><p>面向项目内有权本体数据提供只读 Cypher 查询、结果定位与关系下钻能力。</p></div><button id="entityRoadmapClose" aria-label="关闭规划说明">×</button></div>' +
+      '<section class="entity-query-card" id="entityQueryCard"><div class="entity-query-heading"><div><span class="entity-query-kicker">ENTITY EXPLORER</span><h1>实体检索与关系下钻</h1><p>在有权限的项目本体中，以自然语言定位实体并沿关系继续探索。</p></div><span class="entity-query-scope">当前项目：新能源整车质量分析</span></div>' +
       '<div class="entity-query-panel active" id="entityKeywordPanel"><div class="entity-keyword-line">' +
       icon("search") +
       '<input id="entityKeywordInput" value="产线预警单" placeholder="输入实体名称、属性或业务关键字"><button class="entity-query-helper" id="entityAdvancedBtn">⌄ 高级筛选</button><button class="entity-run-query" data-entity-run>搜索</button></div><div class="entity-advanced-filters" id="entityAdvancedFilters"><label>空间目录<select><option>生产制造域 / 质量中心</option><option>全部有权空间</option></select></label><label>实体类型<select><option>产线预警单</option><option>全部实体类型</option></select></label><label>状态<select><option>全部状态</option><option>待处置</option><option>处理中</option></select></label><label>时间范围<select><option>近 30 天</option><option>近 7 天</option><option>全部时间</option></select></label></div></div>' +
-      '<div class="entity-query-panel" id="entityCypherPanel"><div class="entity-cypher-editor"><div class="entity-code-lines">1<br>2<br>3<br>4</div><textarea id="entityCypherInput" spellcheck="false">MATCH (n:`产线预警单`)\nWHERE n.`预警等级` = $level\nRETURN n ORDER BY n.`预警时间` DESC\nLIMIT 20</textarea><button class="entity-query-helper" id="entityQueryHelper">示例语句</button><button class="entity-run-query" data-entity-run>▶ 运行查询</button></div><div class="entity-query-params"><span>查询参数</span><label>$level <input value="高风险"></label><small>Ctrl + Enter 运行 · 仅支持 MATCH / OPTIONAL MATCH / RETURN 等只读语句</small></div></div></section>' +
       '<section class="entity-result-shell"><header class="entity-result-top"><div><span class="entity-topic-chip">话题 · 产线预警单</span><b id="entityResultSummary">找到 1 个实体类型、170 条实体数据</b></div><span id="entityResultNote">文字检索 · 170 条 · 86 ms</span></header><nav class="entity-result-tabs"><button data-entity-result-tab="type">实体类型 <span>1</span></button><button class="active" data-entity-result-tab="data">实体数据 <span>170</span></button></nav>' +
       '<div class="entity-result-pane" data-entity-result-pane="type"><article class="entity-type-summary"><i>预</i><div><span>生产质量本体</span><h2>产线预警单</h2><p>记录生产过程中由质量规则、设备指标或人工巡检触发的异常预警，关联产线、批次、车辆、责任组织与处置任务。</p><footer><b>42 个属性</b><b>12 类关系</b><b>170 条实体</b></footer></div><button data-switch-entity-data>查看实体数据 →</button></article></div>' +
       '<div class="entity-result-pane active" data-entity-result-pane="data"><div class="entity-results-board"><aside class="entity-type-filter"><h3>实体类型</h3><button class="active" data-entity-type="all"><span>全部结果</span><b>170</b></button><button data-entity-type="alert"><span><i class="blue">预</i>产线预警单</span><b>126</b></button><button data-entity-type="batch"><span><i class="orange">批</i>生产批次</span><b>18</b></button><button data-entity-type="product"><span><i class="green">车</i>车辆实例</span><b>14</b></button><button data-entity-type="org"><span><i class="purple">组</i>责任组织</span><b>12</b></button></aside><div class="entity-results-main"><div class="entity-results-toolbar"><span>按相关度排序</span><button data-toast="已导出当前查询结果（交互示意）">导出结果</button></div><div class="entity-result-list" id="entityResultCards">' +
@@ -4391,28 +4388,7 @@
         };
         return;
       }
-      var entityMode = "keyword",
-        entityResultMode = "data";
-      function setEntityMode(mode) {
-        entityMode = mode;
-        var cypher = mode === "cypher";
-        document
-          .getElementById("entityKeywordTab")
-          .classList.toggle("active", !cypher);
-        document
-          .getElementById("entityCypherTab")
-          .classList.toggle("active", cypher);
-        document
-          .getElementById("entityKeywordPanel")
-          .classList.toggle("active", !cypher);
-        document
-          .getElementById("entityCypherPanel")
-          .classList.toggle("active", cypher);
-        (cypher
-          ? document.getElementById("entityCypherInput")
-          : document.getElementById("entityKeywordInput")
-        ).focus();
-      }
+      var entityResultMode = "data";
       function setEntityResult(mode) {
         entityResultMode = mode;
         document
@@ -4438,21 +4414,13 @@
             x.disabled = false;
           });
           setEntityResult("data");
-          note.textContent =
-            (entityMode === "cypher" ? "Cypher 查询" : "文字检索") +
-            " · 20 条 · " +
-            (entityMode === "cypher" ? "136" : "86") +
-            " ms";
+          note.textContent = "文字检索 · 20 条 · 86 ms";
           document.getElementById("entityResultSummary").textContent =
-            entityMode === "cypher"
-              ? "Cypher 返回 20 条实体数据"
-              : "找到 1 个实体类型、170 条实体数据";
+            "找到 1 个实体类型、170 条实体数据";
           document
             .querySelector(".entity-result-shell")
             .scrollIntoView({ behavior: "smooth", block: "start" });
-          toast(
-            entityMode === "cypher" ? "Cypher 查询执行完成" : "实体检索完成",
-          );
+          toast("实体检索完成");
         }, 420);
       }
       function openEntityDrawer(card) {
@@ -4474,33 +4442,16 @@
           .setAttribute("aria-hidden", "true");
         document.getElementById("entityDrawerMask").classList.remove("show");
       }
-      document.getElementById("entityKeywordTab").onclick = function () {
-        setEntityMode("keyword");
-      };
-      document.getElementById("entityCypherTab").onclick = function () {
-        setEntityMode("cypher");
-      };
       document.querySelectorAll("[data-entity-run]").forEach(function (x) {
         x.onclick = runEntityQuery;
       });
       document.getElementById("entityKeywordInput").onkeydown = function (e) {
         if (e.key === "Enter") runEntityQuery();
       };
-      document.getElementById("entityCypherInput").onkeydown = function (e) {
-        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-          e.preventDefault();
-          runEntityQuery();
-        }
-      };
       document.getElementById("entityAdvancedBtn").onclick = function () {
         document
           .getElementById("entityAdvancedFilters")
           .classList.toggle("show");
-      };
-      document.getElementById("entityQueryHelper").onclick = function () {
-        document.getElementById("entityCypherInput").value =
-          "MATCH (a:`产线预警单`)-[r]->(b)\nWHERE a.`预警等级` = $level\nRETURN a, r, b\nLIMIT 20";
-        toast("已载入关系下钻查询示例");
       };
       document
         .querySelectorAll("[data-entity-result-tab]")
@@ -4565,32 +4516,11 @@
             toast("已切换实体结果分页（交互示意）");
           };
         });
-      var entityParams = new URLSearchParams(location.search),
-        roadmapEntity = entityParams.get("roadmap") === "entity-cypher";
+      var entityParams = new URLSearchParams(location.search);
       var requestedEntityKeyword = entityParams.get("q");
       if (requestedEntityKeyword)
         document.getElementById("entityKeywordInput").value =
           requestedEntityKeyword;
-      if (entityParams.get("mode") === "cypher" || roadmapEntity)
-        setEntityMode("cypher");
-      if (roadmapEntity) {
-        document.getElementById("entityRoadmapNote").classList.add("show");
-        document
-          .getElementById("entityQueryCard")
-          .classList.add("roadmap-focus");
-        setTimeout(function () {
-          document
-            .getElementById("entityQueryCard")
-            .scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 120);
-      }
-      document.getElementById("entityRoadmapClose").onclick = function () {
-        document.getElementById("entityRoadmapNote").classList.remove("show");
-        document
-          .getElementById("entityQueryCard")
-          .classList.remove("roadmap-focus");
-        history.replaceState(null, "", location.pathname + "?mode=cypher");
-      };
       var entityResultHomeButton = document.querySelector(
         ".entity-product-nav button:first-child",
       );

@@ -759,3 +759,54 @@
 .portal-projects-v2 .data-detail-drawer {
   width: min(980px, 78vw);
 }
+.pv2-auto-dependencies {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 11px 14px;
+  border: 1px solid #cfe0ff;
+  border-radius: 9px;
+  background: #f4f8ff;
+  font-size: 10px;
+}
+.pv2-auto-dependencies[hidden] {
+  display: none;
+}
+.pv2-auto-dependencies > b {
+  margin-right: 5px;
+  color: #2d4265;
+}
+.pv2-auto-dependencies > span {
+  padding: 5px 9px;
+  border-radius: 13px;
+  background: #fff;
+  color: #176ef3;
+}
+.pv2-auto-dependencies em {
+  margin-left: 4px;
+  color: #7b8ba4;
+  font-style: normal;
+}
+.pv2-approval-chain > div.parallel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 10px;
+}
+.pv2-approval-chain > div.parallel article {
+  flex: 1;
+  min-width: 230px;
+  width: auto;
+}
+.pv2-approval-chain > div.parallel article strong {
+  font-size: 10px;
+  color: #176ef3;
+}
+.pv2-approval-chain > div.parallel p {
+  width: 100%;
+  margin: 2px 0 0;
+  color: #61738d;
+  font-size: 10px;
+}

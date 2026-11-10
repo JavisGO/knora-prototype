@@ -2182,3 +2182,43 @@
   outline: 2px solid #1764ff;
   outline-offset: 3px;
 }
+.pr2-work {
+  position: relative;
+}
+.pr2-public-recycle-entry {
+  position: absolute;
+  top: 94px;
+  right: 28px;
+  z-index: 2;
+}
+.pr2-public-recycle-entry button {
+  height: 31px;
+  padding: 0 13px;
+  border: 1px solid #dce4ef;
+  border-radius: 16px;
+  background: #fff;
+  color: #53647e;
+  font-size: 10px;
+  cursor: pointer;
+}
+.pr2-public-recycle-entry button:hover {
+  border-color: #176ef3;
+  color: #176ef3;
+}
+.pr2-public-recycle-entry span {
+  margin-left: 4px;
+  color: #176ef3;
+}
+.pr2-public-recycle-table .pr2-th,
+.pr2-public-recycle-table .pr2-tr {
+  grid-template-columns: minmax(340px, 1.5fr) minmax(170px, 1fr) 170px 110px 180px;
+}
+.pr2-public-recycle-table .pr2-row-actions button.danger {
+  color: #e24c4c;
+}
+.pr2-public-recycle-empty {
+  padding: 68px 12px;
+  text-align: center;
+  color: #92a0b2;
+  font-size: 12px;
+}

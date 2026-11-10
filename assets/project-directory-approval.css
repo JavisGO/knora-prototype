@@ -1,0 +1,158 @@
+.approval-resource-path {
+  display: block !important;
+  flex-basis: 100%;
+  overflow-wrap: anywhere;
+  white-space: normal !important;
+  color: #8091a8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.approval-v2-resource:has(.approval-resource-path) {
+  flex-wrap: wrap;
+}
+.approval-folder-contents {
+  padding: 12px 0;
+  font-size: 13px;
+  color: #526d94;
+}
+.approval-folder-contents summary {
+  cursor: pointer;
+}
+.approval-folder-children {
+  padding: 8px 0 0 20px;
+  border-left: 1px solid #e0e7f0;
+  margin-left: 6px;
+}
+.approval-folder-children p {
+  margin: 8px 0;
+}
+.approval-folder-children details {
+  margin: 8px 0;
+}
+.approval-folder-resource {
+  cursor: default !important;
+}
+.approval-v2-modal-resources > div:has(> .approval-inline-folder) {
+  display: grid !important;
+  grid-template-columns: 24px minmax(0, 1fr) !important;
+  align-items: start !important;
+  gap: 8px 12px !important;
+}
+.approval-v2-modal-resources > div:has(> .approval-inline-folder) > .approval-scope-check {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 16px;
+}
+.approval-inline-folder {
+  grid-column: 2;
+  min-width: 0;
+  width: 100%;
+}
+.approval-inline-folder > summary {
+  cursor: pointer !important;
+  position: relative;
+  padding-right: 25px !important;
+}
+.approval-inline-folder > summary::after {
+  content: "▸";
+  position: absolute;
+  right: 5px;
+  top: 16px;
+  color: #8193ad;
+}
+.approval-inline-folder[open] > summary::after {
+  content: "▾";
+}
+.approval-inline-folder .approval-folder-contents {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 0 12px 12px;
+}
+.approval-v2-modal-resources > div:has(> .approval-inline-folder) > p {
+  grid-column: 2;
+  margin: 0 !important;
+  text-align: left !important;
+}
+.approval-inline-folder summary::-webkit-details-marker {
+  display: none;
+}
+.approval-inline-folder .approval-folder-children {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.approval-inline-folder .approval-folder-children details > summary {
+  cursor: pointer;
+}
+.approval-folder-document {
+  color: #1767de;
+  text-decoration: none;
+}
+.approval-folder-document:hover {
+  text-decoration: underline;
+}
+.approval-inline-folder .approval-folder-list {
+  padding: 0;
+  margin-top: 12px;
+  border: 1px solid #e2eaf5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.approval-folder-list-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5ebf5;
+  color: #8191a8;
+}
+.approval-folder-list button {
+  border: 0;
+  background: none;
+  color: #1767de;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  padding: 0;
+}
+.approval-folder-list-rows {
+  max-height: 340px;
+  overflow: auto;
+}
+.approval-folder-list-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 58px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #edf1f7;
+  font-size: 13px;
+}
+.approval-folder-list-row input {
+  flex: 0 0 auto;
+  accent-color: #9ab2d7;
+}
+.approval-folder-list-row a,
+.approval-folder-list-row button {
+  overflow-wrap: anywhere;
+}
+.approval-folder-list-row em {
+  margin-left: auto;
+  white-space: nowrap;
+  color: #8b9caf;
+  font-size: 12px;
+  font-style: normal;
+}
+.approval-folder-list > footer {
+  display: block;
+  padding: 12px 16px;
+  background: #fbfcff;
+  color: #8193ac;
+  font-size: 12px;
+}
+.approval-folder-list-empty {
+  padding: 24px;
+  text-align: center;
+  color: #8292a9;
+}

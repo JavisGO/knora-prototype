@@ -1725,7 +1725,7 @@ function id(x){return document.getElementById(x)}function esc(v){return String(v
 function bookIcon(data){return'<span class="kb-symbol '+(data.type==="数据知识库"?'data':'')+'"><svg class="ico" style="width:27px;height:27px"><use href="#'+(data.type==="数据知识库"?'database':'book')+'"/></svg></span>'}
 function updateProjectInfo(key){var p=projects[key];id("projectInfoName").textContent=p.name;id("projectInfoDesc").textContent=p.desc;id("projectInfoOrg").textContent=p.org;id("projectInfoRole").textContent=p.role;id("projectInfoMembers").textContent=p.members;id("projectInfoDocs").textContent=p.docs;id("projectInfoNote").textContent=p.note}
 function kbCharacters(k){var value=Math.max(.1,k.chunks*.018);return value<1?Math.round(value*10)/10+"w":value.toFixed(1)+"w"}
-window.KnoraKnowledgeMcpContext={current:function(){return document.getElementById('detailPage').classList.contains('active')&&activeKb?Object.assign({},activeKb,{projectId:currentProject}):null},list:function(){return(knowledgeBases[currentProject]||[]).map(function(k){return Object.assign({},k,{projectId:currentProject})})}};
+window.KnoraKnowledgeMcpContext={openDetail:function(kbId){var k=(knowledgeBases[currentProject]||[]).find(function(item){return item.id===kbId});if(!k)return false;showDetail(k);return true},current:function(){return document.getElementById('detailPage').classList.contains('active')&&activeKb?Object.assign({},activeKb,{projectId:currentProject}):null},list:function(){return(knowledgeBases[currentProject]||[]).map(function(k){return Object.assign({},k,{projectId:currentProject})})}};
 function renderGrid(){var p=projects[currentProject],q=id("kbSearch").value.trim().toLowerCase(),items=knowledgeBases[currentProject].filter(function(k){return!q||k.name.toLowerCase().indexOf(q)>-1||k.desc.toLowerCase().indexOf(q)>-1});var create='<article class="kb-card create-card"><h3>创建知识库</h3><p>在当前项目中构建新的知识资源</p><div class="create-options"><button class="create-option" data-create="document"><svg class="ico"><use href="#book"/></svg>文档知识库</button><button class="create-option" data-create="data"><svg class="ico"><use href="#database"/></svg>数据知识库</button></div></article>';var cards=items.map(function(k){return'<article class="kb-card" data-card="'+k.id+'">'+bookIcon(k)+'<h3>'+esc(k.name)+'</h3><p>'+esc(k.desc)+'</p><div class="metrics"><span><b>'+k.docs+'</b> 篇文档</span><span class="char-metric"><b>'+kbCharacters(k)+'</b> 字符</span><span><b>'+k.agents+'</b> 关联智能体</span></div><div class="chips"><span class="chip">'+esc(k.type)+'</span><span class="chip '+(p.personal?'personal':'public')+'">'+(p.personal?'仅个人使用':'公共项目')+'</span><span class="chip"># '+esc(k.tag)+'</span></div><div class="card-foot"><small>'+esc(k.updated)+'</small><div class="card-actions"><button class="mini open-kb" data-kb="'+k.id+'">打开</button><button class="mini simple" data-action="设置">设置</button><button class="mini share-kb" data-kb="'+k.id+'">共享</button>'+'<button class="mini auth-kb" data-kb="'+k.id+'">授权</button><button class="mini simple" data-action="删除">删除</button></div></div></article>'}).join("");id("kbGrid").innerHTML=create+cards;id("pagerCount").textContent=items.length;id("currentProjectName").textContent=p.name;id("currentProjectKind").textContent=p.kind;id("projectScopeText").textContent=p.personal?"当前位于个人默认项目，知识库仅您本人可使用，也可发起共享至公共空间。":"当前位于“"+p.name+"”，您可以使用项目已获分配的文档资源创建知识库。";id("createProjectHint").textContent="创建在“"+p.name+"”中";id("createPrivacyNote").innerHTML=p.personal?"<b>个人项目知识库：</b>创建后默认仅本人可使用，可授权给其他用户的个人项目，或发起共享至公共空间。":"<b>公共项目知识库：</b>由项目成员在权限范围内使用，文档只能从已分配到本项目的资源中选择。"}
 function documentTag(name){if(/客户|服务/.test(name))return "客户运营";if(/渠道/.test(name))return "渠道管理";if(/质量|供应商/.test(name))return "质量管理";if(/AI|智能/.test(name))return "智能营销";return "综合文档"}
 function documentUploadTime(index){var times=["2026-09-13 16:42","2026-09-12 10:26","2026-09-10 14:18","2026-09-08 09:35","2026-09-06 17:08"];return times[index%times.length]}
@@ -1851,8 +1851,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script src="assets/faq-management.js?v=20261021-branch15"></script>
 <script src="assets/action-execution-history.js?v=20261022"></script>
 <script src="assets/ontology-modules.js?v=20261102-merge"></script>
-<link rel="stylesheet" href="assets/entity-builder-v2.css?v=20261021d">
-<script src="assets/entity-builder-v2.js?v=20261021-module-fix"></script>
+<link rel="stylesheet" href="assets/entity-builder-v2.css?v=20261110-batch-fusion">
+<script src="assets/entity-builder-v2.js?v=20261110-batch-fusion"></script>
 <script src="assets/ontology-roadmap-completion.js?v=20261021-agent-react"></script>
 <script src="assets/business-rule-designer.js?v=20261015branchmerge"></script>
 <link rel="stylesheet" href="assets/space-directory-picker.css?v=20261007a">
@@ -1898,8 +1898,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   sync();
 })();
 </script>
-<link rel="stylesheet" href="assets/knowledge-mcp-publisher.css?v=20261023merge">
-<script src="assets/knowledge-mcp-publisher.js?v=20261023merge"></script>
+<link rel="stylesheet" href="assets/knowledge-mcp-publisher.css?v=20261109">
+<script src="assets/knowledge-mcp-guide-content.js?v=20261109"></script><script src="assets/knowledge-mcp-publisher.js?v=20261109"></script><link rel="stylesheet" href="assets/knowledge-retrieval-test.css?v=20261109"><script src="assets/knowledge-retrieval-test.js?v=20261109"></script>
 <link rel="stylesheet" href="assets/flow-evaluation-entry.css?v=20261102">
 <script src="assets/flow-evaluation-entry.js?v=20261102"></script>
 <link rel="stylesheet" href="assets/flow-batch-preparation.css?v=20261102">
@@ -1917,3 +1917,4 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script src="assets/archive-prototype.js?v=20261104"></script>
 </body>
 </html>
+
