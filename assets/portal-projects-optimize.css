@@ -1,0 +1,310 @@
+/* 项目页界面优化（2026-11-11）：面包屑、项目数、卡片、项目切换器 */
+.pv2-tree-row > em.pv2-count {
+  min-width: 22px;
+  padding: 0;
+  background: transparent;
+  color: #8a96a8;
+  font-size: 11px;
+  text-align: right;
+}
+.pv2-app.pv2-tree-collapsed {
+  grid-template-columns: minmax(0, 1fr);
+}
+.pv2-app.pv2-tree-collapsed > .pv2-org {
+  display: none;
+}
+.pv2o-crumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 22px 0;
+  color: #8490a2;
+  font-size: 11px;
+}
+.pv2o-crumb > i {
+  font-style: normal;
+  color: #c3cad6;
+}
+.pv2o-crumb > button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #6c788b;
+  font-size: 11px;
+  cursor: pointer;
+}
+.pv2o-crumb > button:hover {
+  color: #176ef3;
+}
+.pv2o-crumb > span {
+  color: #1d2a45;
+}
+.pv2o-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 22px 6px;
+}
+.pv2o-title h1 {
+  margin: 0;
+  font-size: 18px;
+}
+.pv2o-title small {
+  color: #8490a2;
+  font-size: 11px;
+}
+.pv2o-title .primary {
+  align-self: center;
+  height: 34px;
+  margin-left: auto;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 18px;
+  background: #176ef3;
+  color: #fff;
+  font-size: 11px;
+  cursor: pointer;
+}
+.pv2-toolbar .pv2o-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 16px;
+  color: #4b5870;
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.pv2-project-card.pv2o-card {
+  height: auto;
+  min-height: 170px;
+  display: block;
+  padding: 18px 20px;
+}
+.pv2o-card .pv2-project-icon {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+}
+.pv2o-card-title {
+  min-height: 36px;
+  margin-left: 48px;
+}
+.pv2-project-card.pv2o-card h3 {
+  margin: 0 0 3px;
+  font-size: 14px;
+}
+.pv2o-card-title small {
+  color: #8a96a8;
+  font-size: 10px;
+}
+.pv2-project-card.pv2o-card p {
+  height: auto;
+  min-height: 34px;
+  margin: 14px 0 16px;
+  font-size: 11px;
+}
+.pv2-project-card.pv2o-card footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #e8ecf2;
+  color: #6f7b8f;
+  font-size: 10px;
+}
+.pv2-project-card.pv2o-card footer b {
+  color: #1d2a45;
+}
+.pv2-project-card.pv2o-card footer em {
+  margin-left: auto;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: #eef5ff;
+  color: #176ef3;
+  font-size: 9px;
+}
+.pv2-card-grid .pv2o-empty {
+  grid-column: 1 / -1;
+}
+.pv2o-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 46px 20px;
+  color: #8894a7;
+  font-size: 11px;
+}
+.pv2o-empty p {
+  margin: 0;
+}
+.pv2o-empty button {
+  height: 32px;
+  padding: 0 16px;
+  border: 1px solid #176ef3;
+  border-radius: 16px;
+  background: #fff;
+  color: #176ef3;
+  font-size: 11px;
+  cursor: pointer;
+}
+/* 详情页头部 */
+.pv2-detail-top.pv2o-detail-top {
+  height: auto;
+  min-height: 56px;
+  padding: 0 20px 0 0;
+  border-bottom: 0;
+}
+.pv2o-detail-top .pv2o-crumb {
+  padding: 0 0 0 22px;
+}
+.pv2o-detail-top .pv2o-crumb h1 {
+  margin: 0;
+  font-size: 15px;
+  color: #1d2a45;
+}
+.pv2o-switch {
+  position: relative;
+}
+.pv2o-switch > button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #dde3eb;
+  border-radius: 6px;
+  background: #fff;
+  color: #4b5870;
+  font-size: 11px;
+  cursor: pointer;
+}
+.pv2o-pop {
+  position: absolute;
+  z-index: 30;
+  top: 32px;
+  left: 0;
+  width: 320px;
+  max-height: 380px;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid #dfe5ed;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 12px 32px #1c2a4a24;
+}
+.pv2o-pop[hidden] {
+  display: none;
+}
+.pv2o-pop > input {
+  width: 100%;
+  height: 32px;
+  margin-bottom: 8px;
+  padding: 0 10px;
+  border: 1px solid #d9e0e9;
+  border-radius: 6px;
+  font-size: 11px;
+}
+.pv2o-pop h4 {
+  margin: 8px 6px 4px;
+  color: #8a96a8;
+  font-size: 10px;
+  font-weight: 500;
+}
+.pv2o-pop section > button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.pv2o-pop section > button:hover {
+  background: #f4f7fb;
+}
+.pv2o-pop section > button.current {
+  background: #e4f1ff;
+}
+.pv2o-pop section > button b {
+  font-size: 11px;
+  font-weight: 500;
+}
+.pv2o-pop section > button small {
+  color: #8a96a8;
+  font-size: 9px;
+}
+.pv2o-pop-empty {
+  padding: 16px;
+  color: #8a96a8;
+  font-size: 11px;
+  text-align: center;
+}
+.pv2-project-intro.pv2o-intro {
+  padding: 4px 20px 16px;
+}
+.pv2o-intro .pv2-project-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 15px;
+}
+.pv2o-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  color: #6f7b8f;
+  font-size: 11px;
+}
+.pv2o-meta em {
+  padding: 4px 9px;
+  border: 1px solid #b7d8ff;
+  border-radius: 11px;
+  background: #eef6ff;
+  color: #176ef3;
+  font-size: 9px;
+  font-style: normal;
+}
+.pv2o-meta b {
+  color: #1d2a45;
+  font-weight: 500;
+}
+.pv2o-intro p {
+  margin: 6px 0 0;
+  color: #8490a2;
+  font-size: 10px;
+}
+.pv2-detail-tabs {
+  position: relative;
+}
+.pv2o-tab-actions {
+  margin-left: auto;
+  align-self: center;
+}
+.pv2-detail-tabs .pv2o-tab-actions button.primary {
+  height: 32px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 16px;
+  background: #176ef3;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+}
+.pv2-document-row.owned > em.pv2o-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #4b5870;
+  font-style: normal;
+}
+.pv2o-status > i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00b42a;
+}
