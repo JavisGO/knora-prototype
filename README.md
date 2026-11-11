@@ -1,8 +1,43 @@
 # Knora 产品蓝图原型
 
-入口页面是 `index.html`，用 Chrome 直接打开即可，不需要启动任何服务。
-
 仓库地址：https://github.com/JavisGO/knora-prototype
+
+## Quick Start
+
+只想看原型：
+
+```bash
+git clone https://github.com/JavisGO/knora-prototype.git && cd knora-prototype
+open -a "Google Chrome" index.html      # 入口页面，不需要启动任何服务
+```
+
+要参与修改（先接受仓库邀请，并装好 git 和 gh：`brew install git gh`）：
+
+```bash
+gh auth login                           # 首次：登录 GitHub，协议选 HTTPS
+git clone https://github.com/JavisGO/knora-prototype.git && cd knora-prototype
+git switch -c 姓名缩写/需求              # 新建分支，不要在 main 上改
+# …改页面：自己改，或者让 claude / codex 帮你改…
+git status                              # 确认改动范围
+git add -A && git commit -m "改了哪个页面、改了什么"
+git push -u origin HEAD                 # 推送分支
+gh pr create --fill                     # 提合并请求，在网页上看过改动再点 Merge
+```
+
+之后每次开工前，先同步最新版本再建分支：
+
+```bash
+git switch main && git pull
+```
+
+想让 Agent 代劳，进入仓库目录启动它，第一句话让它先读 README：
+
+```bash
+cd knora-prototype && claude            # 或者 codex
+# > 先完整阅读 README.md，之后按里面的协作规则帮我改原型：……
+```
+
+不想敲命令的话，用 GitHub Desktop 点按钮也一样，见下面第一至五节。
 
 有两种协作方式，选一种用就行：用 GitHub Desktop 点按钮操作（第一至五节），或者让 Claude Code / Codex 这类 Agent 代劳 git 操作（第六节）。两种方式遵守同样的规则。
 
