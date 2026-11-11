@@ -797,3 +797,8 @@ body.home-replica #content {
 .hr-root .portal-agent-zone {
   display: none !important;
 }
+
+/* 只有一个智能体（平台默认）时不显示模式切换 */
+.hr-root .portal-mode-switch.hr-solo {
+  display: none;
+}

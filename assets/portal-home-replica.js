@@ -35,6 +35,8 @@ var head=document.createElement('div');head.className='hr-head';
 var dots=document.createElement('div');dots.className='hr-dots';dots.setAttribute('role','tablist');dots.setAttribute('aria-label','首页轮播');
 var modes=document.getElementById('homeModeSwitch');
 head.appendChild(dots);head.appendChild(modes);hero.insertBefore(head,hero.firstChild);
+/* 无项目智能体时不需要模式切换，只保留一个检索框 */
+modes.classList.add('hr-solo');
 var slides=[],cur=0,timer=0,link=null;
 function slideList(){var list=BASE.map(function(b){return {img:b.img,label:b.label}});cfgs().forEach(function(c){CH.slidesOf(c).forEach(function(s){list.push({img:s.image,label:s.source+' 轮播图',source:s.source,project:s.project,doc:s.doc})})});return list}
 function show(i){cur=(i+slides.length)%slides.length;banner.querySelectorAll('.hr-slide').forEach(function(s,k){s.classList.toggle('on',k===cur)});dots.querySelectorAll('button').forEach(function(b,k){b.setAttribute('aria-selected',String(k===cur))});var s=slides[cur];if(link){link.hidden=!s.doc;link.title=s.doc?'打开文档：'+s.doc.name:''}}
@@ -71,7 +73,7 @@ function agentName(){var a=agentOpts.filter(function(x){return x.id===selAgent})
 function updatePlaceholder(){var ask=isAsk();input.placeholder=ask?greet()+'，'+USER+'，向「'+agentName()+'」提问，基于知识资源回答，来源可追溯':greet()+'，'+USER+'，检索全域知识，统一检索文档、图片与数据表，让知识触手可及'}
 function renderAgents(){agentOpts=agentOptions();if(!agentOpts.some(function(o){return o.id===selAgent}))selAgent='default';
   agentBar.innerHTML='<span class="hr-ab-label">选择智能体</span><div class="hr-ab-list">'+agentOpts.map(function(o){return '<button type="button" class="hr-agent'+(o.id===selAgent?' on':'')+'" data-agent="'+esc(o.id)+'" title="'+esc((o.source?o.source+' · ':'')+o.name)+'"><i>'+esc((o.source||'平')[0])+'</i><b>'+esc(o.name)+'</b>'+(o.source?'<small>'+esc(o.source)+'</small>':'<small>平台</small>')+'</button>'}).join('')+'</div>'+(agentOpts.length===1?'<span class="hr-ab-hint">暂无项目智能体。项目添加到首页后，这里会出现项目智能体。</span>':'');
-  modeBtns[1].innerHTML=ico('agents')+'<span>多智能体</span><em class="hr-count">'+agentOpts.length+'</em>';
+  modeBtns[1].innerHTML=ico('agents')+'<span>智能体</span>'+(agentOpts.length>1?'<em class="hr-count">'+agentOpts.length+'</em>':'');
   updatePlaceholder()}
 agentBar.addEventListener('click',function(e){var b=e.target.closest('[data-agent]');if(!b)return;selAgent=b.dataset.agent;renderAgents();input.focus()});
 function syncMode(){var ask=isAsk();consoleBox.classList.toggle('hr-ask',ask);setBtn(ask);updatePlaceholder()}
@@ -155,7 +157,7 @@ function drawDemo(){demo.innerHTML='<span>演示 · 我已添加到首页的项�
 demo.addEventListener('click',function(e){var b=e.target.closest('[data-n]');if(!b)return;DEMO=Number(b.dataset.n);try{localStorage.setItem(DKEY,String(DEMO))}catch(x){}renderAll()});
 document.body.appendChild(demo);
 
-function renderAll(){drawDemo();renderBanner();renderAgents();drawKw();syncMode()}
+function renderAll(){drawDemo();renderBanner();renderAgents();drawKw();syncMode();modes.classList.toggle('hr-solo',agentOpts.length<=1)}
 renderAll();
 var sig=JSON.stringify(cfgs());
 function resync(){var now=JSON.stringify(cfgs());if(now!==sig){sig=now;renderAll()}}
