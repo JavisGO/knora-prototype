@@ -103,40 +103,6 @@ body.home-replica #content {
   width: 24px;
   background: var(--color-primary);
 }
-.hr-root .portal-mode-switch {
-  display: flex;
-  gap: 4px;
-  margin: 0;
-  padding: 4px;
-  border-radius: 9999px;
-  background: var(--color-primary-bg-hover);
-}
-.hr-root .portal-mode-switch button {
-  height: auto;
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 4px 16px;
-  border: 0;
-  border-radius: 9999px;
-  background: transparent;
-  color: var(--color-text);
-  font-size: 14px;
-  font-weight: 400;
-  cursor: pointer;
-}
-.hr-root .portal-mode-switch button.active {
-  background: #fff;
-  box-shadow: 0 1px 2px rgba(1, 11, 51, 0.06);
-  color: var(--color-primary);
-  font-weight: 600;
-}
-.hr-root .portal-mode-switch button .anticon {
-  display: inline-flex;
-  font-size: 14px;
-}
 /* 检索面板 */
 .hr-root .portal-search-console.hr-console {
   margin: 0;
@@ -623,36 +589,211 @@ body.home-replica #content {
   width: 100px;
   margin-bottom: 8px;
 }
-/* 首页切换：多个可选首页时浮在右上角，只有一个时不显示 */
-body.home-replica .ch-switch {
-  position: absolute;
-  top: 20px;
-  right: 24px;
-  z-index: 6;
-  padding: 4px 4px 4px 14px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.7);
+/* 模式页签：知识检索 / 多智能体 */
+.hr-root .portal-mode-switch {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #dfe8ff;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px rgba(1, 11, 51, 0.1);
+  box-shadow: 0 4px 14px rgba(2, 83, 255, 0.1);
 }
-body.home-replica .ch-switch.hr-single {
+.hr-root .portal-mode-switch button {
+  height: auto;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.hr-root .portal-mode-switch button:hover {
+  color: var(--color-primary);
+}
+.hr-root .portal-mode-switch button.active {
+  background: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(2, 83, 255, 0.32);
+  color: #fff;
+  font-weight: 600;
+}
+.hr-root .portal-mode-switch button .anticon {
+  display: inline-flex;
+  font-size: 16px;
+}
+.hr-root .portal-mode-switch .hr-count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--color-primary-bg-hover);
+  color: var(--color-primary);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+}
+.hr-root .portal-mode-switch button.active .hr-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+/* 轮播：项目来源标签与关联文档 */
+.hr-chip {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 9999px;
+  background: rgba(1, 11, 51, 0.38);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 12px;
+}
+.hr-chip .anticon {
+  display: inline-flex;
+  font-size: 13px;
+}
+.hr-banner-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.hr-banner-link[hidden] {
   display: none;
 }
-body.home-replica .ch-switch select {
-  min-width: 200px;
-  margin-left: 8px;
-  padding: 5px 8px;
-  border-radius: 14px;
+/* 让空白区域的点击落到轮播图上 */
+.hr-content,
+.hr-hero,
+.hr-hero > .portal-search-hero {
+  pointer-events: none;
+}
+.hr-head > *,
+.hr-console,
+.hr-content > :not(.hr-hero) {
+  pointer-events: auto;
+}
+/* 智能体条（仅多智能体模式显示） */
+.hr-agentbar {
+  display: none;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding: 0 24px 14px;
+  margin-top: -4px;
+}
+.hr-console.hr-ask .hr-agentbar {
+  display: flex;
+}
+.hr-ab-label {
+  flex: 0 0 auto;
+  color: var(--color-text-tertiary);
+  font-size: 12px;
+}
+.hr-ab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hr-agent {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px 0 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  background: #fff;
+  color: var(--color-text);
   font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.hr-agent:hover {
+  border-color: var(--color-primary-border-hover);
+}
+.hr-agent i {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-bg-layout);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+}
+.hr-agent b {
+  font-weight: 500;
+}
+.hr-agent small {
+  color: var(--color-text-tertiary);
+  font-size: 11px;
+}
+.hr-agent.on {
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg-hover);
+  color: var(--color-primary);
+}
+.hr-agent.on i {
+  background: var(--color-primary);
+  color: #fff;
+}
+.hr-ab-hint {
+  color: var(--color-text-tertiary);
+  font-size: 12px;
+}
+/* 演示控制 */
+.hr-demo {
+  position: fixed;
+  left: 236px;
+  bottom: 16px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 6px 14px;
+  border-radius: 9999px;
+  background: #1d2129;
+  color: #fff;
+  font-size: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+.hr-demo button {
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  cursor: pointer;
+}
+.hr-demo button.on {
+  background: #fff;
+  color: #1d2129;
+  font-weight: 700;
 }
 /* 原「我的智能体 / 常用操作」区块：平台首页没有，隐藏但不删除（脚本异步插入，所以用选择器隐藏） */
 .hr-root .portal-agent-zone {
   display: none !important;
-}
-.hr-root .combined-range-wrap,
-.hr-root .combined-range-trigger,
-.hr-root .portal-range-filter-line .portal-filter-trigger {
-  width: auto;
-  min-width: 0;
-  flex: 0 0 auto;
 }
