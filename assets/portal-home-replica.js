@@ -73,25 +73,17 @@ function agentName(){var a=agentOpts.filter(function(x){return x.id===selAgent})
 function updatePlaceholder(){var ask=isAsk();input.placeholder=ask?greet()+'，'+USER+'，向「'+agentName()+'」提问，基于知识资源回答，来源可追溯':greet()+'，'+USER+'，检索全域知识，统一检索文档、图片与数据表，让知识触手可及'}
 function renderAgents(){agentOpts=agentOptions();if(!agentOpts.some(function(o){return o.id===selAgent}))selAgent='default';
   agentBar.innerHTML='<span class="hr-ab-label">选择智能体</span><div class="hr-ab-list">'+agentOpts.map(function(o){return '<button type="button" class="hr-agent'+(o.id===selAgent?' on':'')+'" data-agent="'+esc(o.id)+'" title="'+esc((o.source?o.source+' · ':'')+o.name)+'"><i>'+esc((o.source||'平')[0])+'</i><b>'+esc(o.name)+'</b>'+(o.source?'<small>'+esc(o.source)+'</small>':'<small>平台</small>')+'</button>'}).join('')+'</div>'+(agentOpts.length===1?'<span class="hr-ab-hint">暂无项目智能体。项目添加到首页后，这里会出现项目智能体。</span>':'');
-  modeBtns[1].innerHTML=ico('agents')+'<span>智能体</span>'+(agentOpts.length>1?'<em class="hr-count">'+agentOpts.length+'</em>':'');
+  modeBtns[1].innerHTML=ico('bulb')+'<span>智能问答</span>'+(agentOpts.length>1?'<em class="hr-count">'+agentOpts.length+'</em>':'');
   updatePlaceholder()}
 agentBar.addEventListener('click',function(e){var b=e.target.closest('[data-agent]');if(!b)return;selAgent=b.dataset.agent;renderAgents();input.focus()});
 function syncMode(){var ask=isAsk();consoleBox.classList.toggle('hr-ask',ask);setBtn(ask);updatePlaceholder()}
 modes.addEventListener('click',function(e){if(e.target.closest('[data-search-mode]'))setTimeout(syncMode,0)});
 
-/* 筛选行：类型与目录 / 标签 */
+/* 筛选行：类型与目录、标签、重置范围先拿掉，仅保留归档开关与范围提示 */
 var typeTrigger=document.getElementById('homeTypeTrigger'),tagTrigger=document.getElementById('homeTagTrigger');
-typeTrigger.innerHTML=ico('filter')+'<span class="hr-flabel">类型与目录</span><span class="hr-fvalue"><b id="homeTypeLabel">全部类型</b><i>·</i><b id="homeScopeLabel">全部有权目录</b></span>'+ico('down');
-tagTrigger.innerHTML=ico('tags')+'<span class="hr-flabel">标签</span><span class="hr-fvalue"><b id="homeTagLabel">全部标签</b></span>'+ico('down');
-function syncActive(){
-  var t=document.getElementById('homeTypeLabel').textContent,d=document.getElementById('homeScopeLabel').textContent,g=document.getElementById('homeTagLabel').textContent;
-  typeTrigger.classList.toggle('hr-active',!(t==='全部类型'&&d==='全部有权目录'));
-  tagTrigger.classList.toggle('hr-active',g!=='全部标签');
-}
-syncActive();
+[typeTrigger,tagTrigger].forEach(function(t){if(t)t.classList.add('hr-legacy-hidden')});
+var rangeReset=document.getElementById('homeRangeReset');if(rangeReset)rangeReset.classList.add('hr-legacy-hidden');
 var hint=filters.querySelector('.portal-permission-scope');
-function syncHint(){if(!hint)return;var t=document.getElementById('homeScopeLabel').textContent,txt=t==='全部有权目录'?'在全部有权空间中检索':'在已圈定的范围内检索';if(hint.textContent!==txt)hint.textContent=txt}
-if(hint){new MutationObserver(function(){syncHint();syncActive()}).observe(document.getElementById('homeTypeTrigger').parentElement.parentElement,{subtree:true,childList:true,characterData:true});syncHint()}
 var archive=hero.querySelector('.archive-portal-switch');if(archive)filters.insertBefore(archive,hint||null);
 
 /* ---------- 热门 / 最近：项目人工热词在前，其次项目搜索热词，再补平台热门 ---------- */
