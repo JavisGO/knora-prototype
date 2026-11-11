@@ -63,19 +63,15 @@ var modeBtns=modes.querySelectorAll('[data-search-mode]');
 modeBtns[0].innerHTML=ico('search')+'<span>知识检索</span>';
 function isAsk(){return modeBtns[1].classList.contains('active')}
 
-/* 智能体条：多智能体模式下选择由谁回答 */
+/* 可用智能体只用于角标与「是否显示切换」的判断，不再让用户选择 */
 var AGENT_DEFAULT={id:'default',name:'全域知识助手',source:''};
-var selAgent='default',agentOpts=[AGENT_DEFAULT];
-var agentBar=document.createElement('div');agentBar.className='hr-agentbar';
-line.parentNode.insertBefore(agentBar,line.nextSibling);
+var agentOpts=[AGENT_DEFAULT];
 function agentOptions(){var o=[AGENT_DEFAULT];cfgs().forEach(function(c){CH.agentOptionsOf(c).forEach(function(a){o.push(a)})});return o}
-function agentName(){var a=agentOpts.filter(function(x){return x.id===selAgent})[0];return a?a.name:AGENT_DEFAULT.name}
-function updatePlaceholder(){var ask=isAsk();input.placeholder=ask?greet()+'，'+USER+'，向「'+agentName()+'」提问，基于知识资源回答，来源可追溯':greet()+'，'+USER+'，检索全域知识，统一检索文档、图片与数据表，让知识触手可及'}
-function renderAgents(){agentOpts=agentOptions();if(!agentOpts.some(function(o){return o.id===selAgent}))selAgent='default';
-  agentBar.innerHTML='<span class="hr-ab-label">选择智能体</span><div class="hr-ab-list">'+agentOpts.map(function(o){return '<button type="button" class="hr-agent'+(o.id===selAgent?' on':'')+'" data-agent="'+esc(o.id)+'" title="'+esc((o.source?o.source+' · ':'')+o.name)+'"><i>'+esc((o.source||'平')[0])+'</i><b>'+esc(o.name)+'</b>'+(o.source?'<small>'+esc(o.source)+'</small>':'<small>平台</small>')+'</button>'}).join('')+'</div>'+(agentOpts.length===1?'<span class="hr-ab-hint">暂无项目智能体。项目添加到首页后，这里会出现项目智能体。</span>':'');
+function updatePlaceholder(){var ask=isAsk();input.placeholder=ask?greet()+'，'+USER+'，向全域知识提问，基于知识资源回答，来源可追溯':greet()+'，'+USER+'，检索全域知识，统一检索文档、图片与数据表，让知识触手可及'}
+function renderAgents(){agentOpts=agentOptions();
+  /* 智能问答不再让用户选择智能体，由后台按项目路由；页签角标提示可用智能体数 */
   modeBtns[1].innerHTML=ico('bulb')+'<span>智能问答</span>'+(agentOpts.length>1?'<em class="hr-count">'+agentOpts.length+'</em>':'');
   updatePlaceholder()}
-agentBar.addEventListener('click',function(e){var b=e.target.closest('[data-agent]');if(!b)return;selAgent=b.dataset.agent;renderAgents();input.focus()});
 function syncMode(){var ask=isAsk();consoleBox.classList.toggle('hr-ask',ask);setBtn(ask);updatePlaceholder()}
 modes.addEventListener('click',function(e){if(e.target.closest('[data-search-mode]'))setTimeout(syncMode,0)});
 
