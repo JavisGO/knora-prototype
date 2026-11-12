@@ -152,4 +152,5 @@ var sig=JSON.stringify(cfgs());
 function resync(){var now=JSON.stringify(cfgs());if(now!==sig){sig=now;renderAll()}}
 window.addEventListener('storage',function(e){if(e.key==='knora:custom-homes:v1')resync()});
 window.addEventListener('focus',resync);
+window.addEventListener('knora:tenantchange',function(){var h=document.getElementById('homeDefault');if(h)h.innerHTML=cards()});
 })();
