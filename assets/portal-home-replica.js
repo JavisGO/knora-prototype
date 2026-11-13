@@ -96,7 +96,7 @@ function loadHist(){try{var v=JSON.parse(localStorage.getItem(HKEY));if(Array.is
 function saveHist(v){try{localStorage.setItem(HKEY,JSON.stringify(v))}catch(e){}}
 var kw=document.createElement('div');kw.className='hr-keywords';
 function drawKw(){var hist=loadHist();
-  kw.innerHTML='<div class="hr-kw-row" data-type="hot"><span class="hr-kw-label">'+ico('fire','hr-kw-ico')+'热门</span><div class="hr-kw-list">'+hotList().map(function(h){return '<button type="button" class="hr-kw-item" data-kw="'+esc(h.w)+'" title="'+esc(h.src?'来自「'+h.src+'」':h.w)+'">'+esc(h.w)+'</button>'}).join('')+'</div></div>'+
+  kw.innerHTML='<div class="hr-kw-row" data-type="hot"><span class="hr-kw-label">'+ico('fire','hr-kw-ico')+'热门</span><div class="hr-kw-list">'+hotList().map(function(h){return '<button type="button" class="hr-kw-item" data-kw="'+esc(h.w)+'" title="'+esc(h.src?'来自「'+h.src+'」':h.w)+'">'+esc(h.w)+'</button>'}).join('')+'</div><button type="button" id="homeSearchFeedback" class="hr-feedback">我要反馈</button></div>'+
   (hist.length?'<div class="hr-kw-row" data-type="history"><span class="hr-kw-label">'+ico('clock-circle','hr-kw-ico')+'最近</span><div class="hr-kw-list">'+hist.map(function(w){return '<span class="hr-kw-item hr-kw-hist"><button type="button" data-kw="'+esc(w)+'" title="'+esc(w)+'">'+esc(w)+'</button><button type="button" class="hr-kw-x" data-kw-del="'+esc(w)+'" aria-label="删除历史「'+esc(w)+'」">'+ico('close')+'</button></span>'}).join('')+'</div><button type="button" class="hr-kw-clear" data-kw-clear>清空</button></div>':'');
 }
 consoleBox.appendChild(kw);
@@ -152,4 +152,5 @@ var sig=JSON.stringify(cfgs());
 function resync(){var now=JSON.stringify(cfgs());if(now!==sig){sig=now;renderAll()}}
 window.addEventListener('storage',function(e){if(e.key==='knora:custom-homes:v1')resync()});
 window.addEventListener('focus',resync);
+window.addEventListener('knora:tenantchange',function(){var h=document.getElementById('homeDefault');if(h)h.innerHTML=cards()});
 })();

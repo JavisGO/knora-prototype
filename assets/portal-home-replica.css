@@ -802,3 +802,19 @@ body.home-replica #content {
 .hr-root .portal-mode-switch.hr-solo {
   display: none;
 }
+/* 我要反馈：热门行右侧入口（点击由 search-feedback.js 处理） */
+.hr-kw-row[data-type="hot"] .hr-feedback {
+  flex: 0 0 auto;
+  height: 26px;
+  margin-left: auto;
+  padding: 0 12px;
+  border: 1px solid #ffc069;
+  border-radius: 9999px;
+  background: #fff;
+  color: #d46b08;
+  font-size: 12px;
+  cursor: pointer;
+}
+.hr-kw-row[data-type="hot"] .hr-feedback:hover {
+  background: #fff7e6;
+}

@@ -6,9 +6,12 @@
 if(document.body.dataset.app!=='portal'||document.body.dataset.page!=='home')return;
 var content=document.getElementById('content');if(!content)return;
 var params=new URLSearchParams(location.search);
-var kw=params.get('keyword')||'客户风险';
+var kw=params.get('keyword')||params.get('search')||'客户风险';
+var startTab=['docs','images','tables'].indexOf(params.get('tab'))>-1?params.get('tab'):'docs';
+var includeArchived=params.get('archived')==='1';
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
-function go(q){location.href='portal-home.html?mode=results&keyword='+encodeURIComponent(q||'')}
+function archivedOn(){var el=document.getElementById('archivePortalToggle');return el?el.checked:includeArchived}
+function go(q){location.href='portal-home.html?mode=results&keyword='+encodeURIComponent(q||'')+(archivedOn()?'&archived=1':'')}
 function home(){location.href='portal-home.html'}
 
 /* ---------- 首页：回车 / 搜索 跳转到结果页 ---------- */
@@ -25,6 +28,7 @@ if(params.get('mode')!=='results'){
 }
 
 /* ---------- 结果页数据（原型示例） ---------- */
+var ARCHIVED_DOC={id:'archive-demo',ext:'docx',name:'客户风险管理办法（历史版）【已归档】',snippet:'历史风险管理制度，仅供追溯参考（示例数据）。',time:'2025-12-31 18:00',owner:'张敏',no:'0a1b2c3d4e5f60718293a4b5c6d7e8f9',path:'赛豆企业 / 赛力斯集团董事委员会 / 采购组 / 制度文档',archived:true};
 var DOCS=[
  {id:'doc-risk',ext:'docx',name:'客户风险分级与处置管理办法.docx',snippet:'统一重点客户经营风险识别、分级、处置与升级审批要求，客户风险由客户运营部按季度复核。',time:'2026-09-28 16:41',owner:'张敏',no:'ae67525a11d8d545f425feca39c5d831',path:'赛豆企业 / 赛力斯集团董事委员会 / 采购组 / 制度文档'},
  {id:'doc-report',ext:'pdf',name:'2026 年重点客户经营分析报告.pdf',snippet:'汇总重点客户经营趋势与风险信号：本月 3 家客户出现回款逾期，需按风险处置流程跟进。',time:'2026-09-28 09:42',owner:'陈宇',no:'7b3cbba7d0274a5cbf0d71a12d8f736d',path:'赛豆企业 / 赛力斯集团董事委员会 / 采购组 / 经营分析'},
@@ -69,7 +73,8 @@ var DOC_META={
  'doc-playbook':{p:['supplier-project','purchase-analysis'],t:['重点客户','客户服务']},
  'doc-channel':{p:[],t:['经营分析','高频访问']},
  'doc-guide':{p:['group-knowledge'],t:['客户风险','供应链']},
- 'doc-supplier':{p:['supplier-project'],t:['供应链','管理制度']}
+ 'doc-supplier':{p:['supplier-project'],t:['供应链','管理制度']},
+ 'archive-demo':{p:['purchase-project'],t:['管理制度']}
 };
 var TABLE_META={'customer_risk_signal':{p:['purchase-project'],t:['客户风险']},'supplier_master':{p:['supplier-project'],t:['供应链']},'sales_order_detail':{p:['purchase-analysis'],t:['经营分析']}};
 var TAGS=['客户风险','管理制度','经营分析','客户服务','供应链','重点客户','高频访问'];
@@ -79,7 +84,7 @@ function dMeta(d){var m=DOC_META[d.id]||{p:[],t:[]};return {p:m.p,t:m.t,path:d.p
 function tMeta(t){var m=TABLE_META[t.english]||{p:[],t:[]};return {p:m.p,t:m.t,path:'赛豆企业 / 赛力斯集团董事委员会 / '+t.path}}
 function iMeta(i){return dMeta(DOCS.filter(function(x){return x.id===i.id})[0]||{id:i.id})}
 /* ---------- 渲染 ---------- */
-var state={tab:'docs',dir:{},folded:{},fmt:'all',qaMsgs:[],types:{docs:true,images:true,tables:true},tags:[],projects:[],unassigned:false,projQ:'',pop:null};
+var state={tab:startTab,dir:{},folded:{},fmt:'all',qaMsgs:[],types:{docs:true,images:true,tables:true},tags:[],projects:[],unassigned:false,projQ:'',pop:null};
 function hl(text){var t=esc(text);if(kw)t=t.split(esc(kw)).join('<mark>'+esc(kw)+'</mark>');return t}
 function fileIcon(ext){return '<span class="psr-ficon psr-'+ext+'">'+(ext==='pdf'?'P':ext==='md'?'M':ext==='xlsx'?'X':'W')+'</span>'}
 
@@ -100,7 +105,7 @@ function docMatches(d){
 function passProject(m){if(!state.projects.length&&!state.unassigned)return true;return m.p.some(function(id){return state.projects.indexOf(id)>-1})||(state.unassigned&&!m.p.length)}
 function passTag(m){return !state.tags.length||m.t.some(function(t){return state.tags.indexOf(t)>-1})}
 function pass(m){return docMatches(m)&&passProject(m)&&passTag(m)}
-function docItems(){return DOCS.filter(function(d){return pass(dMeta(d))&&(state.fmt==='all'||d.ext===state.fmt)})}
+function docItems(){return (includeArchived?DOCS.concat([ARCHIVED_DOC]):DOCS).filter(function(d){return pass(dMeta(d))&&(state.fmt==='all'||d.ext===state.fmt)})}
 function imageItems(){return IMAGES.filter(function(i){return pass(iMeta(i))})}
 function tableItems(){return TABLES.filter(function(t){return pass(tMeta(t))})}
 function tagsLine(m){return (m.t.map(function(t){return '<span class="psr-tag"># '+esc(t)+'</span>'}).join(''))+(m.p.length?m.p.map(function(id){return '<span class="psr-proj">◫ '+esc(projName(id))+'</span>'}).join(''):'<span class="psr-proj none">未归属项目</span>')}
@@ -131,7 +136,7 @@ function render(){content.innerHTML=
  '<section class="psr">'+
  '<header class="psr-top"><button class="psr-back" data-back aria-label="返回首页">‹</button><div class="psr-bar">'+
   '<nav class="psr-tabs"><button class="on" data-ptab="search">🔍 知识检索</button><button data-ptab="ask">💡 智能问答</button></nav>'+
-  '<span class="psr-scope" data-scope>在全部有权空间中检索</span>'+
+  '<span class="psr-scope" data-scope>'+(includeArchived?'包含已归档知识':'在全部有权空间中检索')+'</span>'+
   '<div class="psr-input"><input id="psrKw" value="'+esc(kw)+'" placeholder="检索全域知识"><span class="psr-hint">回车后同时检索文档、生成智能回答</span><button class="psr-go" data-go>🔍 搜索</button></div>'+
  '</div></header>'+
  '<div class="psr-filters2">'+
@@ -139,7 +144,7 @@ function render(){content.innerHTML=
   '<div class="psr-fgroup"><button class="psr-fbtn" data-pop="proj">◫ 项目 <i class="psr-fcount" data-fc="proj" hidden></i><span class="psr-caret">⌄</span></button><div class="psr-pop psr-pop-proj" data-pop-body="proj" hidden><div class="psr-psearch">⌕ <input data-proj-search placeholder="搜索项目名称" aria-label="搜索项目"></div><div class="psr-plist" data-proj-list></div><footer><button class="psr-linkbtn" data-proj-clear>清空项目筛选</button><button class="psr-done" data-pop-done>完成</button></footer></div></div>'+
   '<div class="psr-fchips" data-chips></div><button class="psr-linkbtn psr-freset" data-freset hidden>重置全部</button>'+
  '</div>'+
- '<div class="psr-hot"><span class="psr-hot-label">🔥 热门</span><div class="psr-hot-list">'+HOT.map(function(w){return '<button data-hot="'+esc(w)+'" class="'+(w===kw?'on':'')+'">'+hl(w)+'</button>'}).join('')+'</div><span class="psr-hot-r"><button class="psr-ghost" data-fold-hot>收起 ⌃</button><button class="psr-feedback">🙈 我要反馈</button></span></div>'+
+ '<div class="psr-hot"><span class="psr-hot-label">🔥 热门</span><div class="psr-hot-list">'+HOT.map(function(w){return '<button data-hot="'+esc(w)+'" class="'+(w===kw?'on':'')+'">'+hl(w)+'</button>'}).join('')+'</div><span class="psr-hot-r"><button class="psr-ghost" data-fold-hot>收起 ⌃</button><button class="psr-feedback" id="homeSearchFeedback" type="button">🙈 我要反馈</button></span></div>'+
  '<div class="psr-main">'+
   '<aside class="psr-dir"><header><b>知识目录</b><small>勾选即检索范围</small><i>≡</i></header><div class="psr-dir-search">⌕ <input placeholder="在已加载的目录中检索" aria-label="搜索目录"></div><div class="psr-tree" data-tree></div></aside>'+
   '<main class="psr-list"><nav class="psr-tabs2"><button class="on" data-tab="docs">文档 <em></em></button><button data-tab="images">图片 <em></em></button><button data-tab="tables">数据表 <em></em></button></nav>'+
@@ -170,7 +175,7 @@ function render(){content.innerHTML=
    [['res',a.res],['proj',a.proj]].forEach(function(x){var el=q('[data-fc='+x[0]+']');el.hidden=!x[1];el.textContent=x[1];q('[data-pop='+x[0]+']').classList.toggle('on',!!x[1]||state.pop===x[0])});
    q('[data-chips]').innerHTML=a.chips.map(function(c){return '<span class="psr-chip">'+esc(c.text)+'<button data-chip-x="'+c.k+'" data-v="'+esc(c.v||'')+'" aria-label="移除">×</button></span>'}).join('');
    q('[data-freset]').hidden=!a.any;
-   q('[data-scope]').textContent=a.any?'已按筛选条件圈定范围':'在全部有权空间中检索';
+   q('[data-scope]').textContent=a.any?'已按筛选条件圈定范围':(includeArchived?'包含已归档知识':'在全部有权空间中检索');
  }
  function refresh(redrawPops){drawRows();drawFilters();drawTrees();if(redrawPops!==false){drawResPop();drawProjList()}}
  function setPop(name){state.pop=name;content.querySelectorAll('[data-pop-body]').forEach(function(el){el.hidden=el.dataset.popBody!==name});drawFilters()}
