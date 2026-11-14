@@ -4,6 +4,19 @@
   const today = new Date("2026-11-13T00:00:00Z");
   const date = (value) => new Date(value + "T00:00:00Z");
   const days = (value) => Math.round((date(value) - today) / 86400000);
+  // 子部门：各部门管理员只在自己有权限的子部门范围内查看（原“业务领域”筛选改为子部门）
+  const SUB = {
+    "客户服务部|售后服务": "华东服务组",
+    "客户服务部|辅助驾驶": "华南服务组",
+    "客户服务部|充电服务": "热线服务组",
+    "产品支持部|辅助驾驶": "辅助驾驶组",
+    "产品支持部|售后服务": "智能座舱组",
+    "产品支持部|充电服务": "智能座舱组",
+    "技术支持部|充电服务": "充电技术组",
+    "技术支持部|售后服务": "售后技术组",
+    "技术支持部|辅助驾驶": "售后技术组",
+  };
+  const sub = (dept, g) => SUB[dept + "|" + g] || g;
   const records = [
     [
       "售后服务政策说明",
@@ -205,7 +218,7 @@
         .map((key, j) => [key, r[j]])
         .concat([["id", i]]),
     ),
-  );
+  ).map((r) => ({ ...r, domain: sub(r.dept, r.domain) }));
   // 每日行为样例共用同一数据源，指标、图表与明细使用相同筛选结果。
   const events = [];
   records.forEach((r) => {
@@ -233,7 +246,7 @@
   ].map((r) => ({
     word: r[0],
     dept: r[1],
-    domain: r[2],
+    domain: sub(r[1], r[2]),
     count: r[3],
     day: r[4],
   }));
@@ -247,8 +260,14 @@
       day: r.updated,
     }));
   const state = {
-    tab: "运营",
+    tab: "盘点",
     tagNodes: [],
+    tagOpen: false,
+    tagType: 0,
+    tagGroup: 0,
+    tagQ: "",
+    exp: {},
+    invCard: 0,
     role: "admin",
     roleDept: "客户服务部",
     roleOwner: "李明",
@@ -261,6 +280,8 @@
     dept: "全部",
     domain: "全部",
     period: 30,
+    from: "2026-10-15",
+    to: "2026-11-13",
     query: "",
     folder: "全部",
     status: "全部",
@@ -353,7 +374,7 @@
     metric: r[2],
     owner: r[3],
     dept: r[4],
-    domain: r[5],
+    domain: sub(r[4], r[5]),
     status: r[6],
     createdDay: iso(r[7]),
     closedDay: r[8] === null ? "" : iso(r[8]),
@@ -426,7 +447,7 @@
   };
   const tagMatch = (r) =>
     state.tags.every((t) => r.tags.includes(t)) &&
-    state.tagNodes.every((n) => r.tags.some((t) => inNode(t, n)));
+    true;
   const escape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -440,8 +461,20 @@
         })[c],
     );
   const sum = (rows, key) => rows.reduce((n, r) => n + r[key], 0);
+  const endOff = () => days(state.to);
   const inPeriod = (value) =>
-    days(value) >= -state.period + 1 && days(value) <= 0;
+    days(value) >= endOff() - state.period + 1 && days(value) <= endOff();
+  function setRange(from, to) {
+    const max = iso(0);
+    if (to > max) to = max;
+    if (from > to) from = to;
+    let len = days(to) - days(from) + 1;
+    if (len > 90) {
+      from = iso(days(to) - 89);
+      len = 90;
+    }
+    Object.assign(state, { from, to, period: len });
+  }
   const base = () =>
     records.filter(
       (r) =>
@@ -455,7 +488,7 @@
     const a = activity(r);
     return {
       ...r,
-      statusLabel: expired(r) ? "已过期（已归档）" : r.status,
+      statusLabel: expired(r) || r.status === "已下架" ? "已归档" : r.status,
       views: sum(a, "views"),
       hits: sum(a, "hits"),
       refs: sum(a, "refs"),
@@ -469,39 +502,14 @@
     r.status === "已发布" &&
     r.expiry &&
     days(r.expiry) >= 0 &&
-    days(r.expiry) <= 30;
+    days(r.expiry) <= 7;
   const select = (key, label, values) =>
     `<label>${label}<select data-filter="${key}" aria-label="${label}">${values.map((v) => `<option value="${v}" ${String(state[key]) === String(v) ? "selected" : ""}>${v}</option>`).join("")}</select></label>`;
   const button = (label, key, value, active) =>
     `<button class="ko-tab ${active ? "selected" : ""}" data-${key}="${value}" aria-pressed="${!!active}">${label}</button>`;
   const statusMatch = (r) =>
     state.status === "全部" ||
-    (state.status === "30天内到期" ? soon(r) : r.statusLabel === state.status);
-  function metricData(rows) {
-    if (state.topic === "使用价值")
-      return [
-        ["浏览量", sum(rows, "views"), "次"],
-        ["检索命中次数", sum(rows, "hits"), "次"],
-        ["引用次数", sum(rows, "refs"), "次"],
-        [
-          "零访问知识",
-          rows.filter((r) => r.status === "已发布" && !r.views).length,
-          "条",
-        ],
-        ["检索点击率", searchRate("clicks"), "%"],
-      ];
-    if (state.topic === "内容质量")
-      return [
-        ["点赞量", sum(rows, "likes"), "次"],
-        ["点踩量", sum(rows, "dislikes"), "次"],
-      ];
-    const s = searchRows();
-    return [
-      ["无结果搜索次数", sum(s, "count"), "次"],
-      ["无结果搜索词数", s.length, "个"],
-      ["无结果率", searchRate("empty"), "%"],
-    ];
-  }
+    (state.status === "7天内到期" ? soon(r) : r.statusLabel === state.status);
   function searchRate(kind) {
     const positive = successfulSearches.filter(
       (r) =>
@@ -537,7 +545,6 @@
     if (state.tab === "盘点")
       return rows.filter(
         (r) =>
-          (state.folder === "全部" || r.folder === state.folder) &&
           statusMatch(r) &&
           tagMatch(r) &&
           (state.updated === "全部" || inPeriod(r.updated)) &&
@@ -546,7 +553,7 @@
     if (state.topic === "覆盖缺口")
       return searchRows().filter((r) => r.word.includes(state.query));
     if (state.topic === "使用价值" && state.metric === 3)
-      rows = rows.filter((r) => r.status === "已发布" && !r.views);
+      rows = rows.filter((r) => r.statusLabel === "已发布" && !r.views);
     if (state.topic === "内容质量")
       rows = rows.filter((r) => (state.metric === 0 ? r.likes : r.dislikes));
     return rows.filter((r) => r.name.includes(state.query));
@@ -563,7 +570,7 @@
       return `<div class="ko-panel"><h3>${metric[0]} · 部门分布</h3><p class="ko-muted">截至 2026-11-13 · 点击部门筛选明细</p>${bars(rows)}</div>`;
     const values = Array.from({ length: state.period }, (_, i) => {
       const d = new Date(today);
-      d.setDate(d.getDate() - state.period + 1 + i);
+      d.setDate(d.getDate() + endOff() - state.period + 1 + i);
       const day = d.toISOString().slice(0, 10);
       if (state.topic === "覆盖缺口")
         return sum(
@@ -588,7 +595,7 @@
           `${48 + (i * 700) / (values.length - 1)},${166 - (v / max) * 130}`,
       )
       .join(" ");
-    return `<div class="ko-panel"><h3>${metric[0]}趋势</h3><p class="ko-muted">所选期间 · 单位 ${metric[2]}</p><svg class="ko-chart" viewBox="0 0 800 205" role="img" aria-label="${metric[0]}趋势"><path d="M48 35H750 M48 100H750 M48 166H750" stroke="#edf0f5" fill="none"/><text x="8" y="40">${max}</text><text x="20" y="170">0</text><polyline points="${points}" stroke="#1764ff" stroke-width="2.5" fill="none"/><text x="48" y="196">${state.period === 7 ? "11-07" : "10-15"}</text><text x="710" y="196">11-13</text></svg></div>`;
+    return `<div class="ko-panel"><h3>${metric[0]}趋势</h3><p class="ko-muted">所选期间 · 单位 ${metric[2]}</p><svg class="ko-chart" viewBox="0 0 800 205" role="img" aria-label="${metric[0]}趋势"><path d="M48 35H750 M48 100H750 M48 166H750" stroke="#edf0f5" fill="none"/><text x="8" y="40">${max}</text><text x="20" y="170">0</text><polyline points="${points}" stroke="#1764ff" stroke-width="2.5" fill="none"/><text x="48" y="196">${state.from.slice(5)}</text><text x="710" y="196">${state.to.slice(5)}</text></svg></div>`;
   }
   function bars(rows) {
     const groups = ["客户服务部", "产品支持部", "技术支持部"].map((dept) => [
@@ -614,7 +621,7 @@
     if (state.tab === "盘点")
       return [
         ["name", "知识名称"],
-        ["folder", "文件夹"],
+        ["dept", "所属部门"],
         ["tags", "标签"],
         ["statusLabel", "状态"],
         ["owner", "负责人"],
@@ -626,7 +633,7 @@
         ["word", "搜索词"],
         ["count", "无结果次数"],
         ["dept", "所属部门"],
-        ["domain", "业务领域"],
+        ["domain", "所属子部门"],
         ["day", "最近搜索时间"],
       ];
     const common = [
@@ -649,7 +656,7 @@
   }
   const fmt = (n) => Math.round(n).toLocaleString("en-US");
   const pill = (text) => {
-    const kind = text.startsWith("已过期")
+    const kind = text.startsWith("已归档") || text.startsWith("已过期")
       ? "mute"
       : text.includes("超期")
       ? "danger"
@@ -711,7 +718,7 @@
     rows.filter((r) => r.dislikes).forEach((r) =>
       push({ ref: `d:${r.id}`, sev: 2, topic: "内容质量", kind: "点踩反馈", title: r.name, impact: `所选期间 ${r.dislikes} 次点踩`, age: 0, owner: r.owner, dept: r.dept, domain: r.domain, metric: "内容质量 · 点踩量", taskTitle: `处理「${r.name}」的点踩反馈` }),
     );
-    rows.filter((r) => r.status === "已发布" && !r.views).forEach((r) =>
+    rows.filter((r) => r.statusLabel === "已发布" && !r.views).forEach((r) =>
       push({ ref: `z:${r.id}`, sev: 1, topic: "使用价值", kind: "零访问", title: r.name, impact: "所选期间零访问", age: 0, owner: r.owner, dept: r.dept, domain: r.domain, metric: "使用价值 · 零访问知识", taskTitle: `评估零访问知识「${r.name}」` }),
     );
     return items.sort((x, y) => y.sev - x.sev || y.age - x.age);
@@ -782,7 +789,7 @@
     const emptyRate = searchRate("empty");
     const dislikeSum = sum(rows, "dislikes");
     const health = [
-      ["使用价值", "零访问知识", rows.filter((r) => r.status === "已发布" && !r.views).length, "条", `检索点击率 ${searchRate("clicks")}%`, "", "", "tab:运营|使用价值"],
+      ["使用价值", "零访问知识", rows.filter((r) => r.statusLabel === "已发布" && !r.views).length, "条", `检索点击率 ${searchRate("clicks")}%`, "", "", "tab:运营|使用价值"],
       ["内容质量", "点踩量", dislikeSum, "次", `点赞 ${sum(rows, "likes")} 次`, dislikeSum ? "warn" : "", "点踩分类待确认", "tab:运营|内容质量"],
       ["覆盖缺口", "无结果率", emptyRate, emptyRate === "—" ? "" : "%", `${empty.length} 个搜索词待补充`, empty.length ? "bad" : "", "", "tab:运营|覆盖缺口"],
     ]
@@ -833,47 +840,263 @@
         <ul class="ko-groups compact">${["客户服务部", "产品支持部", "技术支持部"].map((d) => { const g = list.filter((t) => t.dept === d); return `<li><span>${d}</span><i class="red"><em style="width:${g.length ? (g.filter((t) => t.overdue).length / g.length) * 100 : 0}%"></em></i><b>${g.filter((t) => t.overdue).length}</b><small>共 ${g.length} 个</small></li>`; }).join("")}</ul></section>
     </div>`;
   }
+  const listDefs = {
+    use: { topic: "使用价值", file: "知识使用", cols: [["name", "知识名称"], ["dept", "所属部门"], ["owner", "负责人"], ["views", "浏览量"], ["hits", "检索命中次数"], ["refs", "引用次数"]] },
+    zero: { topic: "使用价值", file: "零访问知识", cols: [["name", "知识名称"], ["dept", "所属部门"], ["owner", "负责人"], ["updated", "最近更新"]] },
+    dislike: { topic: "内容质量", file: "点踩知识", cols: [["name", "知识名称"], ["dept", "所属部门"], ["owner", "负责人"], ["likes", "点赞量"], ["dislikes", "点踩量"]] },
+    gap: { topic: "覆盖缺口", file: "无结果搜索", cols: [["word", "搜索词"], ["count", "无结果次数"], ["dept", "所属部门"], ["domain", "所属子部门"], ["day", "最近搜索时间"]] },
+  };
+  const reasons = [
+    ["内容过时", "说明与当前版本存在差异，请核对适用版本。"],
+    ["答非所问", "回答没有覆盖提问的具体场景。"],
+    ["信息缺失", "缺少适用条件和例外情况。"],
+    ["表述不清", "步骤顺序容易让人误解。"],
+  ];
+  const feedbackOf = (r) => reasons[r.id % reasons.length].join(" · ");
+  function dispatchBtn(k, r, i) {
+    const saved = state.topic;
+    state.topic = listDefs[k].topic;
+    const ref = rowPreset(r).ref;
+    state.topic = saved;
+    const raw = tasks.find((t) => t.ref === ref && t.status !== "已闭环");
+    if (!raw) return `<button class="btn primary ko-sm" data-dispatch-row="${k}:${i}">派发任务</button>`;
+    const t = taskView(raw);
+    return `<span class="ko-pill ${t.overdue ? "danger" : t.status === "处理中" ? "info" : "warn"}" title="${t.code} · 已在闭环追踪中">${t.statusText.replace(" · ", "·")}</span>`;
+  }
+  function trendOf(topic, label, total, rows) {
+    const st = state.topic;
+    const sm = state.metric;
+    state.topic = topic;
+    state.metric = 0;
+    const html = chart(rows, [label, total, "次"]);
+    state.topic = st;
+    state.metric = sm;
+    return html;
+  }
+  function jumpBtn(ref, label) {
+    const raw = tasks.find((t) => t.ref === ref && t.status !== "已闭环");
+    if (!raw) return `<button class="btn primary ko-sm" data-jump="${ref}">${label}</button>`;
+    const t = taskView(raw);
+    return `<button class="ko-pill ko-pillbtn ${t.overdue ? "danger" : t.status === "处理中" ? "info" : "warn"}" data-jump="${ref}" title="${t.code} · 点击查看任务">${t.statusText.replace(" · ", "·")} ›</button>`;
+  }
+  const kpi3 = (items) =>
+    `<div class="ko-kpi3">${items.map(([n, v, u, bad, hint]) => `<div title="${escape(hint || "")}"><span>${n}</span><strong class="${bad ? "bad" : ""}">${v}<small>${u}</small></strong>${hint ? `<em>${hint}</em>` : ""}</div>`).join("")}</div>`;
+  const colHead = (title, desc, tbd = "") => `<header class="ko-colhead"><h3>${title}</h3><span class="ko-muted">${desc}</span>${tbd}</header>`;
+  const subHead = (title, k, total, limit) =>
+    `<div class="ko-subhead"><h4>${title}</h4><span class="ko-muted">${total} 条</span>${total > limit ? `<button class="ko-link" data-exp="${k}">${state.exp[k] ? "收起" : "全部 " + total + " 条"}</button>` : ""}${k === "gap" ? `<button class="ko-link" data-export="${k}" ${total ? "" : "disabled"}>导出</button>` : ""}</div>`;
+  const top = (k, list, limit) => (state.exp[k] ? list : list.slice(0, limit));
+  function analysisHTML(rows) {
+    const L = {
+      use: [...rows].sort((a, b) => b.views - a.views),
+      zero: rows.filter((r) => r.statusLabel === "已发布" && !r.views).sort((a, b) => a.updated.localeCompare(b.updated)),
+      dislike: rows.filter((r) => r.dislikes).sort((a, b) => b.dislikes - a.dislikes),
+      gap: [...searchRows()].sort((a, b) => b.count - a.count),
+    };
+    pending = pending || {};
+    pending.lists = L;
+    pending.presets = {};
+    L.dislike.forEach((r) => (pending.presets[`d:${r.id}`] = { title: `处理「${r.name}」的点踩反馈`, metric: "内容质量 · 点踩量", owner: r.owner, dept: r.dept, domain: r.domain, ref: `d:${r.id}` }));
+    L.gap.forEach((r) => (pending.presets[`w:${r.word}`] = { title: `补充「${r.word}」相关知识`, metric: "覆盖缺口 · 无结果搜索", owner: ownerByDept[r.dept], dept: r.dept, domain: r.domain, ref: `w:${r.word}` }));
+    const clickRate = searchRate("clicks");
+    const emptyRate = searchRate("empty");
+    const emptyCount = sum(L.gap, "count");
+    const likes = sum(rows, "likes");
+    const dislikes = sum(rows, "dislikes");
+    const good = likes + dislikes ? ((likes / (likes + dislikes)) * 100).toFixed(1) : "—";
+    const answers = rows.reduce((n, r) => n + (r.likes + r.dislikes) * 7 + r.refs * 4, 0);
+    const fbRate = answers ? (((likes + dislikes) / answers) * 100).toFixed(1) : "—";
+    const row = (no, main, sub, val, acts) =>
+      `<li class="ko-crow">${no === null ? "" : `<span class="no">${no}</span>`}<div class="m"><b>${main}</b><small>${sub}</small></div>${val || ""}<div class="a">${acts}</div></li>`;
+    const vbar = (v, max, cls = "") => `<div class="v"><i><em class="${cls}" style="width:${(v / max) * 100}%"></em></i><b>${v}</b></div>`;
+    const empty = (t) => `<p class="ko-empty">${t}</p>`;
+
+    // 使用价值
+    const umax = Math.max(1, ...L.use.map((r) => r.views));
+    const useList = top("use", L.use, 5).map((r, i) => row(i + 1, escape(r.name), `${r.dept} · 命中 ${r.hits} · 引用 ${r.refs}`, vbar(r.views, umax), `<button class="ko-link" data-detail="use:${i}">查看</button>`)).join("");
+    const pos = successfulSearches.filter((r) => (state.dept === "全部" || r.dept === state.dept) && (state.domain === "全部" || r.domain === state.domain) && inPeriod(r.day));
+    const clicks = sum(pos, "clicks");
+    const noClick = sum(pos, "count") - clicks;
+    const totalS = clicks + noClick + emptyCount;
+    const pct = (n) => (totalS ? ((n / totalS) * 100).toFixed(0) : 0);
+    const dist = totalS
+      ? `<div class="ko-stackbar"><span class="c" style="flex:${clicks}"></span><span class="n" style="flex:${noClick}"></span><span class="e" style="flex:${emptyCount}"></span></div><ul class="ko-legend"><li><i class="c"></i>有结果且点击 <b>${pct(clicks)}%</b></li><li><i class="n"></i>有结果未点击 <b>${pct(noClick)}%</b></li><li><i class="e"></i>无结果 <b>${pct(emptyCount)}%</b></li></ul>`
+      : empty("所选范围内没有搜索记录");
+    const zeroList = top("zero", L.zero, 3).map((r, i) => row(null, escape(r.name), `${r.dept} · 最近更新 ${r.updated}`, "", dispatchBtn("zero", r, i))).join("");
+    const colA = `<section class="ko-col">${colHead("使用价值", "知识有没有被用起来")}${kpi3([["浏览量", sum(rows, "views"), "次"], ["检索点击率", clickRate, clickRate === "—" ? "" : "%"], ["零访问知识", L.zero.length, "条", L.zero.length > 0]])}
+      <div class="ko-subhead"><h4>浏览量趋势</h4></div>${trendOf("使用价值", "浏览量", sum(rows, "views"), rows)}
+      ${subHead("热门知识", "use", L.use.length, 5)}<ul class="ko-clist">${useList || empty("暂无数据")}</ul>
+      <div class="ko-subhead"><h4>零访问知识</h4><span class="ko-muted">${L.zero.length} 条</span><button class="ko-link" data-viewzero ${L.zero.length ? "" : "disabled"}>查看</button></div><ul class="ko-clist">${zeroList || empty("没有零访问的已发布知识")}</ul></section>`;
+
+    // 内容质量
+    const bySub = state.dept !== "全部";
+    const satKeys = bySub ? (teams[state.dept] || []).map((t) => t[0]) : depts;
+    const satRaw = satKeys
+      .map((d) => {
+        const rs = rows.filter((r) => (bySub ? r.domain : r.dept) === d);
+        const f = sum(rs, "likes") + sum(rs, "dislikes");
+        const ans = rs.reduce((n, r) => n + (r.likes + r.dislikes) * 7 + r.refs * 4, 0);
+        return [d, f, ans, ans ? (f / ans) * 100 : 0];
+      })
+      .filter((r) => r[2]);
+    const satMax = Math.max(1, ...satRaw.map((r) => r[3])) * 1.25;
+    const sat = satRaw
+      .map(([d, f, ans, rate]) => `<li title="${f} / ${ans} 次回答"><span>${d}</span><div class="ko-stackbar slim"><span class="c" style="flex:${rate}"></span><span class="r" style="flex:${satMax - rate}"></span></div><b>${rate.toFixed(1)}%</b></li>`)
+      .join("");
+    const dislikeList = top("dislike", L.dislike, 4)
+      .map((r, i) => {
+        const rs = reasons[r.id % reasons.length];
+        return `<li class="ko-crow fbrow"><div class="m"><b>${escape(r.name)}</b><small>${r.dept} · 点踩 ${r.dislikes} 次</small><p class="ko-quote"><span class="ko-pill">${rs[0]}</span>${escape(rs[1])}</p></div><div class="a">${jumpBtn(`d:${r.id}`, "去处理 ›")}<button class="ko-link" data-detail="dislike:${i}">查看</button></div></li>`;
+      })
+      .join("");
+    const colB = `<section class="ko-col">${colHead("内容质量", "智能体回答得好不好", '<em class="ko-tbd">分类待确认</em>')}${kpi3([["反馈率", fbRate, fbRate === "—" ? "" : "%", false, `${likes + dislikes} / ${answers} 次回答`], ["好评率", good, good === "—" ? "" : "%", false, `赞 ${likes} · 踩 ${dislikes}`], ["点踩", dislikes, "次", dislikes > 0, "需处理"]])}
+      <div class="ko-subhead"><h4>${bySub ? "各子部门反馈率" : "各部门反馈率"}</h4><span class="ko-muted">有反馈的回答 ÷ 回答总数</span></div><ul class="ko-sat rate">${sat || `<li class="ko-empty">暂无数据</li>`}</ul>
+      ${subHead("被点踩的知识", "dislike", L.dislike.length, 4)}<ul class="ko-clist">${dislikeList || empty("所选范围内没有点踩")}</ul></section>`;
+
+    // 覆盖缺口
+    const gmax = Math.max(1, ...L.gap.map((r) => r.count));
+    const gapList = top("gap", L.gap, 5)
+      .map((r, i) => row(i + 1, escape(r.word), `${r.dept} · ${r.domain} · 最近 ${r.day.slice(5)}`, vbar(r.count, gmax, "bad"), `${jumpBtn(`w:${r.word}`, "去处理 ›")}<button class="ko-link" data-detail="gap:${i}">查看</button>`))
+      .join("");
+    const trend = trendOf("覆盖缺口", "无结果搜索次数", emptyCount, rows);
+    const colC = `<section class="ko-col">${colHead("覆盖缺口", "员工需要的知识有没有")}${kpi3([["无结果搜索", emptyCount, "次", emptyCount > 0], ["无结果率", emptyRate, emptyRate === "—" ? "" : "%", emptyRate !== "—" && emptyRate > 0], ["涉及搜索词", L.gap.length, "个"]])}
+      <div class="ko-subhead"><h4>无结果趋势</h4></div>${trend}
+      <div class="ko-subhead"><h4>搜索去向</h4><span class="ko-muted">红色即覆盖缺口</span></div>${dist}
+      ${subHead("无结果搜索词", "gap", L.gap.length, 5)}<ul class="ko-clist">${gapList || empty("所选范围内没有无结果搜索")}</ul>
+      </section>`;
+    return `<div class="ko-cols">${colA}${colB}${colC}</div><p class="ko-muted ko-def">好评率 = 点赞 ÷（点赞 + 点踩），只统计有反馈的回答；反馈率 = 有反馈的回答数 ÷ 智能体回答总数，用来判断好评率是否可信。回答总数为示例口径，待确认。</p>`;
+  }
   function tagTreeHTML(scopeRows) {
-    const n = (pred) => scopeRows.filter((r) => r.tags.some(pred)).length;
-    const on = (node) => (state.tagNodes.includes(node) ? "on" : "");
-    const picked = state.tags.length + state.tagNodes.length;
-    return `<div class="ko-tagtree"><div class="tt-head"><b>标签</b><span class="ko-muted">类型 › 子级 › 标签。勾选标签取交集；点类型或子级名称，表示含该节点下任一标签。数字为范围内的知识数。</span>${picked ? `<button class="ko-link" data-tagclear>清除已选 ${picked} 项</button>` : ""}</div>${tagTree
-      .map(
-        (t) =>
-          `<div class="tt-type"><button class="tt-node ${on(t.type)}" data-tagnode="${t.type}">${t.type}<small>${n((x) => inNode(x, t.type))}</small></button><div class="tt-groups">${t.groups
-            .map(
-              (g) =>
-                `<div class="tt-group"><button class="tt-node sub ${on(t.type + "/" + g.name)}" data-tagnode="${t.type}/${g.name}">${g.name}<small>${n((x) => inNode(x, t.type + "/" + g.name))}</small></button><div class="tt-tags">${g.tags
-                  .map((tag) => `<label class="tt-tag ${state.tags.includes(tag) ? "on" : ""}"><input type="checkbox" data-tag="${tag}" ${state.tags.includes(tag) ? "checked" : ""}>${tag}<small>${n((x) => x === tag)}</small></label>`)
-                  .join("")}</div></div>`,
-            )
-            .join("")}</div></div>`,
-      )
-      .join("")}</div>`;
+    const n = (tag) => scopeRows.filter((r) => r.tags.includes(tag)).length;
+    const t = tagTree[state.tagType] || tagTree[0];
+    const g = t.groups[state.tagGroup] || t.groups[0];
+    const q = state.tagQ.trim();
+    const chk = (tag, path) => `<label class="tp-item ${state.tags.includes(tag) ? "on" : ""}"><input type="checkbox" data-tag="${tag}" ${state.tags.includes(tag) ? "checked" : ""}><span>${tag}${path ? `<small class="path">${path}</small>` : ""}</span><small>${n(tag)}</small></label>`;
+    let body;
+    if (q) {
+      const hits = Object.keys(tagInfo).filter((x) => x.includes(q));
+      body = `<div class="tp-flat">${hits.map((x) => chk(x, `${tagInfo[x].type} › ${tagInfo[x].group}`)).join("") || '<p class="ko-empty">没有匹配的标签</p>'}</div>`;
+    } else {
+      body = `<div class="tp-cols"><ul>${tagTree.map((x, i) => `<li><button class="${i === state.tagType ? "on" : ""}" data-tptype="${i}">${x.type}</button></li>`).join("")}</ul><ul>${t.groups.map((x, i) => `<li><button class="${i === state.tagGroup ? "on" : ""}" data-tpgroup="${i}">${x.name}</button></li>`).join("")}</ul><div class="tp-tags">${g.tags.map((x) => chk(x, "")).join("")}</div></div>`;
+    }
+    const chips = state.tags.map((x) => `<span class="tp-chip" title="${escape(pathOf(x))}">${x}<button data-tagdel="${x}" aria-label="移除${x}">×</button></span>`).join("");
+    return `<div class="ko-tagpick"><span class="tp-label">标签（多选取交集）</span><div class="tp-wrap"><button class="btn" data-tpopen>选择标签 ▾</button>${state.tagOpen ? `<div class="tp-pop"><input data-tpq placeholder="搜索标签，如：驾驶" value="${escape(state.tagQ)}" aria-label="搜索标签">${body}</div>` : ""}</div>${chips}${state.tags.length ? '<button class="ko-link" data-tagclear>清除</button>' : '<span class="ko-muted">未选择，显示全部知识</span>'}</div>`;
+  }
+  const archAt = (r) => (r.statusLabel !== "已归档" ? null : r.status === "已下架" ? r.updated : r.expiry);
+  function invSeries(idx, vis) {
+    const n = state.period;
+    const past = Array.from({ length: n }, (_, k) => endOff() - n + 1 + k);
+    const future = Array.from({ length: 30 }, (_, k) => k);
+    const cfg = [
+      { type: "bar", offs: past, title: "每日更新的知识数", f: (o) => vis.filter((r) => r.updated === iso(o)).length },
+      { type: "stack", offs: past, title: "每日现存（已发布）知识数", f: (o) => vis.filter((r) => r.status !== "未发布" && (!archAt(r) || archAt(r) > iso(o))).length },
+      { type: "bar", offs: future, title: "未来 30 天每日到期的知识数", hi: 8, f: (o) => vis.filter((r) => r.statusLabel === "已发布" && r.expiry === iso(o)).length },
+      { type: "bar", offs: past, title: "累计已归档知识数", f: (o) => vis.filter((r) => archAt(r) && archAt(r) <= iso(o)).length },
+      { type: "bar", offs: past, title: "每日未发布知识数", f: (o) => vis.filter((r) => r.status === "未发布" && r.updated <= iso(o)).length },
+    ][idx];
+    const out = { ...cfg, vals: cfg.offs.map(cfg.f) };
+    if (cfg.type === "stack") {
+      const bySub = state.dept !== "全部";
+      const names = bySub ? (teams[state.dept] || []).map((t) => t[0]) : depts;
+      out.stack = names.map((nm) => ({
+        name: nm,
+        vals: cfg.offs.map((o) => vis.filter((r) => (bySub ? r.domain : r.dept) === nm && r.status !== "未发布" && (!archAt(r) || archAt(r) > iso(o))).length),
+      }));
+    }
+    return out;
+  }
+  function invChartHTML(idx, vis) {
+    const sr = invSeries(idx, vis);
+    const w = 900;
+    const h = 200;
+    const l = 36;
+    const r = 10;
+    const t = 12;
+    const bt = 30;
+    const n = sr.vals.length;
+    const max = Math.max(2, ...sr.vals);
+    const y = (v) => t + (1 - v / max) * (h - t - bt);
+    const step = (w - l - r) / n;
+    const xb = (i) => l + i * step;
+    const xl = (i) => l + (i * (w - l - r)) / (n - 1);
+    const grid = [0, 0.5, 1].map((p) => { const v = Math.round(max * p); return `<path d="M${l} ${y(v).toFixed(1)}H${w - r}" class="grid"/><text x="${l - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${v}</text>`; }).join("");
+    const lab = [0, 0.33, 0.66, 1].map((p) => { const i = Math.round(p * (n - 1)); return `<text x="${(sr.type === "bar" ? xb(i) + step / 2 : xl(i)).toFixed(1)}" y="${h - 10}" text-anchor="${p === 0 ? "start" : p === 1 ? "end" : "middle"}">${iso(sr.offs[i]).slice(5)}</text>`; }).join("");
+    const pal = ["#1764ff", "#6fa2ff", "#a9c4f8", "#34b27b"];
+    let shape;
+    if (sr.type === "stack") {
+      const cum = sr.stack.map(() => []);
+      sr.vals.forEach((_, i) => {
+        let acc = 0;
+        sr.stack.forEach((g, gi) => {
+          acc += g.vals[i];
+          cum[gi][i] = acc;
+        });
+      });
+      const areas = sr.stack
+        .map((g, gi) => {
+          const upper = cum[gi].map((v, i) => `${xl(i).toFixed(1)},${y(v).toFixed(1)}`);
+          const lower = (gi ? cum[gi - 1] : cum[gi].map(() => 0)).map((v, i) => `${xl(i).toFixed(1)},${y(v).toFixed(1)}`).reverse();
+          return `<polygon points="${upper.join(" ")} ${lower.join(" ")}" fill="${pal[gi % pal.length]}" fill-opacity="0.88"/><polyline points="${upper.join(" ")}" fill="none" stroke="#fff" stroke-width="1.2"/>`;
+        })
+        .reverse()
+        .join("");
+      const hover = sr.vals
+        .map((_, i) => `<rect x="${(xl(i) - (w - l - r) / (n - 1) / 2).toFixed(1)}" y="${t}" width="${((w - l - r) / (n - 1)).toFixed(1)}" height="${h - t - bt}" fill="transparent"><title>${iso(sr.offs[i])}（共 ${sr.vals[i]} 条）\n${sr.stack.map((g) => `${g.name}：${g.vals[i]} 条`).join("\n")}</title></rect>`)
+        .join("");
+      shape = areas + hover;
+    } else if (sr.type === "bar") {
+      shape = sr.vals.map((v, i) => `<rect x="${(xb(i) + step * 0.2).toFixed(1)}" y="${y(v).toFixed(1)}" width="${(step * 0.6).toFixed(1)}" height="${Math.max(0, h - bt - y(v)).toFixed(1)}" rx="2" class="${sr.hi && i < sr.hi ? "hi" : ""}"><title>${iso(sr.offs[i])}：${v} 条</title></rect>`).join("");
+    } else {
+      const pts = sr.vals.map((v, i) => `${xl(i).toFixed(1)},${y(v).toFixed(1)}`);
+      const dots = sr.vals.map((v, i) => (i === 0 || v !== sr.vals[i - 1] || i === n - 1 ? `<circle cx="${xl(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.5"><title>${iso(sr.offs[i])}：${v} 条</title></circle>` : "")).join("");
+      shape = `<polygon points="${l},${h - bt} ${pts.join(" ")} ${xl(n - 1).toFixed(1)},${h - bt}" class="area"/><polyline points="${pts.join(" ")}" class="line"/>${dots}`;
+    }
+    const note = idx === 1 ? `按${state.dept === "全部" ? "部门" : "子部门"}堆叠，示例数据` : idx === 2 ? "深色为未来 7 天内到期，浅色为之后到期" : idx === 0 ? "按知识的更新时间统计" : "按发布和归档时间推演，示例数据";
+    return `<section class="ko-panel ko-invchart"><div class="ko-panel-head"><h3>${sr.title}</h3><span class="ko-muted">${note} · 点击上方卡片切换</span></div><svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${sr.title}"><g class="ax">${grid}${lab}</g><g class="sh ${sr.type}">${shape}</g></svg>${sr.stack ? `<ul class="ko-legend">${sr.stack.map((g, gi) => `<li><i style="background:${pal[gi % pal.length]}"></i>${g.name}</li>`).join("")}</ul>` : ""}</section>`;
   }
   function render() {
     const rows = base().map(stats);
     const visible = currentRows();
-    const metrics = state.tab === "运营" ? metricData(rows) : [];
+    const scrollY = window.scrollY;
     const cols = columns();
-    const tabs = [["运营", "指标分析"], ["任务", "闭环追踪"], ["盘点", "知识盘点"]];
-    const showTable = state.tab === "运营" || state.tab === "盘点" || state.tab === "任务";
+    const tabs = [["盘点", "知识盘点"], ["运营", "知识分析"], ["任务", "闭环追踪"]];
+    const showTable = state.tab === "任务";
     const heading = state.tab === "盘点" ? "知识清单" : state.tab === "任务" ? "任务明细" : state.topic === "覆盖缺口" ? "无结果搜索词" : state.topic === "内容质量" ? "知识反馈统计" : "知识明细";
     const canDispatch = state.tab === "运营";
     let body = "";
     if (state.tab === "任务") body = tasksHTML();
     else if (state.tab === "运营")
-      body = `<nav class="ko-topics">${["使用价值", "内容质量", "覆盖缺口"].map((t) => button(t, "topic", t, state.topic === t)).join("")}</nav><div class="ko-metrics">${metrics.map((m, i) => button(`<span>${m[0]}</span> <strong>${m[1]}</strong><small>${m[2]}</small>`, "metric", i, state.metric === i)).join("")}</div>${chart(state.topic === "使用价值" && state.metric === 3 ? visible : rows, metrics[state.metric])}`;
+      body = analysisHTML(rows);
     else
-      body = `<div class="ko-panel ko-inventory"><div class="ko-filters">${select("folder", "文件夹", ["全部", "政策制度", "产品手册", "常见问题", "服务规范"])}${select("status", "状态", ["全部", "已发布", "30天内到期", "已过期（已归档）", "未发布", "已下架"])}${select("updated", "更新范围", ["全部", "所选期间"])}</div>${tagTreeHTML(rows)}<div class="ko-summary five">${[["所选期间更新", visible.filter((r) => inPeriod(r.updated)).length, "条"], ["现存（已发布）", visible.filter((r) => r.statusLabel === "已发布").length, "条"], ["其中 30 天内到期", visible.filter(soon).length, "条"], ["已过期（已归档）", visible.filter(expired).length, "条"], ["已下架", visible.filter((r) => r.status === "已下架").length, "条"]].map(([n, v, u]) => `<article><span>${n}</span><strong>${v}<small>${u}</small></strong></article>`).join("")}</div><p class="ko-muted">当前结果 ${visible.length} 条，另有未发布 ${visible.filter((r) => r.status === "未发布").length} 条。已过期的知识按归档处理，不进入待处理问题。</div></div>`;
+      body = (() => {
+        const n = (f) => visible.filter(f).length;
+        const defs = [["所选期间更新", n((r) => inPeriod(r.updated))], ["现存（已发布）", n((r) => r.statusLabel === "已发布")], ["其中 7 天内到期", n(soon)], ["已归档", n((r) => r.statusLabel === "已归档")], ["未发布", n((r) => r.statusLabel === "未发布")]];
+        const cards = defs
+          .map(([name, v], i) => `<button class="ko-icard ${state.invCard === i ? "sel" : ""}" data-invcard="${i}" aria-pressed="${state.invCard === i}"><span>${name}</span><strong>${v}<small>条</small></strong></button>`)
+          .join("");
+        const chartHTML = invChartHTML(state.invCard, visible);
+        const deptRows = depts
+          .filter((d) => state.dept === "全部" || d === state.dept)
+          .map((d) => {
+            const g = visible.filter((r) => r.dept === d);
+            return `<tr><td>${d}</td><td>${g.length}</td><td>${g.filter((r) => r.statusLabel === "已发布").length}</td><td>${g.filter(soon).length}</td><td>${g.filter((r) => r.statusLabel === "已归档").length}</td><td>${g.filter((r) => r.statusLabel === "未发布").length}</td></tr>`;
+          })
+          .join("");
+        
+        return `<div class="ko-panel ko-inventory">${tagTreeHTML(rows)}<div class="ko-summary five">${cards}</div>${chartHTML}<table class="ko-mini"><thead><tr><th>部门</th><th>知识总数</th><th>已发布</th><th>7 天内到期</th><th>已归档</th><th>未发布</th></tr></thead><tbody>${deptRows}</tbody></table><p class="ko-muted">已过期和已下架的知识统一按已归档处理，不进入待处理问题。有效期字段待确认。</p></div>`;
+      })();
     const taskChips = state.tab === "任务" ? `<div class="ko-seg">${["全部", "待处理", "处理中", "已闭环", "超期"].map((t) => `<button class="ko-tab ${state.taskFilter === t ? "selected" : ""}" data-taskfilter="${t}">${t}</button>`).join("")}</div>` : "";
     const table = showTable
       ? `<section class="ko-panel"><div class="ko-table-head"><h3>${heading} <small>${visible.length} 条</small></h3>${taskChips}<form id="ko-search"><input name="query" placeholder="${state.tab === "任务" ? "搜索任务编码或标题" : state.topic === "覆盖缺口" && state.tab === "运营" ? "搜索关键词" : "搜索知识名称"}" aria-label="搜索明细" value="${escape(state.query)}"><button class="btn">搜索</button></form><button class="btn" data-export ${visible.length ? "" : "disabled"}>导出当前结果</button></div><div class="ko-table-wrap"><table><thead><tr>${cols.map((c) => `<th>${c[1]}</th>`).join("")}<th>操作</th></tr></thead><tbody>${visible.length ? visible.map((r, i) => `<tr>${cols.map((c) => `<td>${cellHTML(r, c[0])}</td>`).join("")}<td class="ko-ops"><button class="ko-link" data-detail="${i}">查看</button>${canDispatch ? `<button class="ko-link" data-dispatch-row="${i}">派发任务</button>` : ""}</td></tr>`).join("") : `<tr><td colspan="${cols.length + 1}" class="ko-empty">暂无符合条件的数据，可调整筛选条件</td></tr>`}</tbody></table></div></section>`
       : "";
     const foot = state.tab === "盘点" ? "未设置有效期的知识不计入过期统计；有效期字段待确认。" : "行为指标按所选期间统计。";
-    root.innerHTML = `<section class="ko"><header class="ko-head"><div><h1>知识运营看板</h1><p class="ko-muted">指标根据实际情况做调整 · 发现问题、派发任务、跟踪处理、验证效果</p></div><div class="ko-head-right"><div class="ko-seg ko-roles" role="group" aria-label="查看视角">${[["admin", "企业管理员"], ["dept", "部门负责人"], ["owner", "知识负责人"]].map(([k, l]) => `<button class="ko-tab ${state.role === k ? "selected" : ""}" data-role="${k}" aria-pressed="${state.role === k}">${l}</button>`).join("")}</div><span class="ko-mock">Mock 数据 · 非真实运营数据</span></div></header><div class="ko-filters"><span class="ko-scope"><b>管理范围</b>${state.role === "admin" ? "全企业" : state.role === "dept" ? state.roleDept : state.roleOwner + " 名下知识"}</span>${state.role === "admin" ? select("dept", "部门", ["全部", ...depts]) : ""}${select("domain", "业务领域", ["全部", "售后服务", "辅助驾驶", "充电服务"])}<label>统计周期<select data-filter="period" aria-label="统计周期"><option value="7" ${state.period === 7 ? "selected" : ""}>近7天</option><option value="30" ${state.period === 30 ? "selected" : ""}>近30天</option></select></label><button class="btn" data-reset>重置筛选</button><span class="ko-muted">样例统计截至 2026-11-13</span></div><nav class="ko-main-tabs">${tabs.map(([k, label]) => button(label, "tab", k, state.tab === k)).join("")}</nav>${body}${table}<p class="ko-muted ko-foot">${foot} 示例数据用于交互评审。</p>
+    root.innerHTML = `<section class="ko"><header class="ko-head"><div><h1>知识运营看板</h1><p class="ko-muted">指标根据实际情况做调整 · 发现问题、派发任务、跟踪处理、验证效果</p></div><div class="ko-head-right"><div class="ko-seg ko-roles" role="group" aria-label="查看视角">${[["admin", "企业管理员"], ["dept", "部门管理员"], ["owner", "知识负责人"]].map(([k, l]) => `<button class="ko-tab ${state.role === k ? "selected" : ""}" data-role="${k}" aria-pressed="${state.role === k}">${l}</button>`).join("")}</div><span class="ko-mock">Mock 数据 · 非真实运营数据</span></div></header><div class="ko-filters"><span class="ko-scope"><b>管理范围</b>${state.role === "admin" ? "全企业" : state.role === "dept" ? state.roleDept + "（含 " + (teams[state.roleDept] || []).length + " 个子部门）" : state.roleOwner + " 名下知识"}</span>${state.role === "dept" ? select("roleDept", "当前部门（演示切换）", depts) : ""}${state.role === "admin" ? select("dept", "部门", ["全部", ...depts]) : ""}${(() => {
+      const scopeDept = state.role === "admin" ? state.dept : state.role === "dept" ? state.roleDept : ownerDept[state.roleOwner];
+      const names = scopeDept === "全部" ? depts.flatMap((d) => teams[d].map((t) => t[0])) : teams[scopeDept].map((t) => t[0]);
+      return select("domain", "子部门", ["全部", ...names]);
+    })()}<div class="ko-range"><span>统计时间</span><input type="date" data-range="from" value="${state.from}" max="${iso(0)}" aria-label="开始日期"><i>至</i><input type="date" data-range="to" value="${state.to}" max="${iso(0)}" aria-label="结束日期"><div class="ko-seg">${[[7, "近7天"], [30, "近30天"]].map(([n, l]) => `<button class="ko-tab ${state.to === iso(0) && state.period === n ? "selected" : ""}" data-quick="${n}">${l}</button>`).join("")}</div></div><button class="btn" data-reset>重置筛选</button><span class="ko-muted">样例统计截至 2026-11-13</span></div><nav class="ko-main-tabs">${tabs.map(([k, label]) => button(label, "tab", k, state.tab === k)).join("")}</nav>${body}${state.tab === "运营" ? "" : table}<p class="ko-muted ko-foot">${foot} 示例数据用于交互评审。</p>
     <dialog id="ko-detail" aria-label="明细"><div id="ko-detail-content"></div><div class="ko-dialog-actions" id="ko-detail-actions"></div></dialog>
     <dialog id="ko-dispatch" aria-label="派发任务"><form id="ko-dispatch-form"><h2>派发任务</h2><p class="ko-muted">将在反馈流中创建一张单子，来源标记为运营看板；处理在原流程内完成，进展在「闭环追踪」查看。</p><label>任务标题<input name="title" required maxlength="60"></label><label>关联指标<input name="metric" readonly></label><label>责任人<select name="owner">${owners.map((o) => `<option>${o}</option>`).join("")}</select></label><label>说明<textarea name="note" rows="3" placeholder="补充背景或期望的处理结果（可选）"></textarea></label><div class="ko-dialog-actions"><button type="button" class="btn" data-close-dispatch>取消</button><button class="btn primary">派发</button></div></form></dialog><div class="ko-status" role="status" id="ko-status"></div></section>`;
+    window.scrollTo(0, scrollY);
   }
   function openDispatch(p) {
     const form = document.getElementById("ko-dispatch-form");
@@ -896,9 +1119,21 @@
     return { title, metric, owner: r.owner, dept: r.dept, domain: r.domain, ref };
   }
   root.addEventListener("change", (e) => {
+    if (e.target.dataset.range) {
+      const f = root.querySelector('[data-range="from"]').value || state.from;
+      const t = root.querySelector('[data-range="to"]').value || state.to;
+      setRange(f, t);
+      render();
+      return;
+    }
     if (e.target.dataset.filter) {
       const k = e.target.dataset.filter;
       state[k] = k === "period" || k === "sla" ? Number(e.target.value) : e.target.value;
+      if (k === "dept") state.domain = "全部";
+      if (k === "roleDept") {
+        state.dept = state.roleDept;
+        state.domain = "全部";
+      }
       state.query = "";
       render();
     }
@@ -906,6 +1141,22 @@
       state.tags = e.target.checked
         ? [...state.tags, e.target.dataset.tag]
         : state.tags.filter((t) => t !== e.target.dataset.tag);
+      render();
+    }
+  });
+  root.addEventListener("input", (e) => {
+    if (e.target.dataset.tpq !== undefined) {
+      state.tagQ = e.target.value;
+      render();
+      const el = root.querySelector("[data-tpq]");
+      el.focus();
+      el.setSelectionRange(el.value.length, el.value.length);
+    }
+  });
+  document.addEventListener("mousedown", (e) => {
+    if (state.tagOpen && !e.target.closest(".tp-wrap")) {
+      state.tagOpen = false;
+      state.tagQ = "";
       render();
     }
   });
@@ -922,7 +1173,7 @@
         metric: p.metric,
         owner,
         dept: p.dept || ownerDept[owner],
-        domain: p.domain && p.domain !== "全部" ? p.domain : "售后服务",
+        domain: p.domain && p.domain !== "全部" ? p.domain : (teams[p.dept || ownerDept[owner]] || [["华东服务组"]])[0][0],
         status: "待处理",
         createdDay: iso(0),
         closedDay: "",
@@ -964,9 +1215,58 @@
       render();
       return;
     }
-    if (b.dataset.tagnode !== undefined) {
-      const node = b.dataset.tagnode;
-      state.tagNodes = state.tagNodes.includes(node) ? state.tagNodes.filter((x) => x !== node) : [...state.tagNodes, node];
+    if (b.dataset.quick !== undefined) {
+      const q = Number(b.dataset.quick);
+      setRange(iso(-q + 1), iso(0));
+      render();
+      return;
+    }
+    if (b.dataset.invcard !== undefined) {
+      state.invCard = Number(b.dataset.invcard);
+      render();
+      return;
+    }
+    if (b.dataset.jump !== undefined) {
+      const ref = b.dataset.jump;
+      const preset = pending.presets[ref];
+      const open = tasks.find((t) => t.ref === ref && t.status !== "已闭环");
+      Object.assign(state, { tab: "任务", taskFilter: "全部", query: open ? open.code : "" });
+      render();
+      window.scrollTo(0, 0);
+      if (open) document.getElementById("ko-status").textContent = `已定位到任务 ${open.code}`;
+      else if (preset) openDispatch(preset);
+      return;
+    }
+    if (b.hasAttribute("data-viewzero")) {
+      const z = pending.lists.zero;
+      document.getElementById("ko-detail-content").innerHTML = `<h2>零访问知识</h2><p class="ko-muted">已发布，所选期间没有被浏览 · ${z.length} 条 · Mock 数据</p><ul class="ko-plain">${z.map((r) => `<li><div><b>${escape(r.name)}</b><small>${r.dept} · ${r.owner} · 最近更新 ${r.updated}</small></div></li>`).join("")}</ul>`;
+      document.getElementById("ko-detail-actions").innerHTML = `<button class="btn" data-close>关闭</button>`;
+      document.getElementById("ko-detail").showModal();
+      return;
+    }
+    if (b.dataset.exp !== undefined) {
+      state.exp = { ...state.exp, [b.dataset.exp]: !state.exp[b.dataset.exp] };
+      render();
+      return;
+    }
+    if (b.hasAttribute("data-tpopen")) {
+      state.tagOpen = !state.tagOpen;
+      render();
+      return;
+    }
+    if (b.dataset.tptype !== undefined) {
+      state.tagType = Number(b.dataset.tptype);
+      state.tagGroup = 0;
+      render();
+      return;
+    }
+    if (b.dataset.tpgroup !== undefined) {
+      state.tagGroup = Number(b.dataset.tpgroup);
+      render();
+      return;
+    }
+    if (b.dataset.tagdel !== undefined) {
+      state.tags = state.tags.filter((x) => x !== b.dataset.tagdel);
       render();
       return;
     }
@@ -992,13 +1292,18 @@
     }
     if (b.dataset.role !== undefined) {
       state.role = b.dataset.role;
+      state.domain = "全部";
       state.dept = state.role === "admin" ? "全部" : state.role === "dept" ? state.roleDept : ownerDept[state.roleOwner];
       state.query = "";
       render();
       return;
     }
     if (b.dataset.dispatchRow !== undefined) {
-      openDispatch(rowPreset(currentRows()[Number(b.dataset.dispatchRow)]));
+      if (b.dataset.dispatchRow.includes(":")) {
+        const [k, i] = b.dataset.dispatchRow.split(":");
+        state.topic = listDefs[k].topic;
+        openDispatch(rowPreset(pending.lists[k][Number(i)]));
+      } else openDispatch(rowPreset(currentRows()[Number(b.dataset.dispatchRow)]));
       return;
     }
     if (b.hasAttribute("data-close-dispatch")) {
@@ -1035,6 +1340,8 @@
         dept: state.role === "admin" ? "全部" : state.dept,
         domain: "全部",
         period: 30,
+        from: "2026-10-15",
+        to: "2026-11-13",
         query: "",
         folder: "全部",
         status: "全部",
@@ -1047,6 +1354,16 @@
     }
     if (b.hasAttribute("data-close"))
       document.getElementById("ko-detail").close();
+    if (b.dataset.detail !== undefined && b.dataset.detail.includes(":")) {
+      const [k, i] = b.dataset.detail.split(":");
+      const r = pending.lists[k][Number(i)];
+      const def = listDefs[k];
+      const fb = k === "dislike" ? `<h3>点踩反馈样例</h3><p>${escape(feedbackOf(r))}</p><p class="ko-muted">点踩分类为新增项，待确认；点赞不附带反馈内容。</p>` : "";
+      document.getElementById("ko-detail-content").innerHTML = `<h2>${escape(r.name || r.word)}</h2><p class="ko-muted">Mock 数据</p><dl>${def.cols.map(([key, title]) => `<dt>${title}</dt><dd>${escape(cell(r, key))}</dd>`).join("")}</dl>${fb}`;
+      document.getElementById("ko-detail-actions").innerHTML = `<button class="btn" data-close>关闭</button>`;
+      document.getElementById("ko-detail").showModal();
+      return;
+    }
     if (b.dataset.detail !== undefined) {
       const r = currentRows()[Number(b.dataset.detail)];
       const isTask = state.tab === "任务";
@@ -1062,7 +1379,9 @@
       document.getElementById("ko-detail").showModal();
     }
     if (b.hasAttribute("data-export")) {
-      const cols = columns();
+      const lk = b.dataset.export;
+      const cols = lk ? listDefs[lk].cols : columns();
+      const data = lk ? pending.lists[lk] : currentRows();
       const quote = (v) =>
         '"' +
         String(v)
@@ -1073,7 +1392,7 @@
         "\uFEFF" +
         [
           cols.map((c) => quote(c[1])).join(","),
-          ...currentRows().map((r) =>
+          ...data.map((r) =>
             cols.map((c) => quote(cell(r, c[0]))).join(","),
           ),
         ].join("\r\n");
@@ -1082,7 +1401,7 @@
       );
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${state.tab === "任务" ? "任务闭环" : "知识" + (state.tab === "盘点" ? "盘点" : state.topic)}-Mock.csv`;
+      a.download = lk ? `${listDefs[lk].file}-Mock.csv` : `${state.tab === "任务" ? "任务闭环" : "知识" + (state.tab === "盘点" ? "盘点" : state.topic)}-Mock.csv`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       document.getElementById("ko-status").textContent = "已导出当前筛选结果";
