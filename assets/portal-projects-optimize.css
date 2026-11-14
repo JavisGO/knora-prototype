@@ -308,3 +308,285 @@
   border-radius: 50%;
   background: #00b42a;
 }
+/* ---- 项目资源列表：平铺 + 来源空间树形筛选（2026-11-14） ---- */
+.pv2-resource-browser.pv2-resource-flat {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 420px;
+}
+.pv2-resource-flat .pv2-resource-list > header {
+  height: auto;
+  min-height: 62px;
+  padding: 12px 16px;
+  row-gap: 8px;
+}
+.pv2-resource-flat .pv2-resource-list > header .pv2-resource-kind-tabs {
+  flex: 0 1 auto;
+}
+.pv2-resource-kind-tabs button em {
+  margin-left: 6px;
+  color: #8a96a8;
+  font-size: 8px;
+  font-style: normal;
+}
+.pv2-resource-kind-tabs button.active em {
+  color: #176ef3;
+}
+.pv2f-wrap {
+  position: relative;
+  margin-left: 10px;
+}
+.pv2f-btn {
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border: 1px solid #dce4ee;
+  border-radius: 15px;
+  background: #fff;
+  color: #67758a;
+  font-size: 9px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.pv2f-btn:hover {
+  border-color: #a9c9f8;
+  color: #176ef3;
+}
+.pv2f-btn.on {
+  border-color: #176ef3;
+  background: #eaf3ff;
+  color: #176ef3;
+}
+.pv2f-btn i {
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: #176ef3;
+  color: #fff;
+  font-size: 8px;
+  font-style: normal;
+  line-height: 15px;
+  text-align: center;
+}
+.pv2f-btn span {
+  font-size: 9px;
+  opacity: 0.7;
+}
+.pv2f-pop {
+  position: absolute;
+  z-index: 40;
+  top: 34px;
+  left: 0;
+  width: 330px;
+  padding: 12px;
+  border: 1px solid #dfe5ed;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 12px 32px #1c2a4a24;
+}
+.pv2f-pop[hidden] {
+  display: none;
+}
+.pv2f-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #dce2ea;
+  border-radius: 8px;
+  color: #8a96a8;
+  font-size: 10px;
+}
+.pv2f-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  font-size: 10px;
+}
+.pv2f-note {
+  margin: 8px 2px 6px;
+  color: #8a96a8;
+  font-size: 8px;
+}
+.pv2f-tree {
+  max-height: 240px;
+  overflow: auto;
+}
+.pv2f-node {
+  display: grid;
+  grid-template-columns: 16px 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 8px 0 calc(6px + var(--d, 0) * 16px);
+  border-radius: 8px;
+  font-size: 10px;
+  cursor: pointer;
+}
+.pv2f-node:hover {
+  background: #f4f7fb;
+}
+.pv2f-node input {
+  margin: 0;
+  accent-color: #176ef3;
+}
+.pv2f-node i {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+  background: #eaf3ff;
+  color: #176ef3;
+  font-size: 8px;
+  font-style: normal;
+}
+.pv2f-node b {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pv2f-node em {
+  color: #8a96a8;
+  font-size: 9px;
+  font-style: normal;
+}
+.pv2f-pop footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #eef1f6;
+}
+.pv2f-pop footer button {
+  height: 26px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 13px;
+  background: transparent;
+  color: #176ef3;
+  font-size: 10px;
+  cursor: pointer;
+}
+.pv2f-pop footer button.primary {
+  background: #176ef3;
+  color: #fff;
+}
+.pv2f-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: 4px;
+}
+.pv2f-chips span {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 24px;
+  padding: 0 4px 0 10px;
+  border-radius: 12px;
+  background: #eaf3ff;
+  color: #176ef3;
+  font-size: 9px;
+}
+.pv2f-chips button {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #176ef3;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+.pv2f-chips button:hover {
+  background: #176ef31f;
+}
+/* 列：名称 | 来源空间 | 状态 | 类型 | 操作（操作列由 approval-chain-links.js 追加） */
+.pv2-resource-flat .pv2-resource-list .pv2-document-head.owned,
+.pv2-resource-flat .pv2-resource-list .pv2-document-row.owned {
+  grid-template-columns: minmax(260px, 1fr) 180px 105px 90px 100px;
+}
+@media (max-width: 900px) {
+  .pv2-resource-flat .pv2-resource-list .pv2-document-head.owned,
+  .pv2-resource-flat .pv2-resource-list .pv2-document-row.owned {
+    grid-template-columns: minmax(180px, 1fr) 110px 80px 70px 88px;
+  }
+}
+.pv2f-source {
+  padding: 0 10px;
+  overflow: hidden;
+  color: #4b5870;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pv2f-spacehead {
+  padding: 9px 16px;
+  border-top: 1px solid #e6eaf0;
+  background: #f4f7fb;
+  color: #6b788c;
+  font-size: 9px;
+}
+.pv2f-spacehead b {
+  color: #1d2a45;
+  font-weight: 600;
+}
+/* 来源空间：是否级联下级的开关 */
+.pv2f-switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 2px 2px;
+  color: #4b5870;
+  font-size: 10px;
+  cursor: pointer;
+}
+.pv2f-switch input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+.pv2f-switch i {
+  position: relative;
+  width: 28px;
+  height: 16px;
+  flex: none;
+  border-radius: 8px;
+  background: #c6cdd9;
+  transition: background 0.15s;
+}
+.pv2f-switch i::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s;
+}
+.pv2f-switch input:checked + i {
+  background: #176ef3;
+}
+.pv2f-switch input:checked + i::before {
+  transform: translateX(12px);
+}
+.pv2f-switch input:focus-visible + i {
+  outline: 2px solid #176ef3;
+  outline-offset: 2px;
+}
+.pv2f-chips small {
+  margin-left: 2px;
+  color: #6f8fc4;
+  font-size: 8px;
+}
