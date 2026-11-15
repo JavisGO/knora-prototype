@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>平台开发排期 · Knora</title>
+  <link rel="stylesheet" href="assets/prototype-index-pages.css">
+  <link rel="stylesheet" href="assets/platform-development-schedule.css">
+</head>
+<body class="content-page">
+  <header class="topbar">
+    <a class="back-link" href="index.html"><span aria-hidden="true">←</span> 返回入口</a>
+    <div class="topbar-title"><div class="mini-brand" aria-hidden="true">K</div><span>Knora 产品蓝图</span></div>
+  </header>
+  <main class="content-shell schedule-shell">
+    <div class="page-heading page-heading-with-actions">
+      <div><p class="eyebrow">DEVELOPMENT SCHEDULE</p><h1>平台开发排期</h1><p class="editor-hint">点击“编辑排期”可直接编辑整个列表。修改自动保存在此浏览器，点击“保存到 HTML”可更新页面文件。</p></div>
+      <div class="editor-toolbar" aria-label="排期维护工具">
+        <button class="toolbar-button" id="edit-list" type="button">编辑排期</button>
+        <button class="toolbar-button schedule-edit-only" id="finish-edit" type="button">保存修改</button>
+        <button class="toolbar-button schedule-edit-only" id="cancel-edit" type="button">取消</button>
+        <button class="toolbar-button schedule-edit-only" id="sort-date" type="button">按日期排序 ↑</button>
+        <button class="toolbar-button schedule-edit-only" id="add-task" type="button">＋ 新增任务</button>
+        <button class="toolbar-button toolbar-button-primary schedule-edit-only" id="save-html" type="button">保存到 HTML</button>
+      </div>
+    </div>
+    <aside class="schedule-notes" aria-label="排期说明"><ol><li>功能任务会动态更新。</li><li>12月的排期先到月（12月31日），之后随需求沟通逐步排到具体日期。</li></ol></aside>
+    <section class="list-filters schedule-filters" aria-label="排期筛选">
+      <div class="filter-item"><label for="filter-keyword">模块 / 功能关键词</label><input id="filter-keyword" type="search" placeholder="搜索模块、功能名称或描述"></div>
+      <div class="filter-item"><label for="filter-status">状态</label><select id="filter-status"><option value="">全部状态</option><option>待启动</option><option>进行中</option><option>待测试</option><option>待部署</option><option>已完成</option></select></div>
+      <div class="filter-item"><label for="filter-start">计划开始日期</label><input id="filter-start" type="date"></div>
+      <div class="filter-item"><label for="filter-end">计划结束日期</label><input id="filter-end" type="date"></div>
+      <div class="filter-item"><label for="filter-date">排期情况</label><select id="filter-date"><option value="">全部日期</option><option value="dated">已排期</option><option value="empty">未排期</option></select></div>
+      <button class="filter-reset" id="reset-filters" type="button">重置</button><span class="filter-result" id="filter-result" aria-live="polite">显示 31 / 67 项</span>
+    </section>
+    <p class="save-status" id="save-status" role="status" aria-live="polite"></p>
+    <section class="schedule-table-frame" aria-label="开发任务列表">
+      <table class="schedule-table">
+        <colgroup><col style="width:16%"><col style="width:17%"><col style="width:31%"><col style="width:11%"><col style="width:9%"><col class="schedule-edit-only" style="width:16%"></colgroup>
+        <thead><tr><th scope="col">所属模块</th><th scope="col">功能名称</th><th scope="col">功能描述</th><th scope="col">计划排期日期</th><th scope="col">状态</th><th scope="col" class="schedule-edit-only">操作</th></tr></thead>
+        <tbody id="schedule-body"><tr data-id="nov-task-03">
+      <td>知识门户 · 首页 · 检索</td>
+      <td>实体类型查询</td>
+      <td>实体类型查询</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="进行中">进行中</span></td>
+      
+    </tr><tr data-id="nov-task-04">
+      <td>知识门户 · 首页 · 检索</td>
+      <td>实体数据查询</td>
+      <td>实体数据查询</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="进行中">进行中</span></td>
+      
+    </tr><tr data-id="nov-task-07">
+      <td>知识门户 · 资源管理 · 数据源连接</td>
+      <td>字段级表分发</td>
+      <td>在连接数据源并进行空间分发时，支持字段级的选择和分发。
+同时支持将同一个表分发到不同部门（待讨论）</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-08">
+      <td>知识门户 · 资源管理 · 本体资源</td>
+      <td>本体资源展示</td>
+      <td>本体资源展示</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-09">
+      <td>知识门户 · 资源管理 · 本体资源</td>
+      <td>本体资源向上移交</td>
+      <td>本体资源向上移交</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-14">
+      <td>知识门户 · 资源管理 · 文档资源</td>
+      <td>视频挂载</td>
+      <td>视频挂载</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="进行中">进行中</span></td>
+      
+    </tr><tr data-id="nov-task-16">
+      <td>知识门户 · 资源管理 · 工具资源</td>
+      <td>自定义MCP服务作为资源</td>
+      <td>支持填写外部接口信息，转换为MCP服务并挂载在资源列表中，并支持授权可见。</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-18">
+      <td>知识门户 · 资源管理 · 回收站</td>
+      <td>公共空间回收站</td>
+      <td>公共空间回收站</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-19">
+      <td>知识门户 · 项目管理 · 本体资源申请</td>
+      <td>实体关系事件申请</td>
+      <td>实体关系事件申请</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-23">
+      <td>知识门户 · 项目管理 · 申请资源</td>
+      <td>基于空间/目录申请资源</td>
+      <td>支持批量申请资源，之后空间目录下新增资源自动同步。
+同时支持在项目资源列表中对所有资源/目录进行全局检索和定位。</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-24">
+      <td>知识门户 · 标签 · 标签权限</td>
+      <td>标签权限</td>
+      <td>标签权限</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-26">
+      <td>知识门户 · 标签 · 自动打标</td>
+      <td>文档自动打标</td>
+      <td>包括AI自动打标，部门继承标签等功能</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-27">
+      <td>知识门户 · 实体看板 · cypher查询本体数据</td>
+      <td>cypher查询本体数据</td>
+      <td>支持cypher查询本体数据，并呈现结果</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="进行中">进行中</span></td>
+      
+    </tr><tr data-id="nov-task-28">
+      <td>本体平台 · 本体管理 · 本体自动构建</td>
+      <td>本体自动构建优化</td>
+      <td>本体自动构建优化</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-29">
+      <td>本体平台 · 本体管理 · 语义图谱 （实体关系事件）</td>
+      <td>企业级与业务域级本体发布及共建</td>
+      <td>企业级与业务域级本体发布及共建</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-30">
+      <td>本体平台 · 本体管理 · 语义图谱 （实体关系事件）</td>
+      <td>分类展示</td>
+      <td>按项目创建和授权到项目的对象分类展示</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-31">
+      <td>本体平台 · 本体管理 · 语义图谱 （实体关系事件）</td>
+      <td>本体映射与发布</td>
+      <td>在实体关系事件完成映射配置后直接发布本体，自动生成并运行流程，完成模型发布</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-32">
+      <td>本体平台 · 本体管理 · Action</td>
+      <td>发布到空间</td>
+      <td>发布到空间</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-33">
+      <td>本体平台 · 本体管理 · Action</td>
+      <td>执行条件配置</td>
+      <td>配置action的执行条件，包括被编辑、删除的数据需满足什么条件才能执行。</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-34">
+      <td>本体平台 · 本体管理 · 规则</td>
+      <td>业务规则优化</td>
+      <td>业务规则优化</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-35">
+      <td>本体平台 · 本体管理 · 知识库</td>
+      <td>知识库召回测试</td>
+      <td>知识库召回测试</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-39">
+      <td>本体平台 · 本体管理 · 流程</td>
+      <td>发布到空间</td>
+      <td>发布到空间</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-42">
+      <td>本体平台 · 本体管理 · 工具</td>
+      <td>自定义工具</td>
+      <td>支持自定义工具在线测试和地址合法性校验</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-44">
+      <td>本体平台 · 本体管理 · 智能体</td>
+      <td>调用流程优化</td>
+      <td>优化智能体调用流程的准确性和稳定性</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-50">
+      <td>本体平台 · 本体管理 · 对外服务</td>
+      <td>智能体MCP</td>
+      <td>智能体MCP</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-52">
+      <td>本体平台 · 经纶 · 非结构化抽取</td>
+      <td>抽取结果校验</td>
+      <td>抽取结果校验</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-53">
+      <td>本体平台 · 经纶 · 非结构化抽取</td>
+      <td>抽取效果优化</td>
+      <td>抽取效果优化</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-47">
+      <td>本体平台 · 本体管理 · 智能体</td>
+      <td>流程卡片页展示逻辑调整</td>
+      <td>流程卡片页展示逻辑调整</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-61">
+      <td>400 需求 · 知识门户 · 元数据管理</td>
+      <td>元数据管理</td>
+      <td>支持用户进行文档元数据配置</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr><tr data-id="nov-task-66">
+      <td>400 需求 · 本体管理-APP · 自定义首页配置</td>
+      <td>授权管理</td>
+      <td>把自定义首页应用在已授权的用户上</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="已完成">已完成</span></td>
+      
+    </tr><tr data-id="nov-task-67">
+      <td>400 需求 · 运营看板 · 知识运营看板</td>
+      <td>知识运营看板</td>
+      <td>围绕反馈流、审批流，查看任务及审批数量、闭环率、超期情况；需先明确流程与任务字段，再落实统计口径。（400，依赖于审批流和反馈）</td>
+      <td>2026-11-30</td>
+      <td><span class="schedule-status" data-status="待启动">待启动</span></td>
+      
+    </tr></tbody>
+      </table>
+    </section>
+    <p class="schedule-footnote">初始按日期从早到晚排列，未排期任务置后；插入或移动后保留手动顺序。筛选时，上下移动针对当前可见任务。<br>修改自动保存在此浏览器；需更新页面文件时点击“保存到 HTML”，选择当前 platform-development-schedule.html 文件覆盖保存。</p>
+  </main>
+  <dialog class="schedule-dialog" id="task-dialog" aria-labelledby="dialog-title">
+    <h2 id="dialog-title">编辑功能任务</h2>
+    <form id="task-form">
+      <label>所属模块<input id="field-module" type="text" placeholder="例如：本体平台 · 本体管理 · 流程"></label>
+      <label>功能名称<input id="field-name" type="text" required="" maxlength="300"></label>
+      <label>功能描述<textarea id="field-description" rows="4" placeholder="一句话描述功能；留空时使用功能名称"></textarea></label>
+      <div class="form-pair"><label>计划排期日期<input id="field-date" type="date"></label><label>状态<select id="field-status"><option selected="">待启动</option><option>进行中</option><option>待测试</option><option>待部署</option><option>已完成</option></select></label></div>
+      <div class="dialog-actions"><button class="toolbar-button" id="cancel-task" type="button">取消</button><button class="toolbar-button toolbar-button-primary" type="submit">保存任务</button></div>
+    </form>
+  </dialog>
+  <script id="platform-schedule-data" data-legacy-fingerprint="-1270311402" type="application/json">[
+  {
+    "id": "nov-task-54",
+    "module": "400 需求 · 知识门户 · 首页调整",
+    "name": "首页排版调整",
+    "description": "第一排为“最新知识、最热知识、我的收藏”三列，直接展示，不用 Tab 切换；提供“展示更多”入口。第二排放“最近使用、任务待办”。",
+    "date": "2026-11-03",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-55",
+    "module": "400 需求 · 知识门户 · 首页调整",
+    "name": "首页排版调整",
+    "description": "调整问候语位置，避免遮挡主要内容。（问候语三行先删除，后改为可配置的）",
+    "date": "2026-11-03",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-56",
+    "module": "400 需求 · 知识门户 · 首页调整",
+    "name": "检索页调整",
+    "description": "左侧目录做为可折叠的效果，不占主要展示区域",
+    "date": "2026-11-03",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-57",
+    "module": "400 需求 · 知识门户 · 首页调整",
+    "name": "智能回答调整",
+    "description": "原本的「智能回答」改为“Knora claw”版的问答，支持多轮对话，每条回答可点赞、点踩并提交反馈。",
+    "date": "2026-11-03",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-58",
+    "module": "400 需求 · 知识门户 · 文档预览",
+    "name": "文档预览",
+    "description": "文档预览界面 UI 优化",
+    "date": "2026-11-03",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-59",
+    "module": "400 需求 · 知识门户 · 文档预览",
+    "name": "文档预览",
+    "description": "文档中超链接点击后在新页面打开",
+    "date": "2026-11-03",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-60",
+    "module": "400 需求 · 知识门户 · 文档预览",
+    "name": "文档预览",
+    "description": "文档预览信息调整：文档元数据",
+    "date": "2026-11-04",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-65",
+    "module": "400 需求 · 本体管理-APP · 自定义首页配置",
+    "name": "热词管理",
+    "description": "支持手动把词加入热门搜索，也能删除热门搜索中不合适的词",
+    "date": "2026-11-05",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-40",
+    "module": "本体平台 · 本体管理 · 流程",
+    "name": "流程日志与反馈导出",
+    "description": "流程日志与反馈导出",
+    "date": "2026-11-06",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-48",
+    "module": "本体平台 · 本体管理 · 对外服务",
+    "name": "本体MCP",
+    "description": "本体MCP",
+    "date": "2026-11-06",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-62",
+    "module": "400 需求 · 知识门户 · 知识反馈",
+    "name": "知识反馈",
+    "description": "已有知识反馈、知识缺失提交、智能回答反馈。",
+    "date": "2026-11-06",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-63",
+    "module": "400 需求 · 知识门户 · 知识反馈",
+    "name": "知识反馈",
+    "description": "知识反馈任务管理",
+    "date": "2026-11-06",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-64",
+    "module": "400 需求 · 本体管理-APP · 自定义首页配置",
+    "name": "轮播图配置",
+    "description": "明确图片尺寸；轮播图保留，支持配置图片及跳转知识；",
+    "date": "2026-11-06",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-06",
+    "module": "知识门户 · 资源管理 · 资源目录",
+    "name": "资源目录样式优化",
+    "description": "默认展开到第三级空间，左侧展开按钮调整更易点击",
+    "date": "2026-11-13",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-11",
+    "module": "知识门户 · 资源管理 · 文档资源",
+    "name": "文档元数据自定义",
+    "description": "用户可自定义知识类型、生效时间、失效时间、业务Owner等元数据，并随知识进入后续加工、发布和维护流程。",
+    "date": "2026-11-13",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-12",
+    "module": "知识门户 · 资源管理 · 文档资源",
+    "name": "公共空间文件夹上传",
+    "description": "在公共空间支持选择文件夹上传，可上传文件夹中的所有文件",
+    "date": "2026-11-13",
+    "status": "待部署"
+  },
+  {
+    "id": "nov-task-17",
+    "module": "知识门户 · 资源管理 · 授权",
+    "name": "追溯授权链路",
+    "description": "在已授权列表中，增加授权人信息，同时增加空间与项目资源的授权信息展示",
+    "date": "2026-11-13",
+    "status": "待部署"
+  },
+  {
+    "id": "nov-task-21",
+    "module": "知识门户 · 项目管理 · 申请资源",
+    "name": "文档资源按目录展示",
+    "description": "在项目管理与本体管理/经纶中选择文档资源的模块，文档资源列表均按目录文件夹显示。包括申请资源、项目资源列表、知识库导入、经纶文本抽取选择文件时展示的文件列表等处",
+    "date": "2026-11-13",
+    "status": "待部署"
+  },
+  {
+    "id": "nov-task-22",
+    "module": "知识门户 · 项目管理 · 申请资源",
+    "name": "数据表资源按目录展示",
+    "description": "在项目管理与本体管理/经纶中选择数据表资源的模块，资源均按照空间/文件夹的结构进行显示，包括申请资源、项目资源列表、本体自动构建选表、本体映射选表、数据集选表、经纶长文本字段抽取等处。统一更新为截图中的样式（但要增加文件夹结构）。注意数据集选表需要额外增加一层数据源的筛选。",
+    "date": "2026-11-13",
+    "status": "待部署"
+  },
+  {
+    "id": "nov-task-36",
+    "module": "本体平台 · 本体管理 · 流程",
+    "name": "流程评测",
+    "description": "流程评测",
+    "date": "2026-11-13",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-37",
+    "module": "本体平台 · 本体管理 · 流程",
+    "name": "模型问题提示",
+    "description": "当大模型出现问题时，直接为用户提示大模型配置错误，需重新配置",
+    "date": "2026-11-13",
+    "status": "待部署"
+  },
+  {
+    "id": "nov-task-43",
+    "module": "本体平台 · 本体管理 · 智能体",
+    "name": "模型问题提示",
+    "description": "当大模型出现问题时，直接为用户提示大模型配置错误，需重新配置",
+    "date": "2026-11-13",
+    "status": "待部署"
+  },
+  {
+    "id": "nov-task-45",
+    "module": "本体平台 · 本体管理 · 智能体",
+    "name": "智能体评测",
+    "description": "智能体评测",
+    "date": "2026-11-13",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-46",
+    "module": "本体平台 · 本体管理 · 智能体",
+    "name": "智能体日志与反馈导出",
+    "description": "智能体日志与反馈导出",
+    "date": "2026-11-13",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-49",
+    "module": "本体平台 · 本体管理 · 对外服务",
+    "name": "知识库MCP",
+    "description": "知识库MCP",
+    "date": "2026-11-13",
+    "status": "待部署"
+  },
+  {
+    "id": "nov-task-51",
+    "module": "本体平台 · 经纶 · 看板",
+    "name": "按项目统计信息",
+    "description": "按项目统计信息并展示在看板中",
+    "date": "2026-11-13",
+    "status": "待部署"
+  },
+  {
+    "id": "nov-task-68",
+    "module": "400 需求 · 知识下架 · 归档",
+    "name": "定时归档",
+    "description": "允许用户提前设置归档时间（上传状态、编辑）",
+    "date": "2026-11-13",
+    "status": "待测试"
+  },
+  {
+    "id": "nov-task-69",
+    "module": "400 需求 · 知识下架 · 归档",
+    "name": "搜索已归档知识",
+    "description": "1. 在知识门户搜索栏增加“搜索已归档知识”开关。开启后，搜索结果中在原有知识基础上加入已归档文件；智能问答也需支持基于已归档文件回答。\n2. 在 Knora claw 中增加相应配置。",
+    "date": "2026-11-13",
+    "status": "待测试"
+  },
+  {
+    "id": "nov-task-70",
+    "module": "400 需求 · 知识下架 · 归档",
+    "name": "归档提醒",
+    "description": "在归档日期即将到期的时候（前24 小时），归档时，共两次发送提醒知识 Owner",
+    "date": "2026-11-13",
+    "status": "待测试"
+  },
+  {
+    "id": "nov-task-03",
+    "module": "知识门户 · 首页 · 检索",
+    "name": "实体类型查询",
+    "description": "实体类型查询",
+    "date": "2026-11-30",
+    "status": "进行中"
+  },
+  {
+    "id": "nov-task-04",
+    "module": "知识门户 · 首页 · 检索",
+    "name": "实体数据查询",
+    "description": "实体数据查询",
+    "date": "2026-11-30",
+    "status": "进行中"
+  },
+  {
+    "id": "nov-task-07",
+    "module": "知识门户 · 资源管理 · 数据源连接",
+    "name": "字段级表分发",
+    "description": "在连接数据源并进行空间分发时，支持字段级的选择和分发。\n同时支持将同一个表分发到不同部门（待讨论）",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-08",
+    "module": "知识门户 · 资源管理 · 本体资源",
+    "name": "本体资源展示",
+    "description": "本体资源展示",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-09",
+    "module": "知识门户 · 资源管理 · 本体资源",
+    "name": "本体资源向上移交",
+    "description": "本体资源向上移交",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-14",
+    "module": "知识门户 · 资源管理 · 文档资源",
+    "name": "视频挂载",
+    "description": "视频挂载",
+    "date": "2026-11-30",
+    "status": "进行中"
+  },
+  {
+    "id": "nov-task-16",
+    "module": "知识门户 · 资源管理 · 工具资源",
+    "name": "自定义MCP服务作为资源",
+    "description": "支持填写外部接口信息，转换为MCP服务并挂载在资源列表中，并支持授权可见。",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-18",
+    "module": "知识门户 · 资源管理 · 回收站",
+    "name": "公共空间回收站",
+    "description": "公共空间回收站",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-19",
+    "module": "知识门户 · 项目管理 · 本体资源申请",
+    "name": "实体关系事件申请",
+    "description": "实体关系事件申请",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-23",
+    "module": "知识门户 · 项目管理 · 申请资源",
+    "name": "基于空间/目录申请资源",
+    "description": "支持批量申请资源，之后空间目录下新增资源自动同步。\n同时支持在项目资源列表中对所有资源/目录进行全局检索和定位。",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-24",
+    "module": "知识门户 · 标签 · 标签权限",
+    "name": "标签权限",
+    "description": "标签权限",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-26",
+    "module": "知识门户 · 标签 · 自动打标",
+    "name": "文档自动打标",
+    "description": "包括AI自动打标，部门继承标签等功能",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-27",
+    "module": "知识门户 · 实体看板 · cypher查询本体数据",
+    "name": "cypher查询本体数据",
+    "description": "支持cypher查询本体数据，并呈现结果",
+    "date": "2026-11-30",
+    "status": "进行中"
+  },
+  {
+    "id": "nov-task-28",
+    "module": "本体平台 · 本体管理 · 本体自动构建",
+    "name": "本体自动构建优化",
+    "description": "本体自动构建优化",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-29",
+    "module": "本体平台 · 本体管理 · 语义图谱 （实体关系事件）",
+    "name": "企业级与业务域级本体发布及共建",
+    "description": "企业级与业务域级本体发布及共建",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-30",
+    "module": "本体平台 · 本体管理 · 语义图谱 （实体关系事件）",
+    "name": "分类展示",
+    "description": "按项目创建和授权到项目的对象分类展示",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-31",
+    "module": "本体平台 · 本体管理 · 语义图谱 （实体关系事件）",
+    "name": "本体映射与发布",
+    "description": "在实体关系事件完成映射配置后直接发布本体，自动生成并运行流程，完成模型发布",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-32",
+    "module": "本体平台 · 本体管理 · Action",
+    "name": "发布到空间",
+    "description": "发布到空间",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-33",
+    "module": "本体平台 · 本体管理 · Action",
+    "name": "执行条件配置",
+    "description": "配置action的执行条件，包括被编辑、删除的数据需满足什么条件才能执行。",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-34",
+    "module": "本体平台 · 本体管理 · 规则",
+    "name": "业务规则优化",
+    "description": "业务规则优化",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-35",
+    "module": "本体平台 · 本体管理 · 知识库",
+    "name": "知识库召回测试",
+    "description": "知识库召回测试",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-39",
+    "module": "本体平台 · 本体管理 · 流程",
+    "name": "发布到空间",
+    "description": "发布到空间",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-42",
+    "module": "本体平台 · 本体管理 · 工具",
+    "name": "自定义工具",
+    "description": "支持自定义工具在线测试和地址合法性校验",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-44",
+    "module": "本体平台 · 本体管理 · 智能体",
+    "name": "调用流程优化",
+    "description": "优化智能体调用流程的准确性和稳定性",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-50",
+    "module": "本体平台 · 本体管理 · 对外服务",
+    "name": "智能体MCP",
+    "description": "智能体MCP",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-52",
+    "module": "本体平台 · 经纶 · 非结构化抽取",
+    "name": "抽取结果校验",
+    "description": "抽取结果校验",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-53",
+    "module": "本体平台 · 经纶 · 非结构化抽取",
+    "name": "抽取效果优化",
+    "description": "抽取效果优化",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-47",
+    "module": "本体平台 · 本体管理 · 智能体",
+    "name": "流程卡片页展示逻辑调整",
+    "description": "流程卡片页展示逻辑调整",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-61",
+    "module": "400 需求 · 知识门户 · 元数据管理",
+    "name": "元数据管理",
+    "description": "支持用户进行文档元数据配置",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-66",
+    "module": "400 需求 · 本体管理-APP · 自定义首页配置",
+    "name": "授权管理",
+    "description": "把自定义首页应用在已授权的用户上",
+    "date": "2026-11-30",
+    "status": "已完成"
+  },
+  {
+    "id": "nov-task-67",
+    "module": "400 需求 · 运营看板 · 知识运营看板",
+    "name": "知识运营看板",
+    "description": "围绕反馈流、审批流，查看任务及审批数量、闭环率、超期情况；需先明确流程与任务字段，再落实统计口径。（400，依赖于审批流和反馈）",
+    "date": "2026-11-30",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-05",
+    "module": "知识门户 · 首页 · 问答",
+    "name": "全资源问答",
+    "description": "基于有权限的文档和本体数据进行问答，并展示溯源",
+    "date": "2026-12-31",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-15",
+    "module": "知识门户 · 资源管理 · 数据资源",
+    "name": "数据表行/列权限",
+    "description": "数据表行/列权限",
+    "date": "2026-12-31",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-20",
+    "module": "知识门户 · 项目管理 · 资源权限申请",
+    "name": "资源权限申请",
+    "description": "用户可在项目资源列表查看所有项目资源，并对其没有权限的文档资源进行权限申请。\n提交申请后可通过审批流程进行授权，获取文档权限\n待讨论",
+    "date": "2026-12-31",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-10",
+    "module": "知识门户 · 资源管理 · 本体资源",
+    "name": "本体资源授权",
+    "description": "本体的数据权限授权，包括行权限与列权限；以及action和logic的授权",
+    "date": "2026-12-31",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-25",
+    "module": "知识门户 · 标签 · 标签管理",
+    "name": "标签属性",
+    "description": "包含标签ID、标签名称、标签分类、标签层级路径、关联知识数、当月使用量、状态（启用、禁用）、权限控制、创建人/创建时间、关联业务属性",
+    "date": "2026-12-31",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-38",
+    "module": "本体平台 · 本体管理 · 流程",
+    "name": "知识库写入节点改造",
+    "description": "按项目资源管理",
+    "date": "2026-12-31",
+    "status": "待启动"
+  },
+  {
+    "id": "nov-task-41",
+    "module": "本体平台 · 本体管理 · 工具",
+    "name": "MCP工具",
+    "description": "支持将自定义工具直接配置为MCP工具集",
+    "date": "2026-12-31",
+    "status": "进行中"
+  }
+]</script>
+  <script src="assets/html-source-editor.js"></script>
+  <script src="assets/platform-development-schedule.js"></script>
+
+
+
+</body></html>
