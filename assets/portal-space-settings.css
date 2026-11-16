@@ -6,10 +6,7 @@
   --ink2: #55637a;
   --ink3: #8490a2;
   --line: #e3e8f0;
-  display: grid;
-  grid-template-columns: 132px minmax(0, 1fr);
-  gap: 20px;
-  align-items: start;
+  display: block;
   padding: 20px 20px 40px;
   color: var(--ink);
 }
@@ -629,4 +626,9 @@
 .spm-member-card.ro .spm-member-row em.admin {
   background: #f7e8ff;
   color: #bc4ddb;
+}
+
+/* 空间设置不再有左侧导航：内容整宽 */
+.spm-snav {
+  display: none;
 }
