@@ -38,9 +38,9 @@ function mount(host,c){
    {label:'数据表',val:c.tables,sub:'来自已接入的数据源',tab:'data'},
    {label:'本体对象',val:c.ontologyTotal,sub:'实体 '+c.ontology.entity+' · 关系 '+c.ontology.relation+' · 事件 '+c.ontology.event+' · 行为 '+c.ontology.action+' · 流程 '+c.ontology.flow,tab:'ontology'},
    {label:'智能体',val:c.agents,sub:c.agentsPublished+' 已发布',tab:'agent'},
-   {label:'空间成员',val:c.members.length,sub:adminN+' 管理员 · '+(c.members.length-adminN)+' 普通成员',tab:c.isAdmin?'members':''}
+   {label:'空间成员',val:c.members.length,sub:adminN+' 管理员 · '+(c.members.length-adminN)+' 普通成员',tab:'members',key:'members'}
   ];
-  function tile(t){var tag=t.tab?'button type="button" data-sd-tab="'+t.tab+'"':'div';return '<'+tag+' class="sd-tile'+(t.hero?' hero':'')+'"><span class="sd-tl">'+t.label+'</span><strong>'+t.val+'</strong><small title="'+esc(t.sub)+'">'+esc(t.sub)+'</small></'+(t.tab?'button':'div')+'>'}
+  function tile(t){var tag=t.tab?'button type="button" data-sd-tab="'+t.tab+'"':'div';return '<'+tag+' class="sd-tile'+(t.hero?' hero':'')+'"'+(t.key?' data-tile="'+t.key+'"':'')+'><span class="sd-tl">'+t.label+'</span><strong>'+t.val+'</strong><small title="'+esc(t.sub)+'">'+esc(t.sub)+'</small></'+(t.tab?'button':'div')+'>'}
   var comp=[['数据表',c.tables,'data'],['智能体',c.agents,'agent'],['本体对象',c.ontologyTotal,'ontology'],['文档',c.docs,'doc']].sort(function(a,b){return b[1]-a[1]}),cmax=Math.max.apply(null,comp.map(function(x){return x[1]}))||1,ctot=comp.reduce(function(a,x){return a+x[1]},0)||1;
   var roleCount={};c.members.forEach(function(m){roleCount[m.role]=(roleCount[m.role]||0)+1});
   host.innerHTML='<div class="sd">'+
@@ -48,17 +48,20 @@ function mount(host,c){
    '<div class="sd-row">'+
     '<section class="sd-card"><header><div><h3>资源构成</h3><p>按资源类型，共 '+ctot+' 项</p></div></header><div class="sd-rank">'+comp.map(function(r){return '<button type="button" class="sd-rrow" data-sd-tab="'+r[2]+'" data-tip="'+r[0]+' '+r[1]+' 项 · 占 '+Math.round(r[1]/ctot*100)+'%"><span class="sd-rname">'+r[0]+'</span><span class="sd-track"><i style="width:'+Math.max(r[1]?3:0,r[1]/cmax*100)+'%"></i></span><span class="sd-rval"><b>'+r[1]+'</b><small>'+Math.round(r[1]/ctot*100)+'%</small></span></button>'}).join('')+'</div></section>'+
     '<section class="sd-card"><header><div><h3>知识时序分布 <span class="sd-cnt">（'+docMonths.filter(function(v){return v>0}).length+'条）</span></h3><p>按更新月份统计文档数</p></div><div class="sd-ctl"><button type="button" class="sd-view" data-sd-view title="切换图表 / 表格">表格</button></div></header><div class="sd-body" data-body="time"></div></section>'+
-    '<section class="sd-card"><header><div><h3>空间成员</h3><p>共 '+c.members.length+' 人'+(Object.keys(roleCount).length?' · '+Object.keys(roleCount).map(function(k){return k+' '+roleCount[k]}).join(' · '):'')+'</p></div>'+(c.isAdmin?'<button type="button" class="sd-link" data-sd-tab="members">管理成员 ›</button>':'')+'</header><ul class="sd-members">'+(c.members.length?c.members.slice(0,5).map(function(mm){return '<li><i>'+esc(mm.account.charAt(0).toUpperCase())+'</i><b>'+esc(mm.account)+'</b><em class="'+(mm.role==='管理员'?'admin':'')+'">'+esc(mm.role)+'</em></li>'}).join(''):'<li class="sd-empty">暂无成员</li>')+'</ul></section>'+
    '</div>'+
+   '<section class="spm-settings spm-members-only" id="spm-sec-members"></section>'+
    '<p class="sd-note">以上为原型示例数据。</p></div>';
 
   function drawTime(){var body=host.querySelector('[data-body=time]');
     if(view==='table'){body.innerHTML=tableHtml(['更新月份','文档数'],docMonths.map(function(v,i){return [MONTHS[i],v]}));return}
     if(!c.docs){body.innerHTML='<div class="sd-empty-chart">暂无文档</div>';return}
     columnChart(body,docMonths,MONTHS.map(mlabel),Math.max(260,body.clientWidth||320))}
+  var M=window.KnoraSpaceManagement;if(M)M.mountMembers(host.querySelector('#spm-sec-members'),c.space,c.isAdmin);
+  function refreshMemberTile(e){if(!host.isConnected){document.removeEventListener('spm-members-changed',refreshMemberTile);return}if(!M||(e.detail&&e.detail.space!==c.space))return;var list=M.memberList(c.space),adm=list.filter(function(m){return m.role==='管理员'}).length,t=host.querySelector('[data-tile=members]');if(t){t.querySelector('strong').textContent=list.length;var sm=t.querySelector('small');sm.textContent=adm+' 管理员 · '+(list.length-adm)+' 普通成员';sm.title=sm.textContent}}
+  document.addEventListener('spm-members-changed',refreshMemberTile);
   drawTime();
   host.querySelector('[data-sd-view]').addEventListener('click',function(e){view=view==='chart'?'table':'chart';e.currentTarget.textContent=view==='chart'?'表格':'图表';drawTime()});
-  host.addEventListener('click',function(e){var t=e.target.closest('[data-sd-tab]');if(t&&window.KnoraResourceTabs)window.KnoraResourceTabs.show(t.dataset.sdTab)});
+  host.addEventListener('click',function(e){var t=e.target.closest('[data-sd-tab]');if(!t)return;if(t.dataset.sdTab==='members'){var el=host.querySelector('#spm-sec-members');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth',block:'start'});return}if(window.KnoraResourceTabs)window.KnoraResourceTabs.show(t.dataset.sdTab)});
   host.querySelectorAll('[data-tip]').forEach(function(el){el.addEventListener('mousemove',function(e){showTip(e,esc(el.dataset.tip))});el.addEventListener('mouseleave',hideTip)});
   if(window.ResizeObserver){var ro=new ResizeObserver(function(){if(!host.isConnected){ro.disconnect();return}if(c.docs&&view==='chart')drawTime()});ro.observe(host.querySelector('[data-body=time]'))}
 }

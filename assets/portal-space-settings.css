@@ -596,3 +596,37 @@
   flex-wrap: nowrap;
   white-space: nowrap;
 }
+
+/* ---- 部门概览下的「空间成员」（复用设置页的成员卡片样式）---- */
+.spm-settings.spm-members-only {
+  display: block;
+  padding: 0;
+  scroll-margin-top: 16px;
+}
+.spm-member-card.ro > header {
+  min-height: 64px;
+}
+.spm-ro-count {
+  margin-left: auto;
+  color: var(--ink3);
+  font-size: 12px;
+}
+.spm-member-card.ro .spm-member-head,
+.spm-member-card.ro .spm-member-row {
+  grid-template-columns: 1.25fr 0.75fr 0.55fr;
+}
+.spm-member-card.ro .spm-member-table {
+  margin-bottom: 14px;
+}
+.spm-member-card.ro .spm-member-row em {
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #e9fff2;
+  color: #16aa72;
+  font-size: 12px;
+  font-style: normal;
+}
+.spm-member-card.ro .spm-member-row em.admin {
+  background: #f7e8ff;
+  color: #bc4ddb;
+}
