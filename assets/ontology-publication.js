@@ -24,7 +24,7 @@
     return {name:selected[selected.length - 1],path:selected.join(' / '),level:selected.length === 1 ? 'enterprise' : 'domain'};
   }
   const levelLabel = level => ({enterprise:'企业级本体',domain:'业务域级本体',draft:'项目未发布本体'})[level];
-  function state() { const data=read(STORE, {models:[],requests:[],grants:[]});demoRequests().forEach(r=>{if(!data.requests.some(x=>x.id===r.id))data.requests.push(r);});return data; }
+  function state() { const data=read(STORE, {models:[],requests:[],grants:[]});demoRequests().concat(demoEditRequests()).forEach(r=>{if(!data.requests.some(x=>x.id===r.id))data.requests.push(r);});return data; }
   function save(data) { localStorage.setItem(STORE, JSON.stringify(data)); schedule();window.dispatchEvent(new Event('knora:ontology-publication-updated')); }
   function config(space) { return read(CONFIG, {})[normalize(space)] || {required:false,nodes:[]}; }
   function modelId(type, api, owner) { return [owner || project(), type, api].join(':'); }
@@ -59,7 +59,28 @@
       {id:'op-demo-enterprise-1115',owner:'enterprise-master',api:'group_credit_profile',reason:'新增企业级实体“集团信用档案”。\n定义统一信用编号、信用等级、评估日期与所属法人。\n供各业务域在客户经营与供应商管理中复用。'}
     ].map((item,i)=>{const model=samples.find(m=>m.api===item.api)||{id:modelId('entity',item.api,item.owner),type:'entity',api:item.api,name:'集团信用档案',ownerProject:item.owner,projectName:'集团客户主数据项目',ownerPath:rootName(),target:target(rootName()),status:'草稿',version:0};return {id:item.id,type:'publish',models:[model],target:model.target,visibility:'public',reason:item.reason,rule:{required:true,nodes:[{source:'本空间管理员',mode:'any',members:[model.target.name+'管理员']}]},node:0,votes:[],status:'审批中',project:item.owner,projectName:model.projectName,created:'2026-11-15 09:'+(i?'40':'20'),sample:true};});
   }
+  function demoEditRequests() {
+    const models=seeds().filter(m=>m.ownerProject==='marketing-master'&&['domain_customer_segment','segment_campaign'].includes(m.api));
+    const base=models[0];
+    models.push({...base,id:modelId('event','customer_segment_changed',base.ownerProject),type:'event',api:'customer_segment_changed',name:'客户分群变更事件',desc:'记录客户分群调整及原因。'});
+    return [{id:'op-demo-edit-1116',type:'edit',models,project:'experience',projectName:'客户体验项目',applicant:'王晨',reason:'为客户体验分析完善客户分群定义及关联规则。\n申请共同维护客户分群实体、分群匹配活动关系和客户分群变更事件，补充体验指标与变更原因。',created:'2026-11-16 09:20:00',status:'审批中',node:0,votes:[],rule:{required:true,nodes:[{source:base.projectName+'管理员',mode:'any',members:[base.projectName+'管理员']}]},sample:true}];
+  }
+  function requestProjectName(request) {
+    return request.projectName || ({insight:'客户洞察项目',experience:'客户体验项目',channel:'渠道协同项目',ai:'智能营销项目'})[request.project] || request.project || '未记录';
+  }
+  function requestApplicant(request) { return request.applicant || (request.type==='edit'?'未记录（历史申请）':'陈宇'); }
+  function currentApplicant() { return window.knoraRolePerspective?.config?.person || window.KnoraKnowledgeFeedback?.currentUser?.() || '陈宇'; }
+  function approvalKind(request) { return request.type==='edit'?'ontology-edit':'ontology'; }
+  function approvalLabel(request) { return request.type==='edit'?'申请本体管理':'本体发布'; }
+  function approvalRequests() { return state().requests.filter(r=>r.type==='edit'||(r.type==='publish'&&r.rule.required)); }
+  function editRequestLines(request) {
+    return ['申请对象：',...request.models.map(m=>label(m.type)+'「'+m.name+'」 · '+m.api),
+      '申请项目：'+requestProjectName(request),'申请原因：\n'+(request.reason||'未填写'),
+      '申请时间：'+request.created,'申请人：'+requestApplicant(request),
+      '对象来源项目：'+[...new Set(request.models.map(m=>m.projectName))].join('、')].join('\n');
+  }
   function requestLines(request) {
+    if(request.type==='edit')return editRequestLines(request);
     const lines=['发起项目：'+(request.projectName||request.models[0].projectName)];
     request.models.forEach(m=>{
       lines.push((m.status==='草稿'||!m.version?'新增发布':'修改发布')+'：'+label(m.type)+'「'+m.name+'」 · '+m.api);
@@ -71,24 +92,31 @@
     if(request.reason)lines.push('变更说明：\n'+request.reason);
     return lines.join('\n');
   }
-  function requestInfo(request) { return '<section class="op-publication-info"><h3>本体发布审批通知</h3><p>'+esc(requestLines(request))+'</p></section>'; }
+  function requestInfo(request) { return '<section class="op-publication-info"><h3>'+approvalLabel(request)+'审批通知</h3><p>'+esc(requestLines(request))+'</p></section>'; }
   function portalItems() {
-    return state().requests.filter(r=>r.type==='publish'&&r.rule.required).slice().reverse().flatMap(r=>['review','submitted'].map(mode=>({id:r.id+(mode==='submitted'?'-submitted':''),requestId:r.id,kind:'ontology',mode,tag:'本体发布',title:(r.models.some(m=>m.version)?'本体修改发布':'本体首次发布')+' · '+r.models.map(m=>m.name).join('、'),desc:requestLines(r),source:r.projectName||r.models[0].projectName,target:r.target.path,applicant:'陈宇',time:r.created,status:r.status==='审批中'?(mode==='review'?'待我审批':'审批中'):['发布中','已发布'].includes(r.status)?'已通过':r.status,resources:r.models.map(m=>({id:m.id,name:m.name,type:'本体',format:label(m.type),meta:levelLabel(r.target.level)}))})));
+    return approvalRequests().slice().reverse().flatMap(r=>['review','submitted'].map(mode=>({
+      id:r.id+(mode==='submitted'?'-submitted':''),requestId:r.id,kind:approvalKind(r),mode,tag:approvalLabel(r),
+      title:(r.type==='edit'?'申请本体管理':r.models.some(m=>m.version)?'本体修改发布':'本体首次发布')+' · '+r.models.map(m=>m.name).join('、'),
+      desc:requestLines(r),source:requestProjectName(r),target:r.type==='edit'?[...new Set(r.models.map(m=>m.projectName))].join('、'):r.target.path,
+      applicant:requestApplicant(r),time:r.created,status:r.status==='审批中'?(mode==='review'?'待我审批':'审批中'):['发布中','已发布'].includes(r.status)?'已通过':r.status,
+      resources:r.models.map(m=>({id:m.id,name:m.name,type:'本体',format:label(m.type),meta:levelLabel((r.target||m.target).level)}))
+    })));
+
   }
   function markNoticeRead(id) {const data=state(),r=data.requests.find(r=>r.id===id);if(r&&!r.noticeRead){r.noticeRead=true;save(data);}}
   function publicationNotices() {
-    const requests=state().requests.filter(r=>r.type==='publish'&&r.rule.required).slice().reverse();
-    const mask=modal('本体发布审批通知',requests.map(r=>'<button class="op-notice-card" data-op-notice="'+esc(r.id)+'"><b>'+esc(r.models.map(m=>m.name).join('、'))+' · '+esc(r.status)+'</b><p>'+esc(requestLines(r))+'</p><small>'+esc(r.created)+' · 查看审批详情 →</small></button>').join('')||'<p>暂无本体发布审批通知</p>','<a class="btn primary" href="portal-mine.html?tab=approval&approvalKind=ontology">进入我的审批待办</a><button class="btn" data-op-close>关闭</button>');
+    const requests=approvalRequests().slice().reverse();
+    const mask=modal('本体审批通知',requests.map(r=>'<button class="op-notice-card" data-op-notice="'+esc(r.id)+'"><b>'+approvalLabel(r)+' · '+esc(r.models.map(m=>m.name).join('、'))+' · '+esc(r.status)+'</b><p>'+esc(requestLines(r))+'</p><small>'+esc(r.created)+' · 查看审批详情 →</small></button>').join('')||'<p>暂无本体审批通知</p>','<a class="btn primary" href="portal-mine.html?tab=approval">进入我的审批待办</a><button class="btn" data-op-close>关闭</button>');
   }
   function refreshPublicationNotices() {
-    const requests=state().requests.filter(r=>r.type==='publish'&&r.rule.required),pop=document.getElementById('approvalNotificationPop');
+    const requests=approvalRequests(),pop=document.getElementById('approvalNotificationPop');
     if(pop){
       let anchor=pop.querySelector('header');
-      requests.slice().reverse().forEach(r=>{let link=Array.from(pop.querySelectorAll('[data-op-notice]')).find(n=>n.dataset.opNotice===r.id);if(!link){link=document.createElement('a');link.dataset.opNotice=r.id;link.href='portal-mine.html?tab=approval&approvalKind=ontology&ontologyRequest='+encodeURIComponent(r.id);}if(anchor.nextElementSibling!==link)anchor.after(link);anchor=link;link.className='approval-notification-item op-publication-notice'+(r.noticeRead?'':' unread');const html='<i>本</i><span><b>本体发布审批 · '+esc(r.models.map(m=>m.name).join('、'))+'</b><small>'+esc(requestLines(r))+'</small></span><em>'+esc(r.status)+'</em>';if(link.innerHTML!==html)link.innerHTML=html;});
+      requests.slice().reverse().forEach(r=>{let link=Array.from(pop.querySelectorAll('[data-op-notice]')).find(n=>n.dataset.opNotice===r.id);if(!link){link=document.createElement('a');link.dataset.opNotice=r.id;link.href='portal-mine.html?tab=approval&approvalKind='+approvalKind(r)+'&ontologyRequest='+encodeURIComponent(r.id);}if(anchor.nextElementSibling!==link)anchor.after(link);anchor=link;link.className='approval-notification-item op-publication-notice'+(r.noticeRead?'':' unread');const html='<i>本</i><span><b>'+approvalLabel(r)+'审批 · '+esc(r.models.map(m=>m.name).join('、'))+'</b><small>'+esc(requestLines(r))+'</small></span><em>'+esc(r.status)+'</em>';if(link.innerHTML!==html)link.innerHTML=html;});
       const unread=pop.querySelectorAll('.approval-notification-item.unread').length;setText(document.querySelector('#approvalNotificationTrigger .badge'),String(unread));setText(pop.querySelector('header small'),unread+' 条未读');
     }
     const bell=document.querySelector('.top-actions button:has(use[href="#bell"])');
-    if(bell&&!personal()){bell.dataset.opNotificationTrigger='';bell.setAttribute('aria-label','本体发布审批通知');setText(bell.querySelector('.badge'),String(requests.filter(r=>!r.noticeRead).length));}
+    if(bell&&!personal()){bell.dataset.opNotificationTrigger='';bell.setAttribute('aria-label','本体审批通知');setText(bell.querySelector('.badge'),String(requests.filter(r=>!r.noticeRead).length));}
   }
 
   function ownModels() {
@@ -174,20 +202,19 @@
     data.requests.forEach(r=>{if(r.status==='发布中'&&Date.now()-r.started>=4500){r.status='已发布';commitPublished(r,data);changed=true;}});
     if(changed)save(data);
   }
-  function showRequest(id) {
+  function showRequest(id, options={}) {
     tick();const request=state().requests.find(r=>r.id===id);if(!request)return;
-    const publishing=request.type==='publish',waiting=request.status==='审批中';
+    const publishing=request.type==='publish',waiting=request.status==='审批中'&&!(request.type==='edit'&&options.readOnly);
     let body='<div class="op-request-summary"><b>'+esc(request.models.map(m=>m.name).join('、'))+'</b><strong>'+esc(request.status)+'</strong><p>'+esc(request.created)+' · '+esc(publishing?request.target.path:request.models[0].projectName+' · 项目管理员')+'</p></div>';
     if(publishing)body+=requestInfo(request)+chainHtml(request.rule);
-    else body+='<p class="op-note">向对象所属项目“'+esc(request.models[0].projectName)+'”的管理员申请编辑。批准后可编辑对象；对象的来源项目与发布归属不变。</p>';
-    if(!publishing)body+='<p>'+esc(request.reason||'未填写申请说明')+'</p>';
+    else body+=requestInfo(request)+'<p class="op-note">向对象所属项目“'+esc(request.models[0].projectName)+'”的管理员申请编辑。批准后可编辑对象；对象的来源项目与发布归属不变。</p>';
     if(waiting){const node=request.rule.nodes[request.node];body+='<section class="op-review"><h3>当前审批节点 '+(request.node+1)+' · '+esc(node.source)+'</h3><p>'+(node.mode==='all'?'全部审批人通过后进入下一节点':'任意一位审批人通过后进入下一节点')+'</p><label>审批身份（原型演示）<select data-op-voter>'+node.members.filter(m=>!request.votes.includes(m)).map(m=>'<option>'+esc(m)+'</option>').join('')+'</select></label><label class="op-field">审批意见<textarea data-op-opinion placeholder="驳回时请填写原因"></textarea></label></section>';}
     if(request.status==='发布中'||request.status==='已发布'){
       const phase=request.status==='已发布'?3:Math.min(2,Math.floor((Date.now()-request.started)/1500));
       body+='<ol class="op-progress">'+['构建存储','构建索引','发布模型版本'].map((s,i)=>'<li class="'+(i<phase?'done':i===phase?'active':'')+'"><b>'+(i<phase?'✓':i+1)+'</b>'+s+'<small>'+(i<phase?'已完成':i===phase?'进行中':'等待中')+'</small></li>').join('')+'</ol><p class="op-note">'+(request.status==='已发布'?'发布成功，可在目标空间查看模型资源。数据同步请在实体的数据映射或同步数据入口单独执行。':'审批已完成，正在发布；关闭窗口后任务继续执行。')+'</p>';
     }
     if(request.rejection)body+='<p class="op-note">驳回原因：'+esc(request.rejection)+'</p>';
-    const mask=modal(publishing?(waiting?'本体发布审批':'本体发布进度'):'编辑权限申请',body,'<span>审批与发布状态自动保存</span><button class="btn" data-op-close>关闭</button>'+(waiting?'<button class="btn" data-op-reject>驳回（演示）</button><button class="btn primary" data-op-approve>通过（演示）</button>':''));
+    const mask=modal(publishing?(waiting?'本体发布审批':'本体发布进度'):'申请本体管理审批',body,'<span>审批与发布状态自动保存</span><button class="btn" data-op-close>关闭</button>'+(waiting?'<button class="btn" data-op-reject>驳回（演示）</button><button class="btn primary" data-op-approve>通过（演示）</button>':''));
     mask.dataset.requestId=id;
     if(waiting){mask.querySelector('[data-op-approve]').onclick=()=>decide(id,true,mask);mask.querySelector('[data-op-reject]').onclick=()=>decide(id,false,mask);}
   }
@@ -196,13 +223,13 @@
     const opinion=mask.querySelector('[data-op-opinion]').value.trim();
     if(!yes&&!opinion)return notice('请填写驳回原因。');
     if(!yes){r.status='已驳回';r.rejection=opinion;}
-    else {const node=r.rule.nodes[r.node];r.votes.push(mask.querySelector('[data-op-voter]').value);if(node.mode!=='all'||node.members.every(m=>r.votes.includes(m))){r.node++;r.votes=[];}if(r.node>=r.rule.nodes.length){if(r.type==='edit'){r.status='已通过';data.grants.push({modelId:r.models[0].id,project:r.project});}else{r.status='发布中';r.started=Date.now();}}}
+    else {const node=r.rule.nodes[r.node];r.votes.push(mask.querySelector('[data-op-voter]').value);if(node.mode!=='all'||node.members.every(m=>r.votes.includes(m))){r.node++;r.votes=[];}if(r.node>=r.rule.nodes.length){if(r.type==='edit'){r.status='已通过';r.models.forEach(model=>{if(!data.grants.some(g=>g.modelId===model.id&&g.project===r.project))data.grants.push({modelId:model.id,project:r.project});});}else{r.status='发布中';r.started=Date.now();}}}
     save(data);showRequest(id);
   }
   function requestEdit(model) {
-    const pending=state().requests.find(r=>r.type==='edit'&&r.models[0].id===model.id&&r.project===project()&&r.status==='审批中');if(pending)return showRequest(pending.id);
+    const pending=state().requests.find(r=>r.type==='edit'&&r.models[0].id===model.id&&r.project===project()&&r.status==='审批中');if(pending)return showRequest(pending.id,{readOnly:true});
     const mask=modal('申请编辑 · '+model.name,'<section class="op-target"><div><small>审批人：对象所属项目管理员</small><h3>'+esc(model.projectName)+'</h3><p>'+esc(model.target.path)+'</p></div></section><p class="op-note">当前可使用此对象，并添加相关关系、事件、Action、流程与智能体。编辑对象本身须经来源项目管理员批准。</p><label class="op-field">申请原因<textarea data-op-reason placeholder="请说明需要修改的内容"></textarea></label>','<button class="btn" data-op-close>取消</button><button class="btn primary" data-op-submit>提交申请</button>');
-    mask.querySelector('[data-op-submit]').onclick=()=>{const reason=mask.querySelector('textarea').value.trim();if(!reason)return notice('请填写申请原因。');const data=state(),r={id:'op-edit-'+Date.now(),type:'edit',models:[model],project:project(),status:'审批中',node:0,votes:[],reason,created:new Date().toLocaleString('zh-CN'),rule:{required:true,nodes:[{source:model.projectName+'管理员',mode:'any',members:[model.projectName+'管理员']}]}};data.requests.push(r);save(data);showRequest(r.id);};
+    mask.querySelector('[data-op-submit]').onclick=()=>{const reason=mask.querySelector('textarea').value.trim();if(!reason)return notice('请填写申请原因。');const data=state(),r={id:'op-edit-'+Date.now(),type:'edit',models:[model],project:project(),projectName:document.getElementById('currentProjectName')?.textContent.trim()||project(),applicant:currentApplicant(),status:'审批中',node:0,votes:[],reason,created:new Date().toLocaleString('zh-CN'),rule:{required:true,nodes:[{source:model.projectName+'管理员',mode:'any',members:[model.projectName+'管理员']}]}};data.requests.push(r);save(data);showRequest(r.id,{readOnly:true});notice('申请本体管理已提交，通知已发送给来源项目管理员，可在“我的审批待办”查看。');};
   }
   function requests(space) {
     const rows=state().requests.filter(r=>!space||normalize(r.target?.name)===normalize(space));
