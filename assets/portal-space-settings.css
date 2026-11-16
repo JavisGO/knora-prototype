@@ -1,0 +1,598 @@
+/* 空间设置页（角色与权限 / 审批机制 / 空间成员合并）2026-11-16
+ * 左侧分区导航 + 右侧三个卡片；字号上调到可读，操作就近，修改可撤销。 */
+.spm-settings {
+  --blue: #176ef3;
+  --ink: #1d2a45;
+  --ink2: #55637a;
+  --ink3: #8490a2;
+  --line: #e3e8f0;
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  padding: 20px 20px 40px;
+  color: var(--ink);
+}
+/* ---- 左侧分区导航 ---- */
+.spm-snav {
+  position: sticky;
+  top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.spm-snav > b {
+  padding: 0 12px 8px;
+  color: var(--ink3);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.spm-snav button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 38px;
+  padding: 0 12px 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink2);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.spm-snav button:hover {
+  background: #eef2f8;
+}
+.spm-snav button.on {
+  background: #e6f0ff;
+  color: var(--blue);
+  font-weight: 600;
+}
+.spm-snav button.on::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  bottom: 9px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--blue);
+}
+.spm-snav em {
+  min-width: 20px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--ink3);
+  font-size: 11px;
+  font-style: normal;
+  line-height: 18px;
+  text-align: center;
+}
+.spm-snav button.on em {
+  color: var(--blue);
+}
+.spm-snav i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff7d00;
+}
+.spm-snav i[hidden] {
+  display: none;
+}
+/* ---- 右侧内容 ---- */
+.spm-sbody {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.spm-ssec {
+  scroll-margin-top: 16px;
+}
+.spm-settings .spm-roles-page,
+.spm-settings .spm-overview,
+.spm-settings .spm-approval {
+  padding: 0;
+}
+.spm-settings .spm-roles-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.spm-settings .spm-mechanism-section {
+  margin-top: 0;
+}
+.spm-settings .spm-member-card,
+.spm-settings .spm-approval {
+  margin-top: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+/* 统一的卡片头：标题 + 说明 + 右侧操作 */
+.spm-settings .spm-role-section > header,
+.spm-settings .spm-mechanism-section > header,
+.spm-settings .spm-member-card > header,
+.spm-sec-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 0 22px;
+  border-bottom: 1px solid #edf0f5;
+}
+.spm-settings .spm-role-section > header h3,
+.spm-settings .spm-mechanism-section > header h3,
+.spm-settings .spm-member-card > header h3,
+.spm-sec-head h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+}
+.spm-settings .spm-role-section > header p,
+.spm-settings .spm-mechanism-section > header p,
+.spm-sec-head p {
+  margin: 4px 0 0;
+  color: var(--ink3);
+  font-size: 12px;
+}
+.spm-settings button.primary,
+.spm-settings .spm-role-section > header > button {
+  height: 34px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 17px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+.spm-settings button.primary:hover {
+  background: #3d85f5;
+}
+.spm-settings button.primary:disabled {
+  background: #c9d3e3;
+  cursor: not-allowed;
+}
+.spm-settings .spm-role-section > header > button,
+.spm-sec-head > button,
+.spm-settings .spm-member-card > header > button {
+  margin-left: auto;
+}
+.spm-settings .spm-mechanism-section > header > span {
+  margin-left: auto;
+  font-size: 11px;
+}
+/* ---- 角色表 ---- */
+.spm-settings .spm-role-table-head {
+  height: 40px;
+  font-size: 12px;
+  color: var(--ink3);
+}
+.spm-settings .spm-role-row {
+  min-height: 78px;
+  padding: 10px 14px;
+}
+.spm-settings .spm-role-row > i {
+  width: 36px;
+  height: 36px;
+  font-size: 12px;
+}
+.spm-settings .spm-role-name b {
+  font-size: 14px;
+}
+.spm-settings .spm-role-name em,
+.spm-settings .spm-role-name small,
+.spm-settings .spm-role-row > div:not(.spm-role-name) > small {
+  font-size: 11px;
+}
+.spm-settings .spm-role-row > div:not(.spm-role-name) > b {
+  font-size: 13px;
+}
+.spm-settings .spm-role-row > footer button,
+.spm-settings .spm-role-full {
+  height: 30px;
+  font-size: 12px;
+}
+.spm-settings .spm-mechanism-section > article {
+  padding: 18px 22px;
+}
+.spm-settings .spm-mechanism-section > article b {
+  font-size: 14px;
+}
+.spm-settings .spm-mechanism-section > article small,
+.spm-settings .spm-mechanism-section > aside {
+  font-size: 12px;
+}
+.spm-settings .spm-mechanism-section > aside {
+  padding: 12px 22px;
+}
+/* ---- 审批机制 ---- */
+.spm-approval-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 18px 22px 0;
+}
+.spm-approval-modes .spm-mode {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 12px;
+  min-height: 84px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.spm-approval-modes .spm-mode:hover {
+  border-color: #b9cff2;
+}
+.spm-approval-modes .spm-mode.active {
+  border: 2px solid var(--blue);
+  padding: 11px 15px;
+  box-shadow: 0 4px 14px #176ef31a;
+}
+.spm-approval-modes .spm-mode:focus-visible,
+.spm-snav button:focus-visible,
+.spm-add:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+.spm-approval-modes .spm-mode > i {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #eaf3ff;
+  color: var(--blue);
+  font-style: normal;
+}
+.spm-approval-modes .spm-mode:nth-child(2) > i {
+  background: #f6ecff;
+  color: #9838e9;
+}
+.spm-approval-modes .spm-mode b {
+  font-size: 14px;
+}
+.spm-approval-modes .spm-mode small {
+  display: block;
+  margin-top: 4px;
+  color: var(--ink3);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.spm-approval .spm-chain {
+  margin: 18px 22px 22px;
+  padding: 18px 20px;
+  border: 1px solid #edf0f5;
+  border-radius: 12px;
+  background: #fafbfd;
+}
+.spm-approval .spm-chain.off {
+  opacity: 0.7;
+}
+.spm-approval .spm-chain h3 {
+  margin: 0;
+  font-size: 14px;
+}
+.spm-approval .spm-chain > p {
+  margin: 6px 0 16px;
+  color: var(--ink3);
+  font-size: 12px;
+}
+.spm-approval .spm-chain > footer {
+  padding-top: 14px;
+  color: var(--ink3);
+  font-size: 12px;
+}
+.spm-approval .spm-chain-board {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.spm-add {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border: 1px dashed #a9c4ee;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--blue);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s, border-style 0.15s;
+}
+.spm-add:hover {
+  border-style: solid;
+  background: #eaf3ff;
+}
+.spm-arrow {
+  color: #b2bccb;
+  font-size: 18px;
+}
+.spm-node {
+  position: relative;
+  min-width: 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 34px 12px 16px;
+  border: 1px solid #cfe0fa;
+  border-radius: 10px;
+  background: #fff;
+}
+.spm-node-no {
+  color: var(--ink3);
+  font-size: 11px;
+}
+.spm-node em {
+  align-self: flex-start;
+  padding: 1px 8px;
+  border-radius: 9px;
+  background: #e6f0ff;
+  color: var(--blue);
+  font-size: 11px;
+  font-style: normal;
+}
+.spm-node b {
+  font-size: 13px;
+}
+.spm-node small {
+  color: var(--ink3);
+  font-size: 11px;
+}
+.spm-node-x {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink3);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+.spm-node-x:hover {
+  background: #fde8e8;
+  color: #d64f48;
+}
+/* ---- 空间成员 ---- */
+.spm-settings .spm-member-card > aside {
+  margin: 16px 22px 0;
+  padding: 11px 14px;
+  font-size: 12px;
+}
+.spm-settings .spm-member-tools {
+  height: 62px;
+  padding: 0 22px;
+}
+.spm-settings .spm-member-tools input,
+.spm-settings .spm-member-tools select {
+  height: 34px;
+  font-size: 13px;
+}
+.spm-settings .spm-member-tools span {
+  font-size: 12px;
+}
+.spm-settings .spm-member-table {
+  margin: 0 22px;
+}
+.spm-settings .spm-member-head {
+  height: 40px;
+}
+.spm-settings .spm-member-head b {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink3);
+}
+.spm-settings .spm-member-row {
+  height: 58px;
+  font-size: 13px;
+}
+.spm-settings .spm-member-row > span:first-child {
+  gap: 12px;
+}
+.spm-settings .spm-member-row > span:first-child i {
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+}
+.spm-mname {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.spm-mname b {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.spm-mname small {
+  color: var(--ink3);
+  font-size: 11px;
+}
+.spm-msrc {
+  color: var(--ink2);
+}
+.spm-role-inline {
+  height: 30px;
+  max-width: 100%;
+  padding: 0 26px 0 12px;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  background: #e9fff2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='m1 1 4 4 4-4' fill='none' stroke='%2316aa72' stroke-width='1.5'/%3E%3C/svg%3E") right 10px center no-repeat;
+  color: #16aa72;
+  font-size: 12px;
+  appearance: none;
+  cursor: pointer;
+}
+.spm-role-inline.admin {
+  background-color: #f7e8ff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='m1 1 4 4 4-4' fill='none' stroke='%23bc4ddb' stroke-width='1.5'/%3E%3C/svg%3E");
+  color: #bc4ddb;
+}
+.spm-role-inline:hover:not(:disabled) {
+  border-color: currentColor;
+}
+.spm-role-inline:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+.spm-settings .spm-member-row button {
+  margin: 0;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.spm-settings .spm-member-row button.danger:hover:not(:disabled) {
+  background: #fde8e8;
+}
+.spm-settings .spm-member-row button:disabled {
+  color: #c3cad6;
+  cursor: not-allowed;
+}
+.spm-member-empty {
+  padding: 32px 0;
+  color: var(--ink3);
+  font-size: 13px;
+  text-align: center;
+}
+.spm-member-empty[hidden] {
+  display: none;
+}
+.spm-settings .spm-member-card > footer {
+  padding: 14px 22px 18px;
+  font-size: 12px;
+}
+/* ---- 悬浮保存条 ---- */
+.spm-savebar {
+  position: sticky;
+  bottom: 18px;
+  z-index: 5;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 8px 18px;
+  border-radius: 24px;
+  background: #1d2a45;
+  box-shadow: 0 10px 28px #1d2a4538;
+  color: #fff;
+  font-size: 13px;
+}
+.spm-savebar[hidden] {
+  display: none;
+}
+.spm-savebar > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.spm-savebar > span i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff9f43;
+}
+.spm-savebar button {
+  height: 32px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 16px;
+  background: #ffffff1f;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+.spm-savebar button:hover {
+  background: #ffffff33;
+}
+.spm-savebar button.primary {
+  background: var(--blue, #176ef3);
+}
+.spm-savebar button.primary:hover {
+  background: #3d85f5;
+}
+/* ---- 撤销提示 ---- */
+.spm-undo {
+  position: fixed;
+  left: 50%;
+  bottom: 36px;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px 10px 18px;
+  border-radius: 22px;
+  background: #1d2a45;
+  box-shadow: 0 10px 28px #1d2a4538;
+  color: #fff;
+  font-size: 13px;
+  transform: translateX(-50%);
+}
+.spm-undo button {
+  height: 28px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 14px;
+  background: #ffffff24;
+  color: #8fc0ff;
+  font-size: 13px;
+  cursor: pointer;
+}
+.spm-undo button:hover {
+  background: #ffffff38;
+}
+@media (max-width: 1180px) {
+  .spm-settings {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .spm-snav {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    flex-direction: row;
+    padding: 8px 0;
+    background: #f5f7fa;
+  }
+  .spm-snav > b {
+    display: none;
+  }
+  .spm-approval-modes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 工作区最小宽度略降，避免在 1600 宽屏下出现横向滚动 */
+.pr2-main > .pr2-work {
+  min-width: 960px;
+}
+.spm-settings .spm-role-table-head,
+.spm-settings .spm-role-row {
+  grid-template-columns: 44px minmax(150px, 1.2fr) 0.42fr 0.78fr 0.78fr 140px;
+}
+.spm-settings .spm-role-row > footer {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
