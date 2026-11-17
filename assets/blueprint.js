@@ -159,14 +159,6 @@
       new CustomEvent("knora:tenantchange", { detail: tenant }),
     );
   }
-  var apps = [
-    ["portal", "首页工作台", "⌂", "portal-home.html", "knowledge"],
-    ["entity", "实体看板", "◉", "entity-dashboard.html", "knowledge"],
-    ["graph", "图析", "⌘", "graph-analysis.html", "knowledge"],
-    ["operations", "运营看板", "▥", "operations-dashboard.html", "knowledge"],
-    ["ontology", "本体管理", "◇", "knowledge-base-management.html?module=aigo", "ontology"],
-    ["jinglun", "经纶", "经", "jinglun.html?view=project-overview", "ontology"],
-  ];
   var sharedProjects = {
     personal: {
       name: "陈宇的个人项目",
@@ -232,45 +224,6 @@
   function blueprintNote() {
     return "";
   }
-  function appGrid() {
-    return [
-      ["knowledge", "知识门户"],
-      ["ontology", "本体平台"],
-    ]
-      .map(function (group) {
-        return (
-          '<section class="app-group"><div class="app-group-title"><b>' +
-          group[1] +
-          "</b><span>" +
-          (group[0] === "knowledge"
-            ? "面向知识使用与洞察"
-            : "面向本体建设与业务运行") +
-          '</span></div><div class="app-group-grid">' +
-          apps
-            .filter(function (x) {
-              return x[4] === group[0];
-            })
-            .map(function (x) {
-              return (
-                '<a class="app-item ' +
-                (x[0] === app ? "active" : "") +
-                '" data-app="' +
-                x[0] +
-                '" href="' +
-                x[3] +
-                '"><span class="app-icon">' +
-                x[2] +
-                "</span><span>" +
-                x[1] +
-                "</span></a>"
-              );
-            })
-            .join("") +
-          "</div></section>"
-        );
-      })
-      .join("");
-  }
   function jinglunProjectSwitchHtml() {
     var active = lastProjectKey(),
       p = sharedProjects[active];
@@ -307,77 +260,15 @@
       "</div></div></div>"
     );
   }
-  function jinglunSidebar() {
-    var view = jinglunView(),
-      projectKey = lastProjectKey(),
-      projectViews = [
-        ["project-overview", "项目概览", "当前项目运行统计", "览"],
-        ["project-flows", "流程管理", "Pipeline 设计与发布", "流"],
-        ["project-schedules", "调度管理", "定时与事件调度", "调"],
-        ["project-tasks", "任务管理", "运行实例与执行日志", "任"],
-        ["project-extraction", "非结构化处理", "多源知识抽取与融合流程", "抽"],
-      ],
-      knowledgeViews = [
-        ["operators", "算子管理", "当前项目可用的数据处理算子", "算"],
-        ["rules", "规则管理", "当前项目的抽取与校验规则", "规"],
-        ["templates", "流程模板", "当前项目可用的流程模板", "模"],
-      ];
-    function links(items, scoped) {
-      return items
-        .map(function (x) {
-          return (
-            '<a class="nav-link ' +
-            (x[0] === view ? "active" : "") +
-            '" href="jinglun.html?view=' +
-            x[0] +
-            (scoped ? "&project=" + projectKey : "") +
-            '"><span class="nav-icon">' +
-            x[3] +
-            "</span><span><b>" +
-            x[1] +
-            "</b><small>" +
-            x[2] +
-            "</small></span></a>"
-          );
-        })
-        .join("");
-    }
-    return (
-      '<aside class="sidebar jinglun-sidebar project-mode"><div class="side-kicker">KNORA JINGLUN</div><h2 class="side-title">经纶</h2><div class="side-group">当前项目</div><div class="jinglun-current-project"><i>项</i><span><b id="jinglunSideProjectName">' +
-      sharedProjects[projectKey].name +
-      "</b><small>与本体管理共享项目范围</small></span></div>" +
-      links(projectViews, true) +
-      '<div class="side-group">知识管理</div>' +
-      links(knowledgeViews, true) +
-      "</aside>"
-    );
-  }
   function sidebar() {
-    if (app === "jinglun") return jinglunSidebar();
-    var r = routes[app] || routes.portal;
     return (
-      '<aside class="sidebar"><div class="side-kicker">' +
-      r.kicker +
-      '</div><h2 class="side-title">' +
-      r.title +
-      '</h2><div class="side-group">一级页面</div>' +
-      r.pages
-        .map(function (x) {
-          return (
-            '<a class="nav-link ' +
-            (x[0] === page ? "active" : "") +
-            '" href="' +
-            x[3] +
-            '"><span class="nav-icon">' +
-            x[4] +
-            "</span><span><b>" +
-            x[1] +
-            "</b><small>" +
-            x[2] +
-            "</small></span></a>"
-          );
-        })
-        .join("") +
+      '<aside class="sidebar unified-nav">' +
+      window.KnoraUnifiedNav.html({
+        app: app,
+        page: page,
+        view: app === "jinglun" ? jinglunView() : "",
+        module: page === "industry-templates" ? "template" : "",
+      }) +
       "</aside>"
     );
   }
@@ -397,11 +288,7 @@
     body.insertAdjacentHTML("afterbegin", icons);
     body.insertAdjacentHTML(
       "beforeend",
-      '<div class="shell"><header class="topbar"><button class="app-trigger" id="appTrigger" aria-label="应用中心">' +
-        icon("grid") +
-        '</button><div class="brand"><span class="logo">K</span><strong>' +
-        r.name +
-        "</strong><small>产品蓝图</small></div>" +
+      '<div class="shell"><header class="topbar"><div class="brand"><span class="logo">K</span><strong>Knora</strong><small>产品蓝图</small></div>' +
         context +
         '<span class="top-spacer"></span><div class="approval-notification-wrap"><button class="top-btn" id="approvalNotificationTrigger" aria-label="审批通知" aria-expanded="false">' +
         icon("bell") +
@@ -412,9 +299,7 @@
         '</button><div class="profile-menu" id="profileMenu"><header><span class="avatar">陈</span><span><b>陈宇</b><small>chenyu@saidoo.com</small></span></header>' +
         profileCommonHtml() +
         tenantChoiceHtml() +
-        '<button id="tenantSwitch" class="tenant-switch-legacy" hidden type="button"></button><div class="profile-menu-footer"><button data-toast="退出登录交互沿用统一认证中心"><span class="profile-menu-icon">退</span><span><b>退出登录</b><small>安全退出当前账号</small></span></button></div></div></div><div class="app-pop" id="appPop"><div class="app-pop-head"><b>Knora 应用中心</b><span>六个应用 · 两个平台</span></div><div class="app-grid">' +
-        appGrid() +
-        '</div></div></header><div class="workspace">' +
+        '<button id="tenantSwitch" class="tenant-switch-legacy" hidden type="button"></button><div class="profile-menu-footer"><button data-toast="退出登录交互沿用统一认证中心"><span class="profile-menu-icon">退</span><span><b>退出登录</b><small>安全退出当前账号</small></span></button></div></div></div></header><div class="workspace">' +
         sidebar() +
         '<main class="content" id="content"></main></div></div><div class="toast" id="toast"></div><div class="modal-mask" id="modalMask"><div class="modal" id="modal"><div class="modal-head"><div><h2 id="modalTitle"></h2><p id="modalDesc"></p></div><button class="modal-close" data-close-modal>×</button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="modalConfirm">确认</button></div></div></div>',
     );
@@ -4182,16 +4067,8 @@
   }
   openDataSourceModal = openDataSourceModalV2;
   function bindGlobal() {
-    var trigger = document.getElementById("appTrigger"),
-      pop = document.getElementById("appPop"),
-      profileTrigger = document.getElementById("profileTrigger"),
+    var profileTrigger = document.getElementById("profileTrigger"),
       profileMenu = document.getElementById("profileMenu");
-    trigger.onclick = function (e) {
-      e.stopPropagation();
-      pop.classList.toggle("open");
-      trigger.classList.toggle("open", pop.classList.contains("open"));
-      profileMenu.classList.remove("open");
-    };
     profileTrigger.onclick = function (e) {
       e.stopPropagation();
       profileMenu.classList.toggle("open");
@@ -4199,14 +4076,8 @@
         "aria-expanded",
         profileMenu.classList.contains("open") ? "true" : "false",
       );
-      pop.classList.remove("open");
-      trigger.classList.remove("open");
     };
     document.addEventListener("click", function (e) {
-      if (!e.target.closest("#appPop") && !e.target.closest("#appTrigger")) {
-        pop.classList.remove("open");
-        trigger.classList.remove("open");
-      }
       if (!e.target.closest(".profile-menu-wrap")) {
         profileMenu.classList.remove("open");
         profileTrigger.setAttribute("aria-expanded", "false");
@@ -4240,7 +4111,6 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") {
         closeModal();
-        pop.classList.remove("open");
         profileMenu.classList.remove("open");
       }
     });
@@ -7129,7 +6999,7 @@
       sidebar = workspace && workspace.querySelector(":scope > .sidebar"),
       button = document.createElement("button"),
       collapsed = false;
-    if (!workspace || !sidebar || body.classList.contains("standalone-product"))
+    if (!workspace || !sidebar)
       return;
     button.type = "button";
     button.id = "sidebarCollapseToggle";
@@ -7153,7 +7023,7 @@
       button.setAttribute("aria-expanded", collapsed ? "false" : "true");
       try {
         localStorage.setItem(
-          "knora:" + app + ":sidebar-collapsed",
+          "knora:sidebar-collapsed",
           collapsed ? "1" : "0",
         );
       } catch (err) {}
@@ -7164,7 +7034,7 @@
     sidebar.appendChild(button);
     try {
       collapsed =
-        localStorage.getItem("knora:" + app + ":sidebar-collapsed") === "1";
+        localStorage.getItem("knora:sidebar-collapsed") === "1";
     } catch (err) {}
     apply(collapsed);
   }
@@ -7200,14 +7070,11 @@
     });
   }
   renderShell();
+  window.KnoraUnifiedNav.bind(document.querySelector(".workspace > .sidebar"));
   document.getElementById("content").innerHTML = currentPage();
   bindGlobal();
   bindPage();
   bindTenantSelector();
   bindUnifiedSidebarCollapse();
   bindApprovalNotifications();
-  if (new URLSearchParams(location.search).get("apps") === "open") {
-    document.getElementById("appPop").classList.add("open");
-    document.getElementById("appTrigger").classList.add("open");
-  }
 })();

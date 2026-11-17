@@ -159,7 +159,7 @@
   }
 
   function filterNavigation() {
-    document.querySelectorAll(".sidebar a.nav-link").forEach(function (link) {
+    document.querySelectorAll(".sidebar a.nav-link, .sidebar a.un-sub").forEach(function (link) {
       var page = portalPageFromHref(link.getAttribute("href"));
       if (page) link.classList.toggle("role-view-hidden", config.portalPages.indexOf(page) < 0);
     });
