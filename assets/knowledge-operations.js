@@ -998,19 +998,39 @@
       </section>`;
     return `<div class="ko-cols">${colA}${colB}${colC}</div><p class="ko-muted ko-def">好评率 = 点赞 ÷（点赞 + 点踩），只统计有反馈的回答；反馈率 = 有反馈的回答数 ÷ 智能体回答总数，用来判断好评率是否可信。回答总数为示例口径，待确认。知识缺口清单合并了无结果搜索（系统记录）和知识缺失反馈（用户上报），两者指向同一主题时排在前面。</p>`;
   }
-  function listDialogHTML(k) {
-    const L = pending.lists[k];
-    const titleMap = { use: "热门知识", zero: "零访问知识", dislike: "待处理的质量问题", gap: "知识缺口清单" };
+  const listTitle = { use: "热门知识", zero: "零访问知识", dislike: "待处理的质量问题", gap: "知识缺口清单" };
+  // 每列：[表头, 页面显示, 导出文本]（导出文本缺省时取显示内容的纯文本）
+  function listCols(k) {
     const tags = (r) => r.tags.map((t) => `<span class="ko-tagchip" title="${escape(pathOf(t))}">${escape(t)}</span>`).join("") || "—";
-    const kb = [["知识名称", (r) => `<b>${escape(r.name)}</b>`], ["文件类型", (r) => r.fileType], ["状态", (r) => pill(r.statusLabel)], ["所属部门 / 子部门", (r) => `${r.dept} / ${r.domain}`], ["负责人", (r) => r.owner], ["标签", tags], ["最近更新", (r) => r.updated], ["有效期至", (r) => r.expiry || "未设置"]];
-    const cols = {
+    const tagsText = (r) => r.tags.map(pathOf).join("；") || "—";
+    const kb = [["知识名称", (r) => `<b>${escape(r.name)}</b>`], ["文件类型", (r) => r.fileType], ["状态", (r) => pill(r.statusLabel)], ["所属部门 / 子部门", (r) => `${r.dept} / ${r.domain}`], ["负责人", (r) => r.owner], ["标签", tags, tagsText], ["最近更新", (r) => r.updated], ["有效期至", (r) => r.expiry || "未设置"]];
+    return {
       use: [...kb, ["浏览量", (r) => r.views], ["检索命中", (r) => r.hits]],
       zero: [...kb, ["浏览量", (r) => r.views], ["检索命中", (r) => r.hits]],
       dislike: [...kb, ["点踩量", (r) => r.dislikes], ["点赞量", (r) => r.likes], ["反馈类型", (r) => r.ftypeLabel], ["问题类型", (r) => r.kindLabel]],
       gap: [["主题", (r) => `<b>${escape(r.word)}</b>`], ["来源", (r) => r.source], ["所属部门 / 子部门", (r) => `${r.dept} / ${r.domain}`], ["关联反馈单", (r) => escape(r.reports.map((t) => `${t.code} · ${t.status}`).join("；") || "—")], ["无结果次数", (r) => r.count], ["最近搜索", (r) => r.day || "—"]],
     }[k];
-    const body = L.map((r, i) => `<tr><td class="no">${i + 1}</td>${cols.map(([, f]) => `<td>${f(r)}</td>`).join("")}</tr>`).join("");
-    return `<div class="ko-listdlg"><h2>${titleMap[k]} <small>共 ${L.length} 条 · Mock 数据 · 所选期间</small></h2><div class="ko-table-wrap"><table><thead><tr><th>#</th>${cols.map(([h]) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div></div>`;
+  }
+  const plain = (html) => new DOMParser().parseFromString(`<div>${html}</div>`, "text/html").body.textContent;
+  function exportList(k) {
+    const cols = listCols(k);
+    const data = pending.lists[k];
+    const quote = (v) => '"' + String(v).replace(/^[=+@-]/, "'$&").replace(/"/g, '""') + '"';
+    const csv = "﻿" + [cols.map((c) => quote(c[0])).join(","), ...data.map((r) => cols.map((c) => quote(c[2] ? c[2](r) : plain(String(c[1](r))))).join(","))].join("\r\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${listTitle[k]}-Mock.csv`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    const st = document.getElementById("ko-status");
+    if (st) st.textContent = `已导出「${listTitle[k]}」${data.length} 条`;
+  }
+  function listDialogHTML(k) {
+    const L = pending.lists[k];
+    const cols = listCols(k);
+    const body = L.map((r, i) => `<tr><td class="no">${i + 1}</td>${cols.map((c) => `<td>${c[1](r)}</td>`).join("")}</tr>`).join("");
+    return `<div class="ko-listdlg"><div class="ko-listhead"><h2>${listTitle[k]} <small>共 ${L.length} 条 · Mock 数据 · 所选期间</small></h2><button class="btn ko-sm" data-export-list="${k}" ${L.length ? "" : "disabled"}>导出</button></div><div class="ko-table-wrap"><table><thead><tr><th>#</th>${cols.map((c) => `<th>${c[0]}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div></div>`;
   }
   function tagTreeHTML(scopeRows) {
     const n = (tag) => scopeRows.filter((r) => r.tags.includes(tag)).length;
@@ -1460,10 +1480,14 @@
         `${isTask && r.status !== "已处理" ? `<button class="btn primary" data-advance="${r.code}">${r.status === "待处理" ? "受理任务" : "标记已处理"}</button>` : ""}<button class="btn" data-close>关闭</button>`;
       document.getElementById("ko-detail").showModal();
     }
+    if (b.dataset.exportList !== undefined || (b.hasAttribute("data-export") && b.dataset.export)) {
+      exportList(b.dataset.exportList || b.dataset.export);
+      return;
+    }
     if (b.hasAttribute("data-export")) {
-      const lk = b.dataset.export;
-      const cols = lk ? listDefs[lk].cols : columns();
-      const data = lk ? pending.lists[lk] : currentRows();
+      const lk = "";
+      const cols = columns();
+      const data = currentRows();
       const quote = (v) =>
         '"' +
         String(v)
