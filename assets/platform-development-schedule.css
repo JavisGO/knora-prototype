@@ -1,0 +1,46 @@
+.schedule-shell { width: min(1600px, calc(100% - 48px)); }
+body:not(.schedule-editing) .schedule-edit-only { display: none; }
+.editor-toolbar [hidden] { display: none; }
+.schedule-cell-editor { width: 100%; min-width: 0; padding: 8px; border: 1px solid #cfdaea; border-radius: 7px; background: #fff; color: #34415a; font: inherit; line-height: 1.6; }
+textarea.schedule-cell-editor { resize: vertical; min-height: 72px; }
+.schedule-editing .schedule-table { min-width: 1260px; }
+.schedule-editing .schedule-table td { padding: 12px 10px; }
+.schedule-notes { margin: 0 0 22px; padding: 16px 22px; border: 1px solid #dce7fa; border-radius: 12px; background: #f0f5ff; color: #405572; font-size: 14px; line-height: 1.9; }
+.schedule-notes ol { margin: 0; padding-left: 20px; }
+.schedule-filters { flex-wrap: wrap; }
+.schedule-filters input, .schedule-dialog input, .schedule-dialog textarea, .schedule-dialog select { width: 100%; min-height: 36px; padding: 8px 10px; border: 1px solid #cfdaea; border-radius: 7px; background: white; color: #34415a; font: inherit; }
+.schedule-filters input[type="search"] { width: 230px; }
+.schedule-filters input[type="date"] { width: 155px; }
+.schedule-table-frame { overflow: auto; border: 1px solid var(--line); border-radius: 12px; background: white; }
+.schedule-table { width: 100%; min-width: 1100px; border-collapse: collapse; table-layout: fixed; font-size: 13px; }
+.schedule-table th { padding: 15px 14px; background: #f3f6fb; text-align: left; color: #53617a; }
+.schedule-table td { padding: 16px 14px; border-top: 1px solid #e8edf5; vertical-align: top; line-height: 1.7; overflow-wrap: anywhere; white-space: pre-wrap; }
+.schedule-table tr:hover td { background: #fafcff; }
+.schedule-table td:nth-child(2) { font-weight: 600; color: #273b5a; }
+.schedule-table .row-actions { display: flex; flex-wrap: wrap; gap: 5px 12px; }
+.row-actions button { border: 0; background: none; padding: 0; font: inherit; color: #3169ca; cursor: pointer; white-space: nowrap; }
+.row-actions button[data-action="delete"] { color: #bd5252; }
+.row-actions button:disabled { color: #b8c1cf; cursor: default; }
+.schedule-status { display: inline-block; padding: 2px 9px; border-radius: 6px; white-space: nowrap; font-size: 12px; color: #637085; background: #eef1f5; }
+.schedule-status[data-status="进行中"] { color: #2b65bf; background: #eaf2ff; }
+.schedule-status[data-status="已完成"] { color: #16836a; background: #e8f6ef; }
+.schedule-status[data-status="待测试"] { color: #946311; background: #fff4d9; }
+.schedule-status[data-status="待部署"] { color: #7854b1; background: #f1ebfc; }
+.schedule-empty { text-align: center; color: #8290a3; padding: 42px !important; }
+.schedule-footnote { margin: 12px 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.schedule-dialog { width: min(640px, calc(100vw - 32px)); max-height: 90vh; padding: 28px; border: 1px solid #dce4ef; border-radius: 16px; color: #34415a; box-shadow: 0 20px 80px #23365333; }
+.schedule-dialog::backdrop { background: #17243b66; }
+.schedule-dialog h2 { margin: 0 0 20px; font-size: 22px; }
+.schedule-dialog form { display: grid; gap: 16px; }
+.schedule-dialog label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; }
+.schedule-dialog textarea { resize: vertical; min-height: 110px; line-height: 1.7; font-weight: 400; }
+.schedule-dialog .form-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.schedule-dialog .dialog-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid #5986df; outline-offset: 2px; }
+@media (max-width: 760px) {
+  .schedule-shell { width: calc(100% - 28px); padding-top: 28px; }
+  .page-heading-with-actions { align-items: flex-start; flex-direction: column; gap: 16px; }
+  .editor-toolbar { justify-content: flex-start; }
+  .schedule-filters .filter-result { width: 100%; margin-left: 0; }
+  .schedule-dialog { padding: 20px; }
+}

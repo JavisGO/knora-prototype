@@ -1,0 +1,77 @@
+.op-mask { position: fixed; inset: 0; z-index: 2100; background: #13213a66; display: flex; align-items: center; justify-content: center; padding: 28px; }
+.op-dialog { width: 790px; max-width: 96vw; max-height: 92vh; display: flex; flex-direction: column; background: white; border-radius: 14px; box-shadow: 0 24px 80px #14274240; color: #24344c; font: 13px/1.6 "Microsoft YaHei", sans-serif; }
+.op-dialog > header { display: flex; align-items: center; justify-content: space-between; padding: 22px 26px; border-bottom: 1px solid #e5eaf1; }
+.op-dialog h2 { margin: 3px 0 0; font-size: 20px; }
+.op-dialog h3 { margin: 12px 0; font-size: 14px; }
+.op-dialog > header small { color: #7d899c; }
+.op-dialog > header button { border: 0; background: transparent; font-size: 26px; color: #8391a5; cursor: pointer; }
+.op-dialog > main { overflow: auto; padding: 24px 26px; }
+.op-dialog > footer { padding: 16px 26px; border-top: 1px solid #e5eaf1; display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+.op-dialog > footer > span { margin-right: auto; font-size: 11px; color: #8591a3; }
+.op-target { display: flex; align-items: center; gap: 16px; padding: 18px; background: #f0f6ff; border: 1px solid #d7e6fc; border-radius: 10px; }
+.op-target > i { display: grid; place-items: center; width: 44px; height: 44px; color: #326bd7; font-style: normal; background: white; border-radius: 10px; }
+.op-target > div { flex: 1; }
+.op-target h3 { margin: 3px 0; font-size: 17px; }
+.op-target p { margin: 0; color: #6d7e95; font-size: 12px; }
+.op-note { color: #6c7b90; font-size: 12px; line-height: 1.8; padding: 12px 14px; background: #f7f9fc; border-radius: 7px; }
+.op-options { display: flex; gap: 12px; margin: 18px 0; }
+.op-options label { flex: 1; border: 1px solid #dce4ef; border-radius: 8px; padding: 14px; cursor: pointer; }
+.op-options label:has(input:checked) { border-color: #4c82e4; background: #f4f8ff; }
+.op-options input { margin-right: 8px; accent-color: #3574df; }
+.op-options small { display: block; color: #718096; margin: 8px 0 0 22px; }
+.op-chain { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin: 14px 0; }
+.op-chain > span { padding: 10px 14px; background: #edf3fc; border: 1px solid #dfe7f4; border-radius: 7px; }
+.op-chain small { display: block; color: #738096; font-size: 11px; }
+.op-chain > i { color: #9aa8bb; font-style: normal; }
+.op-field { display: grid; gap: 8px; margin: 18px 0; }
+.op-field input, .op-field select, .op-field textarea, .op-review select { padding: 10px 12px; border: 1px solid #dce3ed; border-radius: 7px; font: inherit; width: 100%; box-sizing: border-box; }
+.op-field textarea { min-height: 82px; resize: vertical; }
+.op-names { display: flex; flex-wrap: wrap; gap: 6px; }
+.op-names span { background: #eef2f7; padding: 4px 10px; border-radius: 4px; }
+.op-progress { display: flex; gap: 12px; list-style: none; padding: 0; margin: 24px 0; }
+.op-progress li { flex: 1; padding: 16px; border: 1px solid #e3e8ef; border-radius: 8px; }
+.op-progress b { display: block; font-size: 20px; color: #8895a7; }
+.op-progress small { display: block; color: #8592a5; }
+.op-progress .active { background: #edf4ff; border-color: #87b0f5; }
+.op-progress .done b { color: #269e76; }
+.op-request-summary strong { float: right; color: #3875d8; }
+.op-request-list > button { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px; border: 0; border-bottom: 1px solid #e4e9f1; background: white; text-align: left; cursor: pointer; }
+.op-request-list small { display: block; margin-top: 4px; color: #7c8a9e; }
+.op-request-list em { font-style: normal; color: #3875d8; }
+.op-toast { position: fixed; z-index: 2200; right: 28px; top: 80px; background: #203c65; color: white; padding: 15px 22px; border-radius: 8px; box-shadow: 0 8px 30px #24354c33; }
+.op-card-meta { font-size: 11px; color: #5c7296; background: #f2f6fb; border-radius: 4px; padding: 6px 8px; margin: 10px 0; }
+#ontologyModulePage .om-card[data-op-id] .om-card-actions { display: flex !important; position: static; flex-wrap: wrap; margin-top: 12px; }
+#ontologyModulePage .om-card[data-op-id] .om-card-actions [hidden] { display: none !important; }
+.op-graph-meta { position: absolute; top: 100%; left: -28px; width: 150px; text-align: center; color: #5e7293; font-size: 10px; white-space: nowrap; }
+.op-shared-node { border: 2px dashed #7a95d7 !important; }
+.op-expanded-canvas > svg { height: 650px !important; }
+#projectSemanticGraph .op-expanded-canvas:after { content: attr(data-op-summary); }
+.op-level-hidden { display: none !important; }
+.op-approval-config .spm-chain-board { flex-wrap: wrap; gap: 12px; }
+.op-approval-config .spm-chain-board article { min-width: 160px; }
+.op-approval-config article button { font-size: 11px; padding: 3px 6px; border: 1px solid #dce4ee; border-radius: 4px; background: white; cursor: pointer; }
+.op-toggle { display: flex; align-items: center; gap: 8px; padding: 14px 0; }
+.op-related { display: flex; gap: 10px; flex-wrap: wrap; }
+.op-mine-entry { margin: 14px 24px; }
+.entity-builder-v2 .eb-stepper > button { border: 0; background: transparent; text-align: left; }
+#ontologyModulePage .om-toolbar:has([data-op-level]) { flex-wrap: wrap; }
+#projectSemanticGraph:has([data-op-origin]) .semantic-toolbar { flex-wrap: wrap; min-height: 70px; }
+.spm-approval-modes:has([data-approval-mode="ontology"]) { grid-template-columns: repeat(3,minmax(0,1fr)); }
+@media (max-width: 900px) { .op-options, .op-progress { flex-direction: column; } .spm-approval-modes:has([data-approval-mode="ontology"]) { grid-template-columns: 1fr; } }
+#projectSemanticGraph .op-unified-canvas > svg:not(.op-network-edges) { display: none; }
+#projectSemanticGraph .op-unified-canvas .op-network-edges { position: absolute; inset: 0; width: 100%; height: 100% !important; pointer-events: none; z-index: 1; }
+#projectSemanticGraph .op-unified-canvas .semantic-node { z-index: 2; width: 140px; min-width: 0; box-sizing: border-box; transform: none; }
+#projectSemanticGraph .op-unified-canvas .semantic-node b { white-space: nowrap; }
+#projectSemanticGraph .op-unified-canvas .semantic-node[data-op-ontology-level="enterprise"] > i { color: #7957ce; background: #f1ebff; }
+#projectSemanticGraph .op-unified-canvas .semantic-node[data-op-ontology-level="domain"] > i { color: #2478e7; background: #eaf3ff; }
+#projectSemanticGraph .op-unified-canvas .semantic-node[data-op-ontology-level="draft"] > i { color: #c17c24; background: #fff3e0; }
+#projectSemanticGraph .op-unified-canvas .op-graph-meta { left: -6px; width: 152px; }
+#projectSemanticGraph .op-unified-canvas:after { content: attr(data-op-summary); }
+.op-publication-info { padding: 16px; border: 1px solid #dce6f3; border-radius: 10px; background: #f5f9ff; margin: 18px 0; }
+.op-publication-info p, .op-notice-card p, .approval-ontology-summary { white-space: pre-line; line-height: 1.9; overflow-wrap: anywhere; }
+.op-notice-card { display: block; width: 100%; border: 1px solid #dce6f3; border-radius: 9px; padding: 16px; margin-bottom: 12px; background: #f7faff; text-align: left; cursor: pointer; font: inherit; color: #344c70; }
+.op-notice-card small { color: #7b8ba3; }
+.op-publication-notice small { white-space: pre-line !important; line-height: 1.8; overflow-wrap: anywhere; }
+#approvalNotificationPop:has(.op-publication-notice) { width: 520px; max-width: 90vw; max-height: 75vh; overflow-y: auto; }
+.approval-v2-card-icon.ontology { background: #edf1ff; color: #5b67c7; }
+.approval-v2-card-main > .approval-ontology-summary { max-height: none; -webkit-line-clamp: unset; }
