@@ -206,11 +206,11 @@
       .join("");
 
     return (
-      '<div class="un-brand"><span class="un-logo">K</span><strong>Mevo Ontology</strong></div>' +
+      '<div class="un-pinned"><div class="un-brand"><span class="un-logo">K</span><strong>Mevo Ontology</strong></div>' +
       '<div class="un-group un-global">' +
       top +
       "</div>" +
-      '<div class="un-divider"></div>' +
+      '<div class="un-divider"></div></div>' +
       groups
     );
   }

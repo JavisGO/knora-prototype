@@ -485,3 +485,25 @@ body.sidebar-is-collapsed .shell {
   padding-left: 0;
   padding-right: 0;
 }
+
+/* 品牌 + 全局入口固定在顶部，只有下面的项目制分类滚动 */
+.unified-nav .un-pinned {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  margin: -14px -10px 0;
+  padding: 14px 10px 0;
+  background: #fbfcfe;
+}
+.unified-nav .un-pinned .un-brand {
+  position: static;
+  margin: 0;
+  padding: 2px 8px 12px;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-pinned .un-brand {
+  padding-left: 0;
+  padding-right: 0;
+}
+.unified-nav .un-pinned .un-divider {
+  margin: 8px 0 0;
+}

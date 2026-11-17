@@ -1,0 +1,192 @@
+.pm-pane {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #e4e9f1;
+  border-radius: 12px;
+  background: #fff;
+}
+.pm-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 12px;
+  background: #f6f8fb;
+}
+.pm-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #55637a;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.pm-step:hover {
+  background: #eef2f8;
+}
+.pm-step.active {
+  background: #fff;
+  color: #14213b;
+  box-shadow: 0 2px 8px #2236531a;
+}
+.pm-step > i {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #dfe6f0;
+  color: #637187;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+}
+.pm-step.active > i {
+  background: #0967f4;
+  color: #fff;
+}
+.pm-step span {
+  min-width: 0;
+  flex: 1;
+}
+.pm-step b {
+  display: block;
+  font-size: 12px;
+}
+.pm-step small {
+  display: block;
+  margin-top: 1px;
+  color: #98a3b4;
+  font-size: 9px;
+}
+.pm-step em {
+  padding: 0 6px;
+  border-radius: 8px;
+  background: #e3efff;
+  color: #0967f4;
+  font-size: 9px;
+  font-style: normal;
+}
+.pm-panel {
+  min-width: 0;
+}
+.pm-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.pm-head b {
+  font-size: 15px;
+  color: #14213b;
+}
+.pm-head span {
+  color: #8794a8;
+  font-size: 11px;
+}
+.pm-proj {
+  padding: 1px 7px;
+  border-radius: 9px;
+  background: #eef2f8;
+  color: #637187;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+}
+.pm-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.pm-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 88px;
+  padding: 14px 16px;
+  border: 1px solid #e4e9f1;
+  border-radius: 12px;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.pm-card:hover {
+  border-color: #a9c8f8;
+  box-shadow: 0 6px 18px #23416f14;
+}
+.pm-card-main {
+  min-width: 0;
+  flex: 1;
+}
+.pm-card-main b {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #14213b;
+}
+.pm-card-main b em {
+  padding: 0 6px;
+  border-radius: 8px;
+  background: #e3efff;
+  color: #0967f4;
+  font-size: 8px;
+  font-style: normal;
+  line-height: 15px;
+}
+.pm-card-main p {
+  margin: 5px 0 0;
+  color: #8794a8;
+  font-size: 10px;
+  line-height: 1.6;
+}
+.pm-go {
+  flex: 0 0 auto;
+  padding: 6px 14px;
+  border: 1px solid #dfe6f0;
+  border-radius: 7px;
+  background: #fff;
+  color: #14213b;
+  font-size: 11px;
+  text-decoration: none;
+  transition: 0.15s;
+}
+.pm-go:hover {
+  border-color: #0967f4;
+  color: #0967f4;
+}
+.pm-empty {
+  padding: 60px 0;
+  color: #98a3b4;
+  text-align: center;
+  font-size: 11px;
+}
+@media (max-width: 1100px) {
+  .pm-pane {
+    grid-template-columns: 1fr;
+  }
+  .pm-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 「本体发布与编辑审批」入口：标签栏右端 */
+#mineTabs {
+  align-items: center;
+}
+#mineTabs .pm-tabs-entry {
+  margin: 0 14px 0 auto;
+  align-self: center;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 11px;
+}
