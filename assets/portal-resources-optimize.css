@@ -239,3 +239,47 @@
 .pr2-command.enterprise button {
   white-space: nowrap;
 }
+/* ---- 空间详情页：部门概览 + 空间管理页签（原「空间配置」抽屉内容）2026-11-15 ---- */
+.pr2-types button.pr2-tab-sep {
+  margin-left: 26px;
+}
+.pr2-types button.pr2-tab-sep::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 1px;
+  height: 16px;
+  background: #d9dfe8;
+  transform: translateY(-50%);
+}
+.pr2-title .spm-page-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+.spm-page-actions button {
+  height: 34px;
+  padding: 0 16px;
+  border: 1px solid #dce2ea;
+  border-radius: 18px;
+  background: #fff;
+  color: #23334d;
+  font-size: 11px;
+  cursor: pointer;
+}
+.spm-page-actions button:hover {
+  border-color: #98c3ff;
+  color: #176ef3;
+}
+.spm-page-actions button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.spm-page-panel {
+  background: #f5f7fa;
+}
+.spm-inline-pane {
+  min-height: 420px;
+}
