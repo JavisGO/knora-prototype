@@ -288,3 +288,19 @@
 .om-grid[data-view="list"] .om-card .om-card-actions .oac-btn {
   padding: 0 7px;
 }
+
+/* 非个人项目：卡片上的「可编辑 · 本体层级」说明，列表里放在描述列第二行 */
+.om-grid[data-view="list"] .om-card:has(.op-card-meta) .om-linkline {
+  grid-row: 1;
+  align-self: end;
+}
+.om-grid[data-view="list"] .om-card .op-card-meta {
+  grid-column: desc;
+  grid-row: 2;
+  align-self: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #8794a8;
+  font-size: 9px;
+}

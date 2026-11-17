@@ -25,12 +25,12 @@
   grid-template-rows: 60px minmax(0, 1fr);
 }
 .topbar {
-  grid-column: 1/-1;
+  grid-column: 2;
   grid-row: 1;
 }
 .ontology-side {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 1 / span 2;
   min-height: 0;
   overflow: auto;
   padding: 13px 10px;

@@ -260,47 +260,44 @@
       "</div></div></div>"
     );
   }
-  function sidebar() {
+  function isProjectApp() {
+    return window.KnoraUnifiedNav.projectApps.indexOf(app) > -1;
+  }
+  function sidebar(dock) {
     return (
       '<aside class="sidebar unified-nav">' +
       window.KnoraUnifiedNav.html({
         app: app,
         page: page,
-        view: app === "jinglun" ? jinglunView() : "",
         module: page === "industry-templates" ? "template" : "",
       }) +
+      (dock || "") +
       "</aside>"
     );
   }
   function renderShell() {
     var r = routes[app] || routes.portal,
       tenant = currentTenant(),
-      context =
-        app === "ontology" || jinglunInProject()
-          ? jinglunProjectSwitchHtml()
-          : app === "jinglun"
-            ? ""
-            : '<button class="context-pill" id="spaceContext"><span>' +
-              tenant.root +
-              "</span>" +
-              icon("chevron") +
-              "</button>";
+      context = isProjectApp() ? jinglunProjectSwitchHtml() : "";
     body.insertAdjacentHTML("afterbegin", icons);
+    var dock =
+      '<div class="un-dock">' +
+      '<div class="approval-notification-wrap"><button class="top-btn" id="approvalNotificationTrigger" aria-label="审批通知" aria-expanded="false">' +
+      icon("bell") +
+      '<span class="badge">3</span></button><section class="approval-notification-pop" id="approvalNotificationPop"><header><span><b>审批通知</b><small>3 条待处理</small></span><a href="portal-mine.html?approvalDetail=approval-05">进入我的审批待办</a></header><a class="approval-notification-item unread" href="portal-mine.html?approvalDetail=approval-05"><i>表</i><span><b>客户经营数据资源申请</b><small>王晨 · 重点客户经营项目 · 待我审批</small></span><em>刚刚</em></a><a class="approval-notification-item unread" href="portal-mine.html?approvalDetail=approval-06"><i>文</i><span><b>月度经营分析文档申请</b><small>赵宁 · 区域经营复盘项目 · 待我审批</small></span><em>15:30</em></a><a class="approval-notification-item unread" href="portal-mine.html?approvalDetail=approval-data-allocation"><i>表</i><span><b>客户经营数据表共享审批</b><small>赵宁 · 采购组空间 · 待我审批</small></span><em>10:36</em></a></section></div><div class="profile-menu-wrap"><button class="profile profile-trigger" id="profileTrigger" aria-expanded="false"><span class="avatar">陈</span><span><b>陈宇</b><small>平台管理员 · ' +
+      tenant.name +
+      "租户</small></span>" +
+      icon("chevron") +
+      '</button><div class="profile-menu" id="profileMenu"><header><span class="avatar">陈</span><span><b>陈宇</b><small>chenyu@saidoo.com</small></span></header>' +
+      profileCommonHtml() +
+      tenantChoiceHtml() +
+      '<button id="tenantSwitch" class="tenant-switch-legacy" hidden type="button"></button><div class="profile-menu-footer"><button data-toast="退出登录交互沿用统一认证中心"><span class="profile-menu-icon">退</span><span><b>退出登录</b><small>安全退出当前账号</small></span></button></div></div></div></div>';
     body.insertAdjacentHTML(
       "beforeend",
-      '<div class="shell"><header class="topbar"><div class="brand"><span class="logo">K</span><strong>Knora</strong><small>产品蓝图</small></div>' +
+      '<div class="shell"><header class="topbar'+(isProjectApp()?'':' topbar-hidden')+'">' +
         context +
-        '<span class="top-spacer"></span><div class="approval-notification-wrap"><button class="top-btn" id="approvalNotificationTrigger" aria-label="审批通知" aria-expanded="false">' +
-        icon("bell") +
-        '<span class="badge">3</span></button><section class="approval-notification-pop" id="approvalNotificationPop"><header><span><b>审批通知</b><small>3 条待处理</small></span><a href="portal-mine.html?approvalDetail=approval-05">进入我的审批待办</a></header><a class="approval-notification-item unread" href="portal-mine.html?approvalDetail=approval-05"><i>表</i><span><b>客户经营数据资源申请</b><small>王晨 · 重点客户经营项目 · 待我审批</small></span><em>刚刚</em></a><a class="approval-notification-item unread" href="portal-mine.html?approvalDetail=approval-06"><i>文</i><span><b>月度经营分析文档申请</b><small>赵宁 · 区域经营复盘项目 · 待我审批</small></span><em>15:30</em></a><a class="approval-notification-item unread" href="portal-mine.html?approvalDetail=approval-data-allocation"><i>表</i><span><b>客户经营数据表共享审批</b><small>赵宁 · 采购组空间 · 待我审批</small></span><em>10:36</em></a></section></div><div class="profile-menu-wrap"><button class="profile profile-trigger" id="profileTrigger" aria-expanded="false"><span class="avatar">陈</span><span><b>陈宇</b><small>平台管理员 · ' +
-        tenant.name +
-        "租户</small></span>" +
-        icon("chevron") +
-        '</button><div class="profile-menu" id="profileMenu"><header><span class="avatar">陈</span><span><b>陈宇</b><small>chenyu@saidoo.com</small></span></header>' +
-        profileCommonHtml() +
-        tenantChoiceHtml() +
-        '<button id="tenantSwitch" class="tenant-switch-legacy" hidden type="button"></button><div class="profile-menu-footer"><button data-toast="退出登录交互沿用统一认证中心"><span class="profile-menu-icon">退</span><span><b>退出登录</b><small>安全退出当前账号</small></span></button></div></div></div></header><div class="workspace">' +
-        sidebar() +
+        '</header><div class="workspace">' +
+        sidebar(dock) +
         '<main class="content" id="content"></main></div></div><div class="toast" id="toast"></div><div class="modal-mask" id="modalMask"><div class="modal" id="modal"><div class="modal-head"><div><h2 id="modalTitle"></h2><p id="modalDesc"></p></div><button class="modal-close" data-close-modal>×</button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="modalConfirm">确认</button></div></div></div>',
     );
   }
@@ -6822,7 +6819,7 @@
           }, 120);
       }
     }
-    if (app === "ontology" || jinglunInProject()) {
+    if (isProjectApp()) {
       var projectTrigger = document.getElementById("globalProjectTrigger"),
         projectPop = document.getElementById("globalProjectPop");
       function applyJinglunProject(key, notify) {
