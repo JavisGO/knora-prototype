@@ -132,8 +132,9 @@ function projListHtml(){var q=state.projQ.trim().toLowerCase(),all=!state.projec
   return '<label class="psr-prow psr-prow-all"><input type="checkbox" data-projall '+(all?'checked':'')+'><span class="psr-pname">全部项目</span><small>不限定项目</small></label>'+rows+(!q||'未归属项目'.indexOf(q)>-1?'<label class="psr-prow"><input type="checkbox" data-unassigned '+(state.unassigned?'checked':'')+'><span class="psr-pname">未归属项目</span><em class="psr-role grey">个人空间等</em><small>'+unassignedCount()+' 项资源</small></label>':'')+(rows||q&&'未归属项目'.indexOf(q)<0?'<div class="psr-empty small">没有匹配的项目</div>':'');
 }
 
+var QA_ON=(function(){try{return window.KnoraCustomHome?KnoraCustomHome.homeConfigs().some(function(c){return c.qa}):true}catch(e){return true}})();
 function render(){content.innerHTML=
- '<section class="psr">'+
+ '<section class="psr'+(QA_ON?'':' psr-noqa')+'">'+
  '<header class="psr-top"><button class="psr-back" data-back aria-label="返回首页">‹</button><div class="psr-bar">'+
   '<nav class="psr-tabs"><button class="on" data-ptab="search">🔍 知识检索</button><button data-ptab="ask">💡 智能问答</button></nav>'+
   '<span class="psr-scope" data-scope>'+(includeArchived?'包含已归档知识':'在全部有权空间中检索')+'</span>'+
@@ -151,9 +152,9 @@ function render(){content.innerHTML=
   '<div class="psr-toolbar"><b>共检索到 <span data-count></span> 条</b><span class="psr-filters"><select data-type><option value="all">文件格式</option><option value="pdf">PDF</option><option value="docx">Word</option><option value="md">MD</option></select><select><option>更新时间</option></select><select><option>上传人</option></select><span class="psr-sort">↕ 相关度排序 ⌄</span></span></div>'+
   '<div class="psr-rows" data-rows></div>'+
   '<footer class="psr-pager">共 <b data-count2></b> 条 <button>‹</button><button class="on">1</button><button>2</button><button>3</button><button>4</button><button>›</button><select><option>5 条/页</option></select></footer></main>'+
-  '<aside class="psr-qa"><header><span class="psr-qa-ico">🤖</span><div><b>智能问答</b><small>针对关键词「'+esc(kw)+'」 <i class="psr-done-t">● 已生成</i></small></div></header><div class="psr-qa-body" data-qa-body></div>'+
+  (QA_ON?'<aside class="psr-qa"><header><span class="psr-qa-ico">🤖</span><div><b>智能问答</b><small>针对关键词「'+esc(kw)+'」 <i class="psr-done-t">● 已生成</i></small></div></header><div class="psr-qa-body" data-qa-body></div>'+
   '<div class="psr-related"><span>相关搜索 <em>'+RELATED.length+'</em></span><button data-rel-expand>展开 ⌄</button><div class="psr-rel-chips" hidden>'+RELATED.map(function(w){return '<button data-hot="'+esc(w)+'">'+esc(w)+'</button>'}).join('')+'</div></div>'+
-  '<form class="psr-ask" data-ask><input placeholder="围绕检索结果提问…" aria-label="追问"><button type="submit" aria-label="发送">➤</button></form></aside>'+
+  '<form class="psr-ask" data-ask><input placeholder="围绕检索结果提问…" aria-label="追问"><button type="submit" aria-label="发送">➤</button></form></aside>':'')+
  '</div></section>';
 
  function q(sel){return content.querySelector(sel)}
@@ -180,7 +181,7 @@ function render(){content.innerHTML=
  function refresh(redrawPops){drawRows();drawFilters();drawTrees();if(redrawPops!==false){drawResPop();drawProjList()}}
  function setPop(name){state.pop=name;content.querySelectorAll('[data-pop-body]').forEach(function(el){el.hidden=el.dataset.popBody!==name});drawFilters()}
  function resetAll(){state.types={docs:true,images:true,tables:true};state.dir={};state.tags=[];state.projects=[];state.unassigned=false;state.fmt='all';q('[data-type]').value='all';refresh()}
- function drawQa(){var body=q('[data-qa-body]');
+ function drawQa(){var body=q('[data-qa-body]');if(!body)return;
   body.innerHTML='<div class="psr-q"><span>'+esc(kw)+'</span><div class="psr-q-ops"><button data-q-again>⟳ 重新回答</button><button data-q-copy>⧉ 复制问题</button></div></div>'+
   state.qaMsgs.map(function(m){return '<div class="psr-a"><p>'+(m.q?'<b>问：</b>'+esc(m.q)+'<br>':'')+(m.a||qaAnswer(kw))+'</p></div>'}).join('')+
   '<div class="psr-steps"><div class="psr-step"><i>📚</i>知识检索 · doc-center<em class="ok">✔ 完成</em></div><div class="psr-step"><i>⚡</i>大模型 · deepseek-v4.1-flash<em class="ok">✔ 完成</em></div></div>'}
@@ -195,8 +196,8 @@ function render(){content.innerHTML=
  q('[data-proj-search]').oninput=function(){state.projQ=this.value;drawProjList()};
  var hotFold=q('[data-fold-hot]');
  hotFold.onclick=function(){var list=q('.psr-hot-list'),hidden=list.classList.toggle('closed');hotFold.textContent=hidden?'展开 ⌄':'收起 ⌃'};
- q('[data-rel-expand]').onclick=function(){var ch=q('.psr-rel-chips');ch.hidden=!ch.hidden;this.textContent=ch.hidden?'展开 ⌄':'收起 ⌃'};
- q('[data-ask]').onsubmit=function(e){e.preventDefault();var i=this.querySelector('input'),t=i.value.trim();if(!t)return;state.qaMsgs.push({q:t,a:'已围绕检索结果生成回答（原型演示）：请参考上方引用的 [1][2] 来源。'});i.value='';drawQa()};
+ var relBtn=q('[data-rel-expand]');if(relBtn)relBtn.onclick=function(){var ch=q('.psr-rel-chips');ch.hidden=!ch.hidden;this.textContent=ch.hidden?'展开 ⌄':'收起 ⌃'};
+ var askForm=q('[data-ask]');if(askForm)askForm.onsubmit=function(e){e.preventDefault();var i=this.querySelector('input'),t=i.value.trim();if(!t)return;state.qaMsgs.push({q:t,a:'已围绕检索结果生成回答（原型演示）：请参考上方引用的 [1][2] 来源。'});i.value='';drawQa()};
 
  content.addEventListener('change',function(e){var t=e.target;
    if(t.matches('[data-rtype]')){state.types[t.dataset.rtype]=t.checked;if(!RES_TYPES.some(function(r){return state.types[r[0]]}))state.types[t.dataset.rtype]=true;refresh();return}

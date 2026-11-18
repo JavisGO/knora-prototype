@@ -939,3 +939,12 @@
 .ch-pv-chips.words span {
   background: #f5f7fa;
 }
+
+/* 智能问答开关行 */
+.ch-form .ch-qa-toggle {
+  margin: 2px 0 12px;
+  padding: 14px 16px;
+  border: 1px solid #e3e9f2;
+  border-radius: 10px;
+  background: #f8fafd;
+}
