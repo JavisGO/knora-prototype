@@ -67,24 +67,27 @@
      module：本体管理页内的模块 key；href：独立页面。 */
   var projectGroups = [
     {
-      title: "本体建模",
+      title: "业务知识",
       items: [
-        { module: "aigo", label: "本体自动构建", icon: "spark", badge: "AI" },
-        { module: "graph", label: "语义图谱", icon: "network" },
-        { module: "entity", label: "业务对象", icon: "build" },
-        { module: "relation", label: "业务关联", icon: "weave" },
-        { module: "event", label: "事实明细", icon: "layers" },
+        { module: "knowledge", label: "知识库", icon: "book" },
       ],
     },
     {
-      title: "本体逻辑",
+      title: "本体建模",
+      items: [
+        { module: "aigo", label: "本体自动构建", icon: "spark", badge: "AI" },
+        { module: "graph", label: "本体事实", icon: "network", group: ["graph", "entity", "relation", "event"] },
+      ],
+    },
+    {
+      title: "业务逻辑",
       items: [
         { module: "flow", label: "业务流程", icon: "logic" },
         { module: "rule", label: "业务规则", icon: "rule" },
       ],
     },
     {
-      title: "本体行动",
+      title: "业务行动",
       items: [
         { module: "action", label: "业务操作与行为", icon: "action" },
         { module: "tool", label: "工具与模型", icon: "tool" },
@@ -104,13 +107,6 @@
       items: [
         { app: "entity", label: "实体看板", icon: "grid", href: "entity-dashboard.html" },
         { app: "graph", label: "图析", icon: "insight", href: "graph-analysis.html" },
-      ],
-    },
-    {
-      title: "数据与知识",
-      items: [
-        { module: "dataset", label: "数据集", icon: "database" },
-        { module: "knowledge", label: "知识库", icon: "book" },
       ],
     },
     {
@@ -142,6 +138,7 @@
         '" data-module="' +
         item.module +
         '"' +
+        (item.group ? ' data-group="' + item.group.join(" ") + '"' : "") +
         attrs +
         ">" +
         inner +
@@ -186,7 +183,8 @@
           g.items
             .map(function (item) {
               if (item.module) {
-                var current = app === "ontology" && (ctx.module || (onKb ? "aigo" : "")) === item.module;
+                var cm = ctx.module || (onKb ? "aigo" : "");
+                var current = app === "ontology" && (item.group ? item.group.indexOf(cm) > -1 : cm === item.module);
                 return row(item, {
                   active: current,
                   button: onKb,
