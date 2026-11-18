@@ -31,6 +31,8 @@ function syncSelection(){
   if(info){info.querySelector('b').textContent=n;info.hidden=!on}
 }
 function enhanceStats(){
+  /* 统计卡片已移到「部门概览」页签：只在文档列表页（有表格）才做点击筛选 */
+  if(!content.querySelector('.enterprise-table'))return;
   var cards=content.querySelectorAll('.pr2-stats.enterprise .pr2-stat');if(cards.length<4)return;
   [[1,'解析成功'],[3,'待审批']].forEach(function(pair){var card=cards[pair[0]];if(card.dataset.optFilter)return;card.dataset.optFilter=pair[1];card.classList.add('opt-clickable');card.title='点击筛选，再点一次取消'});
   var folders=content.querySelectorAll('.enterprise-table .pr2-folder-row').length;
