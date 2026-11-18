@@ -1,12 +1,12 @@
 (function () {
   "use strict";
-  /* 本体事实：把语义图谱、业务对象、业务关联、事实明细合成同一页面。
+  /* 业务本体：把语义图谱、业务对象、业务关系、业务事件合成同一页面。
      四个视图沿用各自原有页面，顶部加一条切换；URL 仍是 ?module=graph|entity|relation|event，旧链接不失效。 */
   var VIEWS = [
     ["graph", "图谱"],
     ["entity", "业务对象"],
-    ["relation", "业务关联"],
-    ["event", "事实明细"],
+    ["relation", "业务关系"],
+    ["event", "业务事件"],
   ];
   function key() {
     return new URLSearchParams(location.search).get("module");
@@ -30,9 +30,9 @@
   function build() {
     var nav = document.createElement("nav");
     nav.className = "of-switch";
-    nav.setAttribute("aria-label", "本体事实视图");
+    nav.setAttribute("aria-label", "业务本体视图");
     nav.innerHTML =
-      '<div class="of-title"><b>本体事实</b><span>图谱与对象、关联、事实在同一处管理</span></div><div class="of-tabs" role="tablist">' +
+      '<div class="of-title"><b>业务本体</b><span>图谱与对象、关联、事实在同一处管理</span></div><div class="of-tabs" role="tablist">' +
       VIEWS.map(function (v) {
         return '<button type="button" role="tab" data-of="' + v[0] + '">' + v[1] + "</button>";
       }).join("") +

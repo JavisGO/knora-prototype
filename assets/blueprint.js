@@ -29,9 +29,9 @@
       pages: [],
     },
     graph: {
-      name: "图析",
+      name: "知识推演",
       kicker: "KNORA GRAPH",
-      title: "图析",
+      title: "知识推演",
       pages: [
         ["overview", "模块概览", "能力规划占位", "graph-analysis.html", "析"],
       ],
@@ -45,9 +45,9 @@
       ],
     },
     operations: {
-      name: "运营看板",
+      name: "运营",
       kicker: "KNORA OPERATIONS",
-      title: "运营看板",
+      title: "运营",
       pages: [
         [
           "overview",

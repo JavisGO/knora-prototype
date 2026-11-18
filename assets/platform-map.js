@@ -32,8 +32,9 @@
       ask: "发生了什么，何时何地，处于什么状态",
       project: true,
       cards: [
-        { name: "本体自动构建", text: "上传资料，由 AI 对话引导生成业务对象、关联与规则", href: KB + "aigo", tag: "AI" },
-        { name: "本体事实", text: "图谱、业务对象、业务关联、事实明细统一管理", href: KB + "graph" },
+        { name: "自动建模", text: "上传资料，由 AI 对话引导生成业务对象、关联与规则", href: KB + "aigo" },
+        { name: "知识抽取", text: "从非结构化资料中抽取业务知识，形成可复用的本体要素", href: KB + "kextract" },
+        { name: "业务本体", text: "图谱、业务对象、业务关系、业务事件统一管理", href: KB + "graph" },
       ],
     },
     {
@@ -48,14 +49,16 @@
       ],
     },
     {
-      title: "业务行动",
+      title: "业务行为",
       layer: "行动层",
       desc: "让 AI 可控执行",
       ask: "如何触发，如何执行",
       project: true,
       cards: [
-        { name: "业务操作与行为", text: "设计可执行的 Action，需要时进入审批链", href: KB + "action" },
-        { name: "工具与模型", text: "接入工具、MCP 与模型能力", href: KB + "tool" },
+        { name: "业务行动", text: "设计可执行的 Action，需要时进入审批链", href: KB + "action" },
+        { name: "平台工具", text: "接入工具、MCP 与模型能力", href: KB + "tool" },
+        { name: "MCP", text: "将本体能力发布为 MCP 服务，供智能体与外部应用调用", href: KB + "mcp" },
+        { name: "Skill", text: "管理可由智能体调用的专业任务技能与执行说明", href: KB + "skill" },
       ],
     },
     {
@@ -64,8 +67,8 @@
       ask: "成果怎么使用，效果怎么样",
       cards: [
         { name: "实体看板", text: "检索业务实体，或直接运行已授权的 Action", href: "entity-dashboard.html", project: true },
-        { name: "图析", text: "图谱探索与关系分析", href: "graph-analysis.html", project: true },
-        { name: "运营看板", text: "查看知识使用、检索与反馈的运营指标", href: "operations-dashboard.html" },
+        { name: "知识推演", text: "图谱探索与关系分析", href: "graph-analysis.html", project: true },
+        { name: "运营", text: "查看知识使用、检索与反馈的运营指标", href: "operations-dashboard.html" },
       ],
     },
   ];
