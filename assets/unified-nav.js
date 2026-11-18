@@ -3,8 +3,8 @@
 
   /* Knora 统一左侧导航（平铺 + 灰色分类标题，无折叠）
      - 顶部：品牌
-     - 全局入口：首页 / 我的 / 资源 / 项目 / 标签 / 运营看板（不受项目约束，页面顶部无固定栏）
-     - 项目制入口：数据与知识、本体构建、本体建模、本体逻辑、本体行动、本体浏览
+     - 全局入口：首页 / 工作台 / 资源 / 项目 / 标签 / 运营（不受项目约束，页面顶部无固定栏）
+     - 项目制入口：数据与知识、本体构建、本体建模、业务逻辑、业务行为、本体洞察
        （进入后页面顶部出现固定栏，含项目切换）
      - 底部：用户与通知
      本体管理页内二级入口为 button.ontology-module（页内切换）；其余页面为链接。 */
@@ -44,6 +44,11 @@
     tool: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
     insight: '<path d="M3 3v18h18"/><path d="m7 15 4-4.5 3 3L20 7"/><path d="M16 7h4v4"/>',
     bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',
+    funnel: '<path d="M3 4h18l-7 8.5V18l-4 3v-8.5z"/>',
+    plug: '<path d="M9 2v5M15 2v5"/><path d="M6 7h12v4a6 6 0 0 1-12 0z"/><path d="M12 17v5"/>',
+    star: '<path d="m12 3 2.7 5.6 6.3.8-4.6 4.3 1.2 6.1L12 17l-5.6 2.8 1.2-6.1L3 9.4l6.3-.8z"/>',
+    medal: '<circle cx="12" cy="8" r="5"/><path d="m9 12-1.8 9 4.8-3 4.8 3-1.8-9"/>',
+    layout: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
   };
   function svg(name) {
     return (
@@ -56,11 +61,11 @@
   /* 全局入口（不受项目约束） */
   var globalItems = [
     { page: "home", label: "首页", icon: "home", href: "portal-home.html" },
-    { page: "mine", label: "我的", icon: "user", href: "portal-mine.html" },
+    { page: "mine", label: "工作台", icon: "user", href: "portal-mine.html" },
     { page: "resources", label: "资源", icon: "database", href: "portal-resources.html" },
     { page: "projects", label: "项目", icon: "folder", href: "portal-projects.html" },
     { page: "tags", label: "标签", icon: "tag", href: "portal-tags.html" },
-    { app: "operations", label: "运营看板", icon: "chart", href: "operations-dashboard.html" },
+    { app: "operations", label: "运营", icon: "chart", href: "operations-dashboard.html" },
   ];
 
   /* 项目制入口。hidden:true 的分组暂不展示，保留定义便于恢复。
@@ -75,8 +80,9 @@
     {
       title: "本体建模",
       items: [
-        { module: "aigo", label: "本体自动构建", icon: "spark", badge: "AI" },
-        { module: "graph", label: "本体事实", icon: "network", group: ["graph", "entity", "relation", "event"] },
+        { module: "aigo", label: "自动建模", icon: "spark" },
+        { module: "graph", label: "业务本体", icon: "network", group: ["graph", "entity", "relation", "event"] },
+        { module: "kextract", label: "知识抽取", icon: "funnel" },
       ],
     },
     {
@@ -87,26 +93,28 @@
       ],
     },
     {
-      title: "业务行动",
+      title: "业务行为",
       items: [
-        { module: "action", label: "业务操作与行为", icon: "action" },
-        { module: "tool", label: "工具与模型", icon: "tool" },
+        { module: "action", label: "业务行动", icon: "action" },
+        { module: "tool", label: "平台工具", icon: "tool" },
+        { module: "mcp", label: "MCP", icon: "plug" },
+        { module: "skill", label: "Skill", icon: "medal" },
       ],
     },
     {
       title: "智能应用",
       hidden: true,
       items: [
-        { module: "skill", label: "技能", icon: "spark" },
+        { module: "skill", label: "技能", icon: "star" },
         { module: "reasoning", label: "智能体", icon: "graph" },
-        { module: "ui", label: "用户界面", icon: "grid" },
+        { module: "ui", label: "用户界面", icon: "layout" },
       ],
     },
     {
-      title: "本体浏览",
+      title: "本体洞察",
       items: [
         { app: "entity", label: "实体看板", icon: "grid", href: "entity-dashboard.html" },
-        { app: "graph", label: "图析", icon: "insight", href: "graph-analysis.html" },
+        { app: "graph", label: "知识推演", icon: "insight", href: "graph-analysis.html" },
       ],
     },
     {
