@@ -507,3 +507,39 @@ body.sidebar-is-collapsed .shell {
 .unified-nav .un-pinned .un-divider {
   margin: 8px 0 0;
 }
+
+/* 固定区下方第一个分类与上面拉开距离 */
+.unified-nav .un-pinned + .un-group .un-cap {
+  padding-top: 24px;
+}
+
+/* 收起按钮：小箭头 */
+.unified-nav .un-dock .sidebar-collapse-trigger,
+.unified-nav .un-dock .ontology-sidebar-toggle {
+  position: relative;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+}
+.unified-nav .un-dock .sidebar-collapse-trigger > *,
+.unified-nav .un-dock .ontology-sidebar-toggle > * {
+  display: none !important;
+}
+.unified-nav .un-dock .sidebar-collapse-trigger:before,
+.unified-nav .un-dock .ontology-sidebar-toggle:before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -1px;
+  border-left: 1.8px solid currentColor;
+  border-bottom: 1.8px solid currentColor;
+  transform: rotate(45deg);
+  content: "";
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-dock .sidebar-collapse-trigger:before,
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-dock .ontology-sidebar-toggle:before {
+  margin-left: -5px;
+  transform: rotate(-135deg);
+}

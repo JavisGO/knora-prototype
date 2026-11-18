@@ -67,12 +67,9 @@
      module：本体管理页内的模块 key；href：独立页面。 */
   var projectGroups = [
     {
-      title: "本体构建",
-      items: [{ module: "aigo", label: "本体自动构建", icon: "spark", badge: "AI" }],
-    },
-    {
       title: "本体建模",
       items: [
+        { module: "aigo", label: "本体自动构建", icon: "spark", badge: "AI" },
         { module: "graph", label: "语义图谱", icon: "network" },
         { module: "entity", label: "业务对象", icon: "build" },
         { module: "relation", label: "业务关联", icon: "weave" },

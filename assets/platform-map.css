@@ -1,98 +1,157 @@
 .pm-pane {
-  display: grid;
-  grid-template-columns: 230px minmax(0, 1fr);
-  gap: 16px;
   margin-bottom: 16px;
-  padding: 16px;
+  padding: 22px 24px 24px;
   border: 1px solid #e4e9f1;
-  border-radius: 12px;
-  background: #fff;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fbfdff 0%, #fff 46%);
+  box-shadow: 0 4px 16px #2236530a;
 }
-.pm-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 6px;
-  border-radius: 12px;
-  background: #f6f8fb;
+
+/* 横向步骤条 */
+.pm-stepper {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 .pm-step {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 11px;
-  padding: 11px 12px;
+  gap: 10px;
+  padding: 0 6px 4px;
   border: 0;
-  border-radius: 9px;
   background: transparent;
-  color: #55637a;
-  text-align: left;
+  color: #637187;
+  text-align: center;
   cursor: pointer;
-  transition: background 0.15s ease;
 }
-.pm-step:hover {
-  background: #eef2f8;
+/* 连线：每步向右连到下一步的圆点 */
+.pm-step:not(:last-child):after {
+  position: absolute;
+  top: 17px;
+  left: calc(50% + 24px);
+  right: calc(-50% + 24px);
+  height: 0;
+  border-top: 2px dashed #d3dce9;
+  content: "";
 }
-.pm-step.active {
-  background: #fff;
-  color: #14213b;
-  box-shadow: 0 2px 8px #2236531a;
+.pm-step:not(:last-child):before {
+  position: absolute;
+  top: 13px;
+  right: calc(-50% + 22px);
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #c3cfdf;
+  border-right: 2px solid #c3cfdf;
+  transform: rotate(45deg);
+  content: "";
 }
-.pm-step > i {
-  width: 22px;
-  height: 22px;
-  flex: 0 0 22px;
+.pm-dot {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
+  border: 2px solid #dbe4ef;
   border-radius: 50%;
-  background: #dfe6f0;
-  color: #637187;
-  font-size: 10px;
-  font-style: normal;
+  background: #fff;
+  color: #8794a8;
+  font-size: 13px;
   font-weight: 700;
+  transition: all 0.2s ease;
 }
-.pm-step.active > i {
+.pm-dot i {
+  font-style: normal;
+}
+.pm-step:hover .pm-dot {
+  border-color: #9cc3fb;
+  color: #0967f4;
+}
+.pm-step.active .pm-dot {
+  border-color: #0967f4;
   background: #0967f4;
   color: #fff;
+  box-shadow: 0 0 0 5px #0967f41f;
+  transform: scale(1.06);
 }
-.pm-step span {
-  min-width: 0;
-  flex: 1;
+.pm-step-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
-.pm-step b {
-  display: block;
-  font-size: 12px;
+.pm-step-text b {
+  font-size: 13px;
+  color: #3d4a5f;
 }
-.pm-step small {
-  display: block;
-  margin-top: 1px;
+.pm-step.active .pm-step-text b {
+  color: #0b4fbd;
+}
+.pm-step-text small {
   color: #98a3b4;
-  font-size: 9px;
+  font-size: 10px;
 }
-.pm-step em {
-  padding: 0 6px;
-  border-radius: 8px;
-  background: #e3efff;
-  color: #0967f4;
+.pm-step-text em {
+  margin-top: 2px;
+  padding: 0 8px;
+  border-radius: 9px;
+  background: #eef2f8;
+  color: #637187;
   font-size: 9px;
   font-style: normal;
+  line-height: 16px;
 }
-.pm-panel {
-  min-width: 0;
+.pm-step.active .pm-step-text em {
+  background: #e3efff;
+  color: #0967f4;
+}
+.pm-step-text em:empty {
+  display: none;
+}
+
+/* 步骤内容 */
+.pm-body {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed #e1e8f1;
 }
 .pm-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
-.pm-head b {
-  font-size: 15px;
+.pm-head-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pm-head-main b {
   color: #14213b;
+  font-size: 16px;
 }
-.pm-head span {
-  color: #8794a8;
-  font-size: 11px;
+.pm-layer {
+  padding: 1px 9px;
+  border-radius: 9px;
+  background: #e3efff;
+  color: #0967f4;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px;
+}
+.pm-ask {
+  color: #7d8ba0;
+  font-size: 12px;
+}
+.pm-ask:before {
+  margin-right: 8px;
+  color: #c3cddb;
+  content: "|";
 }
 .pm-proj {
   padding: 1px 7px;
@@ -103,9 +162,12 @@
   font-style: normal;
   font-weight: 500;
 }
+.pm-head > .pm-proj {
+  margin-left: auto;
+}
 .pm-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 .pm-card {
@@ -117,11 +179,12 @@
   border: 1px solid #e4e9f1;
   border-radius: 12px;
   background: #fff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 .pm-card:hover {
   border-color: #a9c8f8;
-  box-shadow: 0 6px 18px #23416f14;
+  box-shadow: 0 8px 20px #23416f14;
+  transform: translateY(-1px);
 }
 .pm-card-main {
   min-width: 0;
@@ -130,9 +193,10 @@
 .pm-card-main b {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 6px;
-  font-size: 12px;
   color: #14213b;
+  font-size: 12px;
 }
 .pm-card-main b em {
   padding: 0 6px;
@@ -151,7 +215,7 @@
 }
 .pm-go {
   flex: 0 0 auto;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border: 1px solid #dfe6f0;
   border-radius: 7px;
   background: #fff;
@@ -162,21 +226,8 @@
 }
 .pm-go:hover {
   border-color: #0967f4;
-  color: #0967f4;
-}
-.pm-empty {
-  padding: 60px 0;
-  color: #98a3b4;
-  text-align: center;
-  font-size: 11px;
-}
-@media (max-width: 1100px) {
-  .pm-pane {
-    grid-template-columns: 1fr;
-  }
-  .pm-grid {
-    grid-template-columns: 1fr;
-  }
+  background: #0967f4;
+  color: #fff;
 }
 
 /* 「本体发布与编辑审批」入口：标签栏右端 */
@@ -189,4 +240,106 @@
   height: 30px;
   padding: 0 12px;
   font-size: 11px;
+}
+
+@media (max-width: 1200px) {
+  .pm-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .pm-stepper {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 16px;
+  }
+  .pm-step:after {
+    display: none;
+  }
+  .pm-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 顺序说明 */
+.pm-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  background: #f3f7fc;
+  color: #7d8ba0;
+  font-size: 11px;
+}
+.pm-note b {
+  flex: 0 0 auto;
+  padding: 1px 8px;
+  border-radius: 9px;
+  background: #e3efff;
+  color: #0967f4;
+  font-size: 10px;
+}
+
+/* 收起 / 展开 */
+.pm-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.pm-bar-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.pm-bar-title b {
+  color: #14213b;
+  font-size: 14px;
+}
+.pm-bar-title span {
+  color: #98a3b4;
+  font-size: 11px;
+}
+.pm-fold {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid #e0e7f0;
+  border-radius: 8px;
+  background: #fff;
+  color: #637187;
+  font-size: 11px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.pm-fold:hover {
+  border-color: #9cc3fb;
+  color: #0967f4;
+}
+.pm-fold i {
+  width: 5px;
+  height: 5px;
+  margin-top: 2px;
+  border-top: 1.6px solid currentColor;
+  border-left: 1.6px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.18s ease;
+}
+.pm-fold[aria-expanded="false"] i {
+  margin-top: -2px;
+  transform: rotate(225deg);
+}
+.pm-pane.folded {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  cursor: pointer;
+}
+.pm-pane.folded .pm-bar {
+  margin-bottom: 0;
+}
+.pm-pane.folded:hover {
+  border-color: #cfe0fb;
 }
