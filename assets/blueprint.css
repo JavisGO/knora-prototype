@@ -69,22 +69,6 @@ a {
   background: #fff;
   border-bottom: 1px solid var(--line);
 }
-.app-trigger {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: #fff;
-  color: #5c6b82;
-}
-.app-trigger:hover,
-.app-trigger.open {
-  border-color: #c7dbfa;
-  background: #f0f6ff;
-  color: var(--blue);
-}
 .brand {
   display: flex;
   align-items: center;
@@ -520,95 +504,6 @@ a {
   background: #fff;
   color: #5d6b80;
   font-size: 10px;
-}
-.app-pop {
-  position: absolute;
-  z-index: 100;
-  left: 14px;
-  top: 52px;
-  width: 435px;
-  display: none;
-  padding: 15px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: var(--shadow);
-}
-.app-pop.open {
-  display: block;
-}
-.app-pop-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.app-pop-head b {
-  font-size: 12px;
-}
-.app-pop-head span {
-  color: #909bac;
-  font-size: 8px;
-}
-.app-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-.app-item {
-  min-height: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 8px;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  background: #fff;
-  color: #526078;
-  text-decoration: none;
-  font-size: 10px;
-}
-.app-item:hover,
-.app-item.active {
-  border-color: #b8d2fb;
-  background: #eef5ff;
-  color: var(--blue);
-}
-.app-item.active {
-  font-weight: 700;
-}
-.app-icon {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 11px;
-  background: #eaf3ff;
-  color: #236bcf;
-  font-size: 17px;
-  font-weight: 800;
-}
-.app-item:nth-child(2) .app-icon {
-  background: #fff0e2;
-  color: #d57a0a;
-}
-.app-item:nth-child(3) .app-icon {
-  background: #eeebff;
-  color: #684bda;
-}
-.app-item:nth-child(4) .app-icon {
-  background: #e7f8f2;
-  color: #0b916b;
-}
-.app-item:nth-child(5) .app-icon {
-  background: #e8f5ff;
-  color: #197bb9;
-}
-.app-item:nth-child(6) .app-icon {
-  background: #f0ebff;
-  color: #6848d4;
 }
 .app-meta {
   font-size: 7px !important;
@@ -1931,16 +1826,6 @@ a {
   }
   .brand strong {
     font-size: 15px;
-  }
-  .app-pop {
-    position: fixed;
-    left: 10px;
-    right: 10px;
-    top: 54px;
-    width: auto;
-  }
-  .app-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
   .grid-2,
   .grid-3,
@@ -5126,71 +5011,6 @@ a {
   }
 }
 
-/* Grouped application switcher */
-.app-pop {
-  width: 570px;
-}
-.app-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-.app-group {
-  padding: 10px;
-  border: 1px solid #e4eaf2;
-  border-radius: 11px;
-  background: #fbfcfe;
-}
-.app-group-title {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.app-group-title b {
-  font-size: 10px;
-}
-.app-group-title span {
-  color: #98a3b3;
-  font-size: 7px;
-}
-.app-group-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
-}
-.app-group:nth-child(2) .app-group-grid {
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 270px;
-}
-.app-item {
-  min-height: 72px;
-}
-.app-item[data-app="portal"] .app-icon {
-  background: #eaf3ff;
-  color: #236bcf;
-}
-.app-item[data-app="entity"] .app-icon {
-  background: #e7f8f2;
-  color: #0b916b;
-}
-.app-item[data-app="graph"] .app-icon {
-  background: #f0ebff;
-  color: #6848d4;
-}
-.app-item[data-app="operations"] .app-icon {
-  background: #e8f5ff;
-  color: #197bb9;
-}
-.app-item[data-app="ontology"] .app-icon {
-  background: #fff0e2;
-  color: #d57a0a;
-}
-.app-item[data-app="jinglun"] .app-icon {
-  background: #eeeaff;
-  color: #684bda;
-}
-
 /* Shared project context on Jinglun */
 .global-project-switch {
   position: relative;
@@ -5668,14 +5488,6 @@ a {
   }
 }
 @media (max-width: 720px) {
-  .app-pop {
-    width: auto;
-  }
-  .app-group-grid,
-  .app-group:nth-child(2) .app-group-grid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: none;
-  }
   .global-project-switch {
     order: 3;
     width: 100%;

@@ -1645,3 +1645,65 @@
   font-style: normal;
   color: var(--ko-text-3);
 }
+.ko-crow .v b.rp {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ko-amber);
+}
+.ko-bytype {
+  margin-top: 6px;
+}
+.ko-bytype th,
+.ko-bytype td {
+  text-align: right;
+}
+.ko-bytype th:first-child,
+.ko-bytype td:first-child {
+  text-align: left;
+}
+.ko-seg .ko-tab small {
+  color: var(--ko-text-3);
+}
+.ko-dsec {
+  margin: 18px 0 8px;
+  padding-left: 8px;
+  border-left: 3px solid var(--ko-primary);
+  font-size: 14px;
+  color: #172840;
+}
+.ko dialog dl {
+  grid-template-columns: 130px 1fr;
+}
+.ko dialog.ko-wide {
+  width: min(1180px, 94vw);
+}
+.ko-listdlg h2 small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ko-text-3);
+  margin-left: 8px;
+}
+.ko-listdlg .ko-table-wrap {
+  max-height: 62vh;
+  margin-top: 10px;
+}
+.ko-listdlg td.no {
+  color: var(--ko-text-3);
+}
+.ko-listdlg td b {
+  font-weight: 600;
+  color: #172840;
+}
+.ko-listdlg thead th {
+  position: sticky;
+  top: 0;
+}
+.ko-listhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ko-listhead h2 {
+  margin: 0;
+}
