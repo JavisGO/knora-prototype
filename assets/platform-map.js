@@ -22,7 +22,7 @@
       cards: [
         { name: "知识库", text: "创建文档知识库，解析、分片并检索", href: KB + "knowledge" },
         { name: "数据集", text: "管理数据表、特征集与业务数据视图", href: KB + "dataset" },
-        { name: "知识加工", text: "多源知识抽取、数据处理流程与调度", href: "jinglun.html?view=project-overview" },
+        { name: "本体数据加工", text: "多源知识抽取、数据处理流程与调度", href: "jinglun.html?view=project-overview" },
       ],
     },
     {
