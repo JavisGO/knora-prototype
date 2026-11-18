@@ -1,0 +1,545 @@
+/* Knora 统一左侧导航：平铺 + 灰色分类标题，底部为用户与通知 */
+.shell {
+  --un-w: 220px;
+  grid-template-columns: var(--un-w) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+body.sidebar-is-collapsed .shell {
+  --un-w: 72px;
+}
+.shell > .topbar {
+  grid-column: 2;
+  grid-row: 1;
+  gap: 12px;
+}
+.shell > .topbar.topbar-hidden {
+  display: none;
+}
+.shell > .workspace {
+  display: contents;
+}
+.shell > .workspace > .sidebar {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  min-height: 0;
+  min-width: 0;
+  display: flex !important;
+  flex-direction: column;
+}
+.shell > .workspace > .content {
+  grid-column: 2 !important;
+  grid-row: 2;
+  min-width: 0;
+  min-height: 0;
+}
+
+.unified-nav {
+  --un-text: #3d4a5f;
+  --un-muted: #9aa5b6;
+  --un-hover: #f2f5fa;
+  --un-active-bg: #eaf2ff;
+  --un-primary: var(--blue, #0967f4);
+  padding: 14px 10px 0;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #d7deea transparent;
+}
+.unified-nav::-webkit-scrollbar {
+  width: 6px;
+}
+.unified-nav::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: #d7deea;
+}
+
+/* 品牌 */
+.unified-nav .un-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 2px 8px 14px;
+}
+.unified-nav .un-logo {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #0967f4, #16b6c8);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+}
+.unified-nav .un-brand strong {
+  overflow: hidden;
+  color: #14213b;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* 分类 */
+.unified-nav .un-group {
+  margin: 0;
+}
+.unified-nav .un-cap {
+  padding: 14px 10px 5px;
+  color: var(--un-muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+.unified-nav .un-divider {
+  height: 1px;
+  margin: 10px 8px 0;
+  background: #edf0f5;
+}
+.unified-nav .un-group:not(:has(.nav-link:not(.role-view-hidden))) {
+  display: none;
+}
+
+/* 条目 */
+.unified-nav .nav-link {
+  position: relative;
+  width: 100%;
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1px 0;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--un-text);
+  font-size: 11px;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.unified-nav .nav-link b {
+  font-weight: inherit;
+}
+.unified-nav .nav-link:hover {
+  background: var(--un-hover);
+  color: #1f2a3c;
+}
+.unified-nav .nav-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 0;
+  background: transparent !important;
+  color: #7c8aa0;
+}
+.unified-nav .un-ico {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.unified-nav .nav-link:hover .nav-icon {
+  color: var(--un-primary);
+}
+.unified-nav .nav-link.active {
+  background: var(--un-active-bg);
+  color: var(--un-primary);
+  font-weight: 600;
+}
+.unified-nav .nav-link.active .nav-icon {
+  color: var(--un-primary);
+}
+.unified-nav .nav-link.active:before {
+  position: absolute;
+  left: -10px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--un-primary);
+  content: "";
+}
+.unified-nav .nav-link em {
+  margin-left: auto;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: #e3efff;
+  color: var(--un-primary);
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 15px;
+}
+.unified-nav .nav-link:focus-visible {
+  outline: 2px solid #8fb8f7;
+  outline-offset: -2px;
+}
+
+/* 底部：用户与通知 */
+.unified-nav .un-dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: auto -10px 0;
+  padding: 8px 10px;
+  border-top: 1px solid #edf0f5;
+  background: #fbfcfe;
+}
+.unified-nav .un-dock .profile-menu-wrap {
+  order: 0;
+  flex: 1;
+  min-width: 0;
+}
+.unified-nav .un-dock .approval-notification-wrap {
+  order: 1;
+}
+.unified-nav .un-dock .profile-trigger {
+  width: 100%;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--un-text);
+  text-align: left;
+  text-decoration: none;
+}
+.unified-nav .un-dock .profile-trigger:hover,
+.unified-nav .un-dock .profile-trigger[aria-expanded="true"] {
+  background: var(--un-hover);
+}
+.unified-nav .un-dock .profile-trigger > span:not(.avatar) {
+  min-width: 0;
+  flex: 1;
+}
+.unified-nav .un-dock .profile-trigger b,
+.unified-nav .un-dock .profile-trigger small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.unified-nav .un-dock .profile-trigger b {
+  font-size: 11px;
+}
+.unified-nav .un-dock .profile-trigger small {
+  color: #8794a8;
+  font-size: 8px;
+}
+.unified-nav .un-dock .profile-trigger > .ico {
+  display: none;
+}
+.unified-nav .un-dock .top-btn {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #637187;
+}
+.unified-nav .un-dock .top-btn:hover {
+  background: var(--un-hover);
+  color: var(--un-primary);
+}
+.unified-nav .un-dock .top-btn .un-ico {
+  width: 17px;
+  height: 17px;
+}
+.unified-nav .un-dock .top-btn .badge {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+}
+/* 弹层改为向右上展开，不被侧栏裁切 */
+.unified-nav .un-dock .approval-notification-pop,
+.unified-nav .un-dock .profile-menu {
+  position: fixed;
+  left: calc(var(--un-w, 220px) + 8px);
+  right: auto;
+  top: auto;
+  bottom: 12px;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+}
+.unified-nav .sidebar-collapse-trigger {
+  width: calc(100% + 20px);
+  margin: 0 -10px !important;
+}
+
+/* 收起态：只留图标 */
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-cap,
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-brand strong,
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .nav-link > span:not(.nav-icon),
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .nav-link em,
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-dock .profile-trigger > span:not(.avatar) {
+  display: none;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-brand {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .nav-link {
+  justify-content: center;
+  min-height: 38px;
+  padding: 0;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-group + .un-group {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid #edf0f5;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-divider {
+  display: none;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-dock {
+  flex-direction: column;
+  gap: 2px;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-dock .profile-menu-wrap {
+  flex: none;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-dock .profile-trigger {
+  width: 40px;
+  justify-content: center;
+  padding: 0;
+}
+
+/* 本体管理页（.ontology-side 容器）：覆盖旧版按钮样式 */
+.ontology-side.unified-nav {
+  padding: 14px 10px 0;
+}
+.ontology-side.unified-nav .nav-link b {
+  font-size: 11px;
+  font-weight: inherit;
+}
+.ontology-side.unified-nav .nav-link span {
+  font-size: inherit;
+}
+.app.ontology-sidebar-collapsed .ontology-side.unified-nav {
+  padding: 14px 8px 0;
+}
+.app.ontology-sidebar-collapsed .ontology-side.unified-nav .nav-link .nav-icon {
+  display: grid;
+}
+.ontology-side.unified-nav .ontology-sidebar-toggle {
+  margin: 0 -10px;
+  width: calc(100% + 20px);
+}
+.app.ontology-sidebar-collapsed .ontology-side.unified-nav .ontology-sidebar-toggle {
+  margin: 0 -8px;
+  width: calc(100% + 16px);
+}
+
+/* 收起按钮：并入底部栏的小按钮 */
+.unified-nav .un-dock .sidebar-collapse-trigger,
+.unified-nav .un-dock .ontology-sidebar-toggle,
+.ontology-side.unified-nav .un-dock .ontology-sidebar-toggle,
+.app.ontology-sidebar-collapsed .ontology-side.unified-nav .un-dock .ontology-sidebar-toggle {
+  position: static;
+  order: 2;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  min-height: 0;
+  margin: 0 !important;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  color: #8794a8;
+}
+.unified-nav .un-dock .sidebar-collapse-trigger:hover,
+.unified-nav .un-dock .ontology-sidebar-toggle:hover {
+  background: var(--un-hover);
+  color: var(--un-primary);
+}
+
+/* 项目切换：轻量胶囊，替代原来的大边框卡片 */
+.topbar .global-project-trigger,
+.topbar .project-trigger {
+  height: 40px;
+  min-width: 0;
+  max-width: 420px;
+  gap: 10px;
+  padding: 0 10px 0 5px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.topbar .global-project-trigger:hover,
+.topbar .project-trigger:hover {
+  border-color: transparent;
+  background: #f2f5fa;
+  box-shadow: none;
+}
+.topbar .global-project-trigger.open,
+.topbar .project-trigger.open {
+  border-color: #cfe0fb;
+  background: #eaf2ff;
+  box-shadow: none;
+}
+.topbar .global-project-trigger > span:nth-child(2),
+.topbar .project-trigger > span {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.topbar .global-project-trigger > span:nth-child(2):before,
+.topbar .project-trigger > span:before {
+  display: block;
+  color: #9aa5b6;
+  font-size: 8px;
+  line-height: 11px;
+  content: "当前项目";
+}
+.topbar .global-project-trigger b,
+.topbar .project-trigger b {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #14213b;
+  font-size: 12px;
+  line-height: 16px;
+}
+.topbar .global-project-trigger small,
+.topbar .project-trigger small {
+  display: none;
+}
+.topbar .global-project-trigger > i,
+.topbar .project-trigger .project-kind {
+  padding: 1px 7px;
+  border-radius: 9px;
+  background: #e8f0fc;
+  color: #4a6fa5;
+  font-size: 8px;
+  line-height: 16px;
+}
+.topbar .global-project-trigger .ico,
+.topbar .project-trigger > .ico:last-child {
+  width: 13px;
+  height: 13px;
+  color: #8794a8;
+  transition: transform 0.18s ease;
+}
+.topbar .global-project-trigger.open .ico:last-child,
+.topbar .project-trigger.open > .ico:last-child {
+  transform: rotate(180deg);
+}
+.topbar .global-project-icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #e3efff, #d2e6ff);
+  color: #0967f4;
+  font-size: 11px;
+}
+.topbar .project-trigger > .ico:first-child {
+  box-sizing: content-box;
+  width: 16px;
+  height: 16px;
+  padding: 7px;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #e3efff, #d2e6ff);
+  color: #0967f4;
+}
+.topbar .project-switch {
+  margin-left: 0;
+}
+/* 弹层 */
+.topbar .global-project-pop,
+.topbar .project-pop {
+  margin-top: 6px;
+  border: 1px solid #e1e7f0;
+  border-radius: 14px;
+  box-shadow: 0 16px 44px #1c32542b;
+}
+.global-project-row {
+  border-radius: 9px;
+}
+
+/* 品牌固定在侧栏顶部，导航滚动时不随之移走 */
+.unified-nav .un-brand {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  margin: -14px -10px 0;
+  padding: 14px 18px 12px;
+  background: #fbfcfe;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-brand {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* 品牌 + 全局入口固定在顶部，只有下面的项目制分类滚动 */
+.unified-nav .un-pinned {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  margin: -14px -10px 0;
+  padding: 14px 10px 0;
+  background: #fbfcfe;
+}
+.unified-nav .un-pinned .un-brand {
+  position: static;
+  margin: 0;
+  padding: 2px 8px 12px;
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-pinned .un-brand {
+  padding-left: 0;
+  padding-right: 0;
+}
+.unified-nav .un-pinned .un-divider {
+  margin: 8px 0 0;
+}
+
+/* 固定区下方第一个分类与上面拉开距离 */
+.unified-nav .un-pinned + .un-group .un-cap {
+  padding-top: 24px;
+}
+
+/* 收起按钮：小箭头 */
+.unified-nav .un-dock .sidebar-collapse-trigger,
+.unified-nav .un-dock .ontology-sidebar-toggle {
+  position: relative;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+}
+.unified-nav .un-dock .sidebar-collapse-trigger > *,
+.unified-nav .un-dock .ontology-sidebar-toggle > * {
+  display: none !important;
+}
+.unified-nav .un-dock .sidebar-collapse-trigger:before,
+.unified-nav .un-dock .ontology-sidebar-toggle:before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -1px;
+  border-left: 1.8px solid currentColor;
+  border-bottom: 1.8px solid currentColor;
+  transform: rotate(45deg);
+  content: "";
+}
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-dock .sidebar-collapse-trigger:before,
+:is(body.sidebar-is-collapsed, .app.ontology-sidebar-collapsed) .unified-nav .un-dock .ontology-sidebar-toggle:before {
+  margin-left: -5px;
+  transform: rotate(-135deg);
+}
