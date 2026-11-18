@@ -14,9 +14,9 @@
   }
   function pref(m) {
     try {
-      return localStorage.getItem(KEY + m) === "list" ? "list" : "card";
+      return localStorage.getItem(KEY + m) === "card" ? "card" : "list";
     } catch (e) {
-      return "card";
+      return "list";
     }
   }
   function save(m, v) {

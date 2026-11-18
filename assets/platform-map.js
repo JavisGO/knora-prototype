@@ -9,19 +9,20 @@
       desc: "选定范围，备好资料",
       ask: "先确定在哪个范围内工作，并备好资料",
       cards: [
-        { name: "项目管理", text: "查看、创建项目，作为本体与知识的工作范围", href: "portal-projects.html" },
         { name: "资源管理", text: "上传文档、接入数据源，统一管理空间资产", href: "portal-resources.html" },
+        { name: "项目管理", text: "查看、创建项目，作为本体与知识的工作范围", href: "portal-projects.html" },
         { name: "标签体系", text: "维护企业统一标签，用于资源与本体的分类筛选", href: "portal-tags.html" },
       ],
     },
     {
-      title: "数据与知识",
+      title: "业务知识",
       desc: "把资料变成可用知识",
       ask: "数据从哪里来，知识怎么沉淀",
       project: true,
       cards: [
-        { name: "数据集", text: "管理数据表、特征集与业务数据视图", href: KB + "dataset" },
         { name: "知识库", text: "创建文档知识库，解析、分片并检索", href: KB + "knowledge" },
+        { name: "数据集", text: "管理数据表、特征集与业务数据视图", href: KB + "dataset" },
+        { name: "知识加工", text: "多源知识抽取、数据处理流程与调度", href: "jinglun.html?view=project-overview" },
       ],
     },
     {
@@ -32,14 +33,11 @@
       project: true,
       cards: [
         { name: "本体自动构建", text: "上传资料，由 AI 对话引导生成业务对象、关联与规则", href: KB + "aigo", tag: "AI" },
-        { name: "语义图谱", text: "以图的方式查看项目内业务对象与业务关联", href: KB + "graph" },
-        { name: "业务对象", text: "定义核心业务概念、属性及数据映射", href: KB + "entity" },
-        { name: "业务关联", text: "定义业务对象之间可复用的语义关系与约束", href: KB + "relation" },
-        { name: "事实明细", text: "管理已发生的事件、状态变化与事实记录", href: KB + "event" },
+        { name: "本体事实", text: "图谱、业务对象、业务关联、事实明细统一管理", href: KB + "graph" },
       ],
     },
     {
-      title: "本体逻辑",
+      title: "业务逻辑",
       layer: "逻辑层",
       desc: "固化规律与规则",
       ask: "遵循什么规则，为什么如此",
@@ -50,7 +48,7 @@
       ],
     },
     {
-      title: "本体行动",
+      title: "业务行动",
       layer: "行动层",
       desc: "让 AI 可控执行",
       ask: "如何触发，如何执行",
