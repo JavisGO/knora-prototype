@@ -267,6 +267,7 @@
     tagGroup: 0,
     tagQ: "",
     exp: {},
+    age: "全部",
     ftype: "全部",
     invCard: 0,
     role: "admin",
@@ -455,8 +456,7 @@
     return !!i && i.type === type && (!group || i.group === group);
   };
   const tagMatch = (r) =>
-    state.tags.every((t) => r.tags.includes(t)) &&
-    true;
+    !state.tags.length || state.tags.some((t) => r.tags.includes(t));
   const escape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -516,6 +516,9 @@
     `<label>${label}<select data-filter="${key}" aria-label="${label}">${values.map((v) => `<option value="${v}" ${String(state[key]) === String(v) ? "selected" : ""}>${v}</option>`).join("")}</select></label>`;
   const button = (label, key, value, active) =>
     `<button class="ko-tab ${active ? "selected" : ""}" data-${key}="${value}" aria-pressed="${!!active}">${label}</button>`;
+  const ageBuckets = [["30 天内更新", (d) => d <= 30], ["30 至 90 天", (d) => d > 30 && d <= 90], ["90 天以上未更新", (d) => d > 90]];
+  const ageOf = (r) => -days(r.updated);
+  const ageMatch = (r) => state.age === "全部" || (ageBuckets.find((b) => b[0] === state.age) || [0, () => true])[1](ageOf(r));
   const statusMatch = (r) =>
     state.status === "全部" ||
     (state.status === "7天内到期" ? soon(r) : r.statusLabel === state.status);
@@ -914,11 +917,12 @@
     `<div class="ko-kpi3">${items.map(([n, v, u, bad, hint]) => `<div title="${escape(hint || "")}"><span>${n}</span><strong class="${bad ? "bad" : ""}">${v}<small>${u}</small></strong>${hint ? `<em>${hint}</em>` : ""}</div>`).join("")}</div>`;
   const colHead = (title, desc, tbd = "") => `<header class="ko-colhead"><h3>${title}</h3><span class="ko-muted">${desc}</span>${tbd}</header>`;
   const subHead = (title, k, total) =>
-    `<div class="ko-subhead"><h4>${title}</h4><span class="ko-muted">${total} 条</span><button class="ko-link" data-viewlist="${k}" ${total ? "" : "disabled"}>查看</button>${k === "gap" ? `<button class="ko-link" data-export="${k}" ${total ? "" : "disabled"}>导出</button>` : ""}</div>`;
+    `<div class="ko-subhead"><h4>${title}</h4><span class="ko-muted">${total} 条</span><button class="ko-link" data-viewlist="${k}" ${total ? "" : "disabled"}>查看</button></div>`;
   const top = (k, list, limit) => list.slice(0, limit);
-  function analysisHTML(rows) {
+  function analysisHTML(allRows) {
+    const rows = allRows.filter(tagMatch);
     const L = {
-      use: [...rows].sort((a, b) => b.views - a.views),
+      use: [...rows].sort((a, b) => b.views - a.views).slice(0, 10),
       zero: rows.filter((r) => r.statusLabel === "已发布" && !r.views).sort((a, b) => a.updated.localeCompare(b.updated)),
       dislike: rows.filter((r) => r.dislikes).sort((a, b) => b.dislikes - a.dislikes).map((r) => ({ ...r, ftype: ftypeOf(r.id), ftypeLabel: ftypeName[ftypeOf(r.id)], kindLabel: kindOf(r.id) })),
       gap: gapRows(),
@@ -996,7 +1000,7 @@
       <div class="ko-subhead"><h4>搜索去向</h4><span class="ko-muted">红色即覆盖缺口</span></div>${dist}
       ${subHead("知识缺口清单", "gap", L.gap.length, 5)}<ul class="ko-clist">${gapList || empty("所选范围内没有知识缺口")}</ul>
       </section>`;
-    return `<div class="ko-cols">${colA}${colB}${colC}</div><p class="ko-muted ko-def">好评率 = 点赞 ÷（点赞 + 点踩），只统计有反馈的回答；反馈率 = 有反馈的回答数 ÷ 智能体回答总数，用来判断好评率是否可信。回答总数为示例口径，待确认。知识缺口清单合并了无结果搜索（系统记录）和知识缺失反馈（用户上报），两者指向同一主题时排在前面。</p>`;
+    return `<div class="ko-cols">${colA}${colB}${colC}</div><p class="ko-muted ko-def">好评率 = 点赞 ÷（点赞 + 点踩），只统计有反馈的回答；反馈率 = 有反馈的回答数 ÷ 智能体回答总数，用来判断好评率是否可信。回答总数为示例口径，待确认。知识缺口清单合并了无结果搜索（系统记录）和知识缺失反馈（用户上报），两者指向同一主题时排在前面。${state.tags.length ? `<br>已选标签 ${state.tags.length} 个：标签筛选作用于知识类数据（浏览量、热门与零访问知识、点赞点踩）；无结果搜索、检索点击率和知识缺失反馈不带标签，不受影响。` : ""}</p>`;
   }
   const listTitle = { use: "热门知识", zero: "零访问知识", dislike: "待处理的质量问题", gap: "知识缺口清单" };
   // 每列：[表头, 页面显示, 导出文本]（导出文本缺省时取显示内容的纯文本）
@@ -1032,6 +1036,52 @@
     const body = L.map((r, i) => `<tr><td class="no">${i + 1}</td>${cols.map((c) => `<td>${c[1](r)}</td>`).join("")}</tr>`).join("");
     return `<div class="ko-listdlg"><div class="ko-listhead"><h2>${listTitle[k]} <small>共 ${L.length} 条 · Mock 数据 · 所选期间</small></h2><button class="btn ko-sm" data-export-list="${k}" ${L.length ? "" : "disabled"}>导出</button></div><div class="ko-table-wrap"><table><thead><tr><th>#</th>${cols.map((c) => `<th>${c[0]}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div></div>`;
   }
+  const donutPal = ["#1764ff", "#6fa2ff", "#9aa7bd", "#f0b429", "#34b27b", "#a9c4f8"];
+  function donutHTML(items, total, centerLabel, attr, activeKey) {
+    const R = 46;
+    const C = 2 * Math.PI * R;
+    let acc = 0;
+    const segs = items
+      .map((it, i) => {
+        const len = total ? (it.n / total) * C : 0;
+        const dash = `${Math.max(len - (items.filter((x) => x.n).length > 1 ? 1.5 : 0), 0).toFixed(2)} ${(C - len + (items.filter((x) => x.n).length > 1 ? 1.5 : 0)).toFixed(2)}`;
+        const off = (-acc).toFixed(2);
+        acc += len;
+        return it.n ? `<circle class="dn-seg ${activeKey === it.key ? "on" : ""}" cx="60" cy="60" r="${R}" fill="none" stroke="${it.color || donutPal[i % donutPal.length]}" stroke-width="14" stroke-dasharray="${dash}" stroke-dashoffset="${off}" transform="rotate(-90 60 60)" data-${attr}="${it.key}"><title>${it.label} ${it.n} 条（${Math.round((it.n / total) * 100)}%）</title></circle>` : "";
+      })
+      .join("");
+    const legend = items
+      .map((it, i) => `<button class="ov-lg ${activeKey === it.key ? "on" : ""}" data-${attr}="${it.key}"><i style="background:${it.color || donutPal[i % donutPal.length]}"></i>${it.label}<b>${it.n}</b><small>${total ? Math.round((it.n / total) * 100) : 0}%</small></button>`)
+      .join("");
+    return `<div class="dn"><svg viewBox="0 0 120 120" role="img" aria-label="${centerLabel}"><circle cx="60" cy="60" r="${R}" fill="none" stroke="#f0f3f9" stroke-width="14"/>${segs}<text x="60" y="58" text-anchor="middle" class="dn-n">${total}</text><text x="60" y="74" text-anchor="middle" class="dn-l">${centerLabel}</text></svg><div class="ov-legend">${legend}</div></div>`;
+  }
+  function invOverviewHTML(vis, scopeRows) {
+    const total = vis.length;
+    const pubd = vis.filter((r) => r.statusLabel === "已发布").length;
+    const arch = vis.filter((r) => r.statusLabel === "已归档").length;
+    const unpub = vis.filter((r) => r.statusLabel === "未发布").length;
+    const statusItems = [["已发布", pubd, "#1764ff"], ["已归档", arch, "#9aa7bd"], ["未发布", unpub, "#f0b429"]].map(([label, n, color]) => ({ key: label, label, n, color }));
+    const totalPanel = `<section class="ko-panel ov-total"><h3>知识总量</h3><p class="ko-muted">当前范围内，含已归档和未发布 · 点击状态筛选</p>${donutHTML(statusItems, total, "条知识", "ovstatus", state.status)}${state.status !== "全部" ? `<button class="ko-link" data-ovclear="status">取消状态筛选：${state.status}</button>` : ""}</section>`;
+
+    // 部门分布：全企业看部门，选了部门看子部门
+    const bySub = state.dept !== "全部";
+    const keys = bySub ? (teams[state.dept] || []).map((t) => t[0]) : depts;
+    const deptItems = keys.map((k) => ({ key: k, label: k, n: vis.filter((r) => (bySub ? r.domain : r.dept) === k).length }));
+    const deptPanel = `<section class="ko-panel"><h3>${bySub ? "子部门分布" : "部门分布"}</h3><p class="ko-muted">${bySub ? "点击子部门筛选，再点取消" : "点击部门查看其子部门"}</p>${donutHTML(deptItems, total, "条知识", "ovdept", state.domain !== "全部" ? state.domain : "")}</section>`;
+
+    // 标签分布：按标签类型分三组并排，数字取当前范围（不受已选标签影响）
+    const sc = scopeRows;
+    const tagRows = tagTree.map((t) => ({
+      type: t.type,
+      covered: sc.filter((r) => r.tags.some((x) => tagInfo[x] && tagInfo[x].type === t.type)).length,
+      list: t.groups.flatMap((g) => g.tags).map((tag) => [tag, sc.filter((r) => r.tags.includes(tag)).length]).sort((a, b) => b[1] - a[1]),
+    }));
+    const untagged = sc.filter((r) => !r.tags.length).length;
+    const tmax = Math.max(1, ...tagRows.flatMap((t) => t.list.map((x) => x[1])));
+    const tagPanel = `<section class="ko-panel ov-tagpanel"><div class="ko-panel-head"><h3>标签分布</h3><span class="ko-muted">点击标签加入筛选（取并集）· 共 ${sc.length} 条知识，无标签 ${untagged} 条</span></div><div class="ov-tags">${tagRows.map((t) => `<div class="ov-tg"><div class="ov-tt">${t.type}<small>覆盖 ${t.covered} / ${sc.length}</small></div><ul class="ov-bars">${t.list.map(([tag, n]) => `<li><button class="${state.tags.includes(tag) ? "on" : ""}" data-ovtag="${tag}"><span>${tag}</span><i><em style="width:${(n / tmax) * 100}%"></em></i><b>${n}</b></button></li>`).join("")}</ul></div>`).join("")}</div></section>`;
+
+    return `<div class="ov-grid two">${totalPanel}${deptPanel}</div>${tagPanel}`;
+  }
   function tagTreeHTML(scopeRows) {
     const n = (tag) => scopeRows.filter((r) => r.tags.includes(tag)).length;
     const t = tagTree[state.tagType] || tagTree[0];
@@ -1046,7 +1096,7 @@
       body = `<div class="tp-cols"><ul>${tagTree.map((x, i) => `<li><button class="${i === state.tagType ? "on" : ""}" data-tptype="${i}">${x.type}</button></li>`).join("")}</ul><ul>${t.groups.map((x, i) => `<li><button class="${i === state.tagGroup ? "on" : ""}" data-tpgroup="${i}">${x.name}</button></li>`).join("")}</ul><div class="tp-tags">${g.tags.map((x) => chk(x, "")).join("")}</div></div>`;
     }
     const chips = state.tags.map((x) => `<span class="tp-chip" title="${escape(pathOf(x))}">${x}<button data-tagdel="${x}" aria-label="移除${x}">×</button></span>`).join("");
-    return `<div class="ko-tagpick"><span class="tp-label">标签（多选取交集）</span><div class="tp-wrap"><button class="btn" data-tpopen>选择标签 ▾</button>${state.tagOpen ? `<div class="tp-pop"><input data-tpq placeholder="搜索标签，如：驾驶" value="${escape(state.tagQ)}" aria-label="搜索标签">${body}</div>` : ""}</div>${chips}${state.tags.length ? '<button class="ko-link" data-tagclear>清除</button>' : '<span class="ko-muted">未选择，显示全部知识</span>'}</div>`;
+    return `<div class="ko-tagpick"><span class="tp-label" title="多选取并集">标签</span><div class="tp-wrap"><button class="btn" data-tpopen>选择标签 ▾</button>${state.tagOpen ? `<div class="tp-pop"><input data-tpq placeholder="搜索标签，如：驾驶" value="${escape(state.tagQ)}" aria-label="搜索标签">${body}</div>` : ""}</div>${chips}${state.tags.length ? '<button class="ko-link" data-tagclear>清除</button>' : ''}</div>`;
   }
   const archAt = (r) => (r.statusLabel !== "已归档" ? null : r.status === "已下架" ? r.updated : r.expiry);
   function invSeries(idx, vis) {
@@ -1149,7 +1199,7 @@
           })
           .join("");
         
-        return `<div class="ko-panel ko-inventory">${tagTreeHTML(rows)}<div class="ko-summary five">${cards}</div>${chartHTML}<table class="ko-mini"><thead><tr><th>部门</th><th>知识总数</th><th>已发布</th><th>7 天内到期</th><th>已归档</th><th>未发布</th></tr></thead><tbody>${deptRows}</tbody></table><p class="ko-muted">已过期和已下架的知识统一按已归档处理，不进入待处理问题。有效期字段待确认。</p></div>`;
+        return `<div class="ko-panel ko-inventory">${invOverviewHTML(visible, rows)}<div class="ko-section-title ov-sec"><h3>文档知识时序分布</h3><span class="ko-muted">点击卡片切换下方时间图</span></div><div class="ko-summary five">${cards}</div>${chartHTML}<p class="ko-muted">已过期和已下架的知识统一按已归档处理，不进入待处理问题。有效期字段待确认。</p></div>`;
       })();
     const taskChips = state.tab === "任务" ? `<div class="ko-seg">${["全部", "待处理", "处理中", "已处理", "超期"].map((t) => `<button class="ko-tab ${state.taskFilter === t ? "selected" : ""}" data-taskfilter="${t}">${t}</button>`).join("")}</div>` : "";
     const typeChips = state.tab === "任务" ? `<div class="ko-seg">${["全部", ...Object.values(ftypeName)].map((t) => `<button class="ko-tab ${state.ftype === t ? "selected" : ""}" data-ftype="${t}">${t} <small>${t === "全部" ? taskBase().length : taskBase().filter((x) => ftypeName[x.ftype] === t).length}</small></button>`).join("")}</div>` : "";
@@ -1157,11 +1207,12 @@
       ? `<section class="ko-panel"><div class="ko-table-head"><h3>${heading} <small>${visible.length} 条</small></h3>${typeChips}${taskChips}<form id="ko-search"><input name="query" placeholder="${state.tab === "任务" ? "搜索任务编码或标题" : state.topic === "覆盖缺口" && state.tab === "运营" ? "搜索关键词" : "搜索知识名称"}" aria-label="搜索明细" value="${escape(state.query)}"><button class="btn">搜索</button></form><button class="btn" data-export ${visible.length ? "" : "disabled"}>导出当前结果</button></div><div class="ko-table-wrap"><table><thead><tr>${cols.map((c) => `<th>${c[1]}</th>`).join("")}<th>操作</th></tr></thead><tbody>${visible.length ? visible.map((r, i) => `<tr>${cols.map((c) => `<td>${cellHTML(r, c[0])}</td>`).join("")}<td class="ko-ops"><button class="ko-link" data-detail="${i}">查看</button>${canDispatch ? `<button class="ko-link" data-dispatch-row="${i}">派发任务</button>` : ""}</td></tr>`).join("") : `<tr><td colspan="${cols.length + 1}" class="ko-empty">暂无符合条件的数据，可调整筛选条件</td></tr>`}</tbody></table></div></section>`
       : "";
     const foot = state.tab === "盘点" ? "未设置有效期的知识不计入过期统计；有效期字段待确认。" : "行为指标按所选期间统计。";
-    root.innerHTML = `<section class="ko"><header class="ko-head"><div><h1>知识运营看板</h1><p class="ko-muted">指标根据实际情况做调整 · 发现问题、派发任务、跟踪处理、验证效果</p></div><div class="ko-head-right"><div class="ko-seg ko-roles" role="group" aria-label="查看视角">${[["admin", "企业管理员"], ["dept", "部门管理员"], ["owner", "知识负责人"]].map(([k, l]) => `<button class="ko-tab ${state.role === k ? "selected" : ""}" data-role="${k}" aria-pressed="${state.role === k}">${l}</button>`).join("")}</div><span class="ko-mock">Mock 数据 · 非真实运营数据</span></div></header><div class="ko-filters"><span class="ko-scope"><b>管理范围</b>${state.role === "admin" ? "全企业" : state.role === "dept" ? state.roleDept + "（含 " + (teams[state.roleDept] || []).length + " 个子部门）" : state.roleOwner + " 名下知识"}</span>${state.role === "dept" ? select("roleDept", "当前部门（演示切换）", depts) : ""}${state.role === "admin" ? select("dept", "部门", ["全部", ...depts]) : ""}${(() => {
-      const scopeDept = state.role === "admin" ? state.dept : state.role === "dept" ? state.roleDept : ownerDept[state.roleOwner];
-      const names = scopeDept === "全部" ? depts.flatMap((d) => teams[d].map((t) => t[0])) : teams[scopeDept].map((t) => t[0]);
-      return select("domain", "子部门", ["全部", ...names]);
-    })()}<div class="ko-range"><span>统计时间</span><input type="date" data-range="from" value="${state.from}" max="${iso(0)}" aria-label="开始日期"><i>至</i><input type="date" data-range="to" value="${state.to}" max="${iso(0)}" aria-label="结束日期"><div class="ko-seg">${[[7, "近7天"], [30, "近30天"]].map(([n, l]) => `<button class="ko-tab ${state.to === iso(0) && state.period === n ? "selected" : ""}" data-quick="${n}">${l}</button>`).join("")}</div></div><button class="btn" data-reset>重置筛选</button><span class="ko-muted">样例统计截至 2026-11-13</span></div><nav class="ko-main-tabs">${tabs.map(([k, label]) => button(label, "tab", k, state.tab === k)).join("")}</nav>${body}${state.tab === "运营" ? "" : table}<p class="ko-muted ko-foot">${foot} 示例数据用于交互评审。</p>
+    root.innerHTML = `<section class="ko"><header class="ko-head"><div><h1>知识运营看板</h1><p class="ko-muted">指标根据实际情况做调整 · 发现问题、派发任务、跟踪处理、验证效果</p></div><div class="ko-head-right"><span class="ko-muted ko-simnote" title="正式使用时，视角由登录用户的权限决定，不提供切换">角色模拟 · 仅用于演示，正式使用按登录用户权限确定</span><div class="ko-seg ko-roles" role="group" aria-label="查看视角">${[["admin", "企业管理员"], ["dept", "部门管理员"], ["owner", "知识负责人"]].map(([k, l]) => `<button class="ko-tab ${state.role === k ? "selected" : ""}" data-role="${k}" aria-pressed="${state.role === k}">${l}</button>`).join("")}</div><span class="ko-mock">Mock 数据 · 非真实运营数据</span></div></header><nav class="ko-main-tabs">${tabs.map(([k, label]) => button(label, "tab", k, state.tab === k)).join("")}</nav><div class="ko-filters">${state.role === "dept" ? select("roleDept", "当前部门（演示切换）", depts) : ""}${(() => {
+      const scopeDepts = state.role === "admin" ? depts : [state.role === "dept" ? state.roleDept : ownerDept[state.roleOwner]];
+      const cur = state.dept === "全部" ? "" : state.domain === "全部" ? state.dept : state.dept + "|" + state.domain;
+      const groups = scopeDepts.map((d) => `<optgroup label="${d}"><option value="${d}" ${cur === d ? "selected" : ""}>${d}（全部）</option>${teams[d].map((t) => `<option value="${d}|${t[0]}" ${cur === d + "|" + t[0] ? "selected" : ""}>　${t[0]}</option>`).join("")}</optgroup>`).join("");
+      return `<label>部门<select data-scope aria-label="部门">${state.role === "admin" ? `<option value="" ${cur === "" ? "selected" : ""}>全部</option>` : ""}${groups}</select></label>`;
+    })()}${state.tab === "盘点" || state.tab === "运营" ? tagTreeHTML(rows) : ""}<div class="ko-range"><span>统计时间</span><input type="date" data-range="from" value="${state.from}" max="${iso(0)}" aria-label="开始日期"><i>至</i><input type="date" data-range="to" value="${state.to}" max="${iso(0)}" aria-label="结束日期"><div class="ko-seg">${[[7, "近7天"], [30, "近30天"]].map(([n, l]) => `<button class="ko-tab ${state.to === iso(0) && state.period === n ? "selected" : ""}" data-quick="${n}">${l}</button>`).join("")}</div></div><button class="btn" data-reset>重置筛选</button><span class="ko-muted">样例统计截至 2026-11-13</span></div>${body}${state.tab === "运营" ? "" : table}<p class="ko-muted ko-foot">${foot} 示例数据用于交互评审。</p>
     <dialog id="ko-list" aria-label="清单" class="ko-wide"><div id="ko-list-content"></div><div class="ko-dialog-actions"><button class="btn" data-close-list>关闭</button></div></dialog>
     <dialog id="ko-detail" aria-label="明细"><div id="ko-detail-content"></div><div class="ko-dialog-actions" id="ko-detail-actions"></div></dialog>
     <dialog id="ko-dispatch" aria-label="派发任务"><form id="ko-dispatch-form"><h2>派发任务</h2><p class="ko-muted">将在知识反馈中创建一张单子，来源标记为运营看板；处理在知识反馈中完成，进展在「闭环追踪」查看。</p><label>任务标题<input name="title" required maxlength="60"></label><label>关联指标<input name="metric" readonly></label><label>反馈类型<input name="ftype" readonly></label><label>责任人<select name="owner">${owners.map((o) => `<option>${o}</option>`).join("")}</select></label><label>说明<textarea name="note" rows="3" placeholder="补充背景或期望的处理结果（可选）"></textarea></label><div class="ko-dialog-actions"><button type="button" class="btn" data-close-dispatch>取消</button><button class="btn primary">派发</button></div></form></dialog><div class="ko-status" role="status" id="ko-status"></div></section>`;
@@ -1193,6 +1244,14 @@
       const f = root.querySelector('[data-range="from"]').value || state.from;
       const t = root.querySelector('[data-range="to"]').value || state.to;
       setRange(f, t);
+      render();
+      return;
+    }
+    if (e.target.dataset.scope !== undefined) {
+      const [d, t] = e.target.value.split("|");
+      state.dept = d || "全部";
+      state.domain = t || "全部";
+      state.query = "";
       render();
       return;
     }
@@ -1270,7 +1329,7 @@
     }
   });
   root.addEventListener("click", (e) => {
-    const b = e.target.closest("button");
+    const b = e.target.closest("button, circle[data-ovstatus], circle[data-ovdept]");
     if (!b) return;
     if (b.dataset.goto !== undefined) {
       const [topic, metric] = b.dataset.goto.split("|");
@@ -1291,6 +1350,29 @@
     if (b.dataset.quick !== undefined) {
       const q = Number(b.dataset.quick);
       setRange(iso(-q + 1), iso(0));
+      render();
+      return;
+    }
+    if (b.dataset.ovstatus !== undefined) {
+      state.status = state.status === b.dataset.ovstatus ? "全部" : b.dataset.ovstatus;
+      render();
+      return;
+    }
+    if (b.dataset.ovdept !== undefined) {
+      const k = b.dataset.ovdept;
+      if (state.dept === "全部") Object.assign(state, { dept: k, domain: "全部" });
+      else state.domain = state.domain === k ? "全部" : k;
+      render();
+      return;
+    }
+    if (b.dataset.ovtag !== undefined) {
+      const t = b.dataset.ovtag;
+      state.tags = state.tags.includes(t) ? state.tags.filter((x) => x !== t) : [...state.tags, t];
+      render();
+      return;
+    }
+    if (b.dataset.ovclear !== undefined) {
+      state.status = "全部";
       render();
       return;
     }
@@ -1434,6 +1516,7 @@
         folder: "全部",
         status: "全部",
         tags: [],
+        age: "全部",
         tagNodes: [],
         updated: "全部",
         taskFilter: "全部",

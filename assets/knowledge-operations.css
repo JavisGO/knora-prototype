@@ -1707,3 +1707,261 @@
 .ko-listhead h2 {
   margin: 0;
 }
+.ko-simnote {
+  max-width: 220px;
+  line-height: 1.4;
+  text-align: right;
+}
+.ov-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: stretch;
+}
+.ov-grid > .ko-panel,
+.ov-tagpanel {
+  margin: 0;
+  padding: 16px 18px;
+  min-width: 0;
+}
+.ov-grid h3 {
+  margin: 0 0 2px;
+  font-size: 14px;
+}
+.ov-tagpanel {
+  margin-bottom: 14px;
+}
+.ov-tagpanel .ko-panel-head h3 {
+  margin: 0;
+}
+.ov-tags {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 4px;
+}
+.ov-tg + .ov-tg {
+  margin-top: 0;
+}
+.ov-tt {
+  margin: 8px 0 4px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ko-line);
+}
+.ov-total .ov-lab {
+  color: var(--ko-text-2);
+  font-size: 13px;
+}
+.ov-total > strong {
+  display: block;
+  font-size: 34px;
+  line-height: 1.25;
+  color: #172840;
+  font-weight: 600;
+}
+.ov-total small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ko-text-3);
+  margin-left: 4px;
+}
+.ov-bar {
+  display: flex;
+  height: 12px;
+  margin: 12px 0 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f0f3f9;
+}
+.ov-seg {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.9;
+}
+.ov-seg.p,
+.ov-lg i.p {
+  background: #1764ff;
+}
+.ov-seg.a,
+.ov-lg i.a {
+  background: #9aa7bd;
+}
+.ov-seg.u,
+.ov-lg i.u {
+  background: #f0b429;
+}
+.ov-seg.on {
+  opacity: 1;
+  box-shadow: inset 0 0 0 2px #fff;
+}
+.ov-legend {
+  display: grid;
+  gap: 2px;
+}
+.ov-lg {
+  display: grid;
+  grid-template-columns: 12px 1fr auto 40px;
+  gap: 8px;
+  align-items: center;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ko-text-2);
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+}
+.ov-lg:hover,
+.ov-lg.on {
+  background: #eaf2ff;
+}
+.ov-lg i {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+}
+.ov-lg b {
+  color: #172840;
+}
+.ov-lg small {
+  margin: 0;
+  text-align: right;
+}
+.ov-bars {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+.ov-bars button {
+  display: grid;
+  grid-template-columns: 92px 1fr 28px;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ko-text-2);
+  padding: 5px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+}
+.ov-bars button:hover,
+.ov-bars button.on {
+  background: #eaf2ff;
+}
+.ov-bars button.on span {
+  color: var(--ko-primary);
+  font-weight: 600;
+}
+.ov-bars i {
+  display: block;
+  height: 8px;
+  background: #f0f3f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ov-bars em {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #6fa2ff, #1764ff);
+  border-radius: 4px;
+}
+.ov-bars button.warn em {
+  background: linear-gradient(90deg, #ffc98a, var(--ko-amber));
+}
+.ov-bars b {
+  text-align: right;
+  color: #172840;
+  font-weight: 500;
+}
+.ov-tt {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  font-weight: 600;
+  color: #172840;
+}
+.ov-tt small {
+  font-weight: 400;
+  color: var(--ko-text-3);
+}
+@media (max-width: 1280px) {
+  .ov-grid,
+  .ov-tags {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ko-filters .ko-tagpick {
+  margin: 0;
+  gap: 8px;
+}
+.ko-filters .tp-label {
+  color: var(--ko-text-2);
+}
+.ov-grid .ov-bars {
+  gap: 6px;
+  margin-top: 12px;
+}
+.ov-grid .ov-bars button {
+  padding: 8px 6px;
+}
+.ov-total > strong {
+  font-size: 32px;
+}
+.ov-grid .ov-bars button {
+  grid-template-columns: 112px 1fr 28px;
+}
+
+.ov-grid.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.dn {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10px;
+}
+.dn svg {
+  width: 150px;
+  height: 150px;
+}
+.dn-seg {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.dn:hover .dn-seg {
+  opacity: 0.55;
+}
+.dn .dn-seg:hover,
+.dn .dn-seg.on {
+  opacity: 1;
+}
+.dn-n {
+  font: 600 22px sans-serif;
+  fill: #172840;
+}
+.dn-l {
+  font: 9px sans-serif;
+  fill: var(--ko-text-3);
+}
+.dn .ov-legend {
+  gap: 4px;
+}
+.ko-main-tabs {
+  margin-bottom: 14px;
+}
+.ov-sec {
+  margin: 4px 0 10px;
+}
