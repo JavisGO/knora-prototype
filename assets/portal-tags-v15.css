@@ -1064,3 +1064,73 @@
   padding-left: 24px;
   padding-right: 24px;
 }
+
+/* 标签权限及配置入口 */
+.tagv15-btn:disabled{cursor:not-allowed;opacity:.45}
+.tagv15-permission-matrix header,.tagv15-permission-row{display:grid;grid-template-columns:1.35fr repeat(4,.65fr) 1fr;align-items:center;gap:7px;padding:9px 11px;font-size:8px}
+
+
+/* Keep tag actions reachable while scrolling wide tables. */
+.tagv15-main-panel{min-width:0}
+.tagv15-table-wrap{overflow:auto}
+.tagv15-table th:last-child,.tagv15-table td:last-child{position:sticky;right:0;background:#fff;z-index:2;min-width:154px;box-shadow:-5px 0 8px #1835680a}
+.tagv15-table th:last-child{background:#f5f7fb;z-index:3}
+.tagv15-row-actions{white-space:nowrap;display:flex;gap:12px}
+.tagv15-tree-row.subset .tagv15-caret{visibility:hidden}
+
+
+/* Tag details and compact basic editing. */
+.tagv15-table{border-collapse:separate;border-spacing:0;min-width:1080px}
+
+.tagv15-table th:first-child,.tagv15-table td:first-child{position:sticky;left:0;min-width:32px;width:32px;box-sizing:border-box;background:#fff;z-index:2}
+
+.tagv15-table th:nth-child(2),.tagv15-table td:nth-child(2){position:sticky;left:32px;background:#fff;z-index:2;min-width:150px;box-shadow:4px 0 7px #18356808}
+
+.tagv15-table th:first-child,.tagv15-table th:nth-child(2){background:#f7f9fc;z-index:3}
+
+.tagv15-table th:last-child,.tagv15-table td:last-child{min-width:200px}
+
+.tagv15-table tr.selected td:first-child,.tagv15-table tr.selected td:nth-child(2),.tagv15-table tr.selected td:last-child{background:#f1f7ff}
+
+.tagv15-basic-edit .tagv15-modal-body>.tagv15-section-title{display:none}
+
+.tagv15-basic-edit .tagv15-form-grid{display:flex;flex-direction:column;gap:24px}
+
+.tagv15-basic-edit .tagv15-form-grid>.tagv15-field{display:none}
+
+.tagv15-basic-edit .tagv15-field:has(#tagv15EditName),.tagv15-basic-edit .tagv15-field:has(#tagv15EditDescription),.tagv15-basic-edit .tagv15-field:has([name="tagv15Status"]){display:flex}
+
+.tagv15-basic-edit #tagv15EditName{max-width:460px}
+
+.tagv15-basic-edit .tagv15-form-grid+.tagv15-section-title+.tagv15-form-grid{margin-top:24px}
+
+#tagv15EditDescription{min-height:88px;resize:vertical}
+
+.tagv15-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin:22px 0 30px}
+
+.tagv15-detail-grid dt{color:#73829b;margin-bottom:12px}
+.tagv15-detail-grid dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
+
+.tagv15-detail-exclusions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.tagv15-detail-exclusions>div{padding:10px 14px;border:1px solid #dce6f4;border-radius:8px}
+.tagv15-detail-exclusions small{display:block;color:#74839c;margin-top:5px}
+.tagv15-detail-grid{grid-template-columns:1fr}
+
+.tagv15-basic-edit .tagv15-field:has(#tagv15EditName),.tagv15-basic-edit .tagv15-field:has(#tagv15EditDescription),.tagv15-basic-edit .tagv15-field:has([name="tagv15Status"]){display:block;font-size:14px;line-height:24px}
+
+.tagv15-basic-edit .tagv15-field>input,.tagv15-basic-edit .tagv15-field>textarea{display:block;width:100%;margin-top:10px;font-size:14px;box-sizing:border-box}
+
+.tagv15-basic-edit .tagv15-radio{display:flex;gap:24px;margin-top:10px}
+.tagv15-basic-edit .tagv15-radio label{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;font-size:14px}
+.tagv15-basic-edit .tagv15-radio input{width:16px;height:16px;margin:0}
+
+.tagv15-basic-edit .tagv15-modal-foot{justify-content:flex-end;gap:12px}
+.tagv15-basic-edit .tagv15-modal-foot>span{display:none}
+.tagv15-basic-edit .tagv15-btn{font-size:14px}
+
+#tagv15DetailMask .tagv15-modal-body{font-size:14px}
+#tagv15DetailMask .tagv15-section-title{font-size:16px}
+
+
+/* Only the operation column stays fixed. */
+.tagv15-table th:first-child,.tagv15-table td:first-child,.tagv15-table th:nth-child(2),.tagv15-table td:nth-child(2){position:static;left:auto;z-index:auto;box-shadow:none}
