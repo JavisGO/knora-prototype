@@ -1639,7 +1639,7 @@ button {
   }
 }
 </style>
-<link rel="stylesheet" href="assets/kb-bridge.css?v=20261008profile">
+<link rel="stylesheet" href="assets/kb-bridge.css?v=20261117n">
 <link rel="stylesheet" href="assets/ontology-modules.css?v=20261102-merge">
 <link rel="stylesheet" href="assets/action-execution-history.css?v=20261022">
 <link rel="stylesheet" href="assets/business-rules.css?v=20261015branchmerge">
@@ -1836,21 +1836,25 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 })();
 </script>
-<script src="assets/kb-bridge.js?v=20261009a"></script>
-<script src="assets/ontology-sidebar-shared.js?v=20261021faq"></script>
+<script src="assets/kb-bridge.js?v=20261117n"></script>
+<script src="assets/unified-nav.js?v=20261118k"></script>
+<link rel="stylesheet" href="assets/ontology-list-view.css?v=20261117g">
 <script>
-(function renderSharedOntologySidebar(){
+(function renderUnifiedSidebar(){
  var side=document.querySelector('.ontology-side');
- if(!side||!window.KnoraOntologySidebar)return;
+ if(!side||!window.KnoraUnifiedNav)return;
  var active=new URLSearchParams(location.search).get('module')||'aigo';
- window.KnoraOntologySidebar.render(side,active);
+ window.KnoraUnifiedNav.renderInto(side,{app:'ontology',module:active,asButton:true});
 })();
 </script>
 <link rel="stylesheet" href="assets/faq-management.css?v=20261021-branch15">
 <script src="assets/faq-excel.js?v=20261021-branch15"></script>
 <script src="assets/faq-management.js?v=20261021-branch15"></script>
 <script src="assets/action-execution-history.js?v=20261022"></script>
-<script src="assets/ontology-publication.js?v=20261116-edit-approval-r2"></script><script src="assets/ontology-modules.js?v=20261102-merge"></script>
+<script src="assets/ontology-publication.js?v=20261116-edit-approval-r2"></script><script src="assets/ontology-modules.js?v=20261118-mcp"></script>
+<script src="assets/ontology-list-view.js?v=20261118"></script>
+<link rel="stylesheet" href="assets/ontology-facts.css?v=1">
+<script src="assets/ontology-facts.js?v=2"></script>
 <link rel="stylesheet" href="assets/entity-builder-v2.css?v=20261110-batch-fusion">
 <script src="assets/entity-builder-v2.js?v=20261110-batch-fusion"></script>
 <script src="assets/ontology-roadmap-completion.js?v=20261021-agent-react"></script>
