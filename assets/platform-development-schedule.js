@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  const statuses = ['待启动', '进行中', '待测试', '待部署', '已完成'];
+  const statuses = ['待启动', '进行中', '待测试', '待部署', '已完成', '待优化', '未标注'];
   const seed = JSON.parse($('platform-schedule-data').textContent);
   // A changed source file starts a new local draft, so old browser data cannot hide new schedules.
   const fingerprint = JSON.stringify(seed).split('').reduce((hash, char) => (Math.imul(hash, 31) + char.charCodeAt(0)) | 0, 0);
@@ -17,22 +17,29 @@
   try {
     const legacyFingerprint = $('platform-schedule-data').dataset.legacyFingerprint;
     const saved = JSON.parse(localStorage.getItem(storageKey) || (legacyFingerprint ? localStorage.getItem(`knora-platform-schedule:${location.pathname}:${legacyFingerprint}`) : null));
-    if (validRows(saved)) saved.forEach(row => { if (row.status === '未标注') row.status = '待启动'; });
     if (validRows(saved)) { rows = saved; localStorage.setItem(storageKey, JSON.stringify(rows)); dirty = true; $('save-status').textContent = '已恢复此浏览器中保存的排期。'; }
   } catch (_) { /* Local storage may be unavailable when opening a local HTML file. */ }
   const options = selected => statuses.map(status => `<option${status === selected ? ' selected' : ''}>${status}</option>`).join('');
   $('filter-status').innerHTML = '<option value="">全部状态</option>' + options('');
   $('field-status').innerHTML = options('待启动');
-  const filterIds = ['filter-keyword','filter-status','filter-start','filter-end','filter-date'];
+  const filterIds = ['filter-module','filter-group','filter-name','filter-description','filter-month','filter-status','filter-start','filter-end','filter-date'];
   filterIds.forEach(id => { $(id).value = ''; });
   $('task-dialog').removeAttribute('open');
+  function moduleColumns(value) {
+    const paths = value.split(' / ').map(path => path.split(' · '));
+    return [
+      [...new Set(paths.map(([platform]) => platform))].join(' / '),
+      [...new Set(paths.map(([, ...groups]) => groups.filter(group => group !== '-').join(' · ')).filter(Boolean))].join(' / ')
+    ];
+  }
   function visibleRows() {
-    const query = $('filter-keyword').value.trim().toLowerCase();
+    const textFilters = ['name','description'].map(key => [key, $(`filter-${key}`).value.trim().toLowerCase()]);
     const status = $('filter-status').value;
+    const month = $('filter-month').value;
     const start = $('filter-start').value;
     const end = $('filter-end').value;
-    return rows.filter(row => (!query || [row.module,row.name,row.description].some(value => value.toLowerCase().includes(query))) &&
-      (!status || row.status === status) && (!start || (row.date && row.date >= start)) && (!end || (row.date && row.date <= end)) &&
+    return rows.filter(row => textFilters.every(([key, query]) => row[key].toLowerCase().includes(query)) &&
+      (!month || (row.month || row.date.slice(5, 7)) === month) && (!status || row.status === status) && (!start || (row.date && row.date >= start)) && (!end || (row.date && row.date <= end)) &&
       (!$('filter-date').value || ($('filter-date').value === 'empty' ? !row.date : !!row.date)));
   }
   function render() {
@@ -42,13 +49,13 @@
     $('filter-result').textContent = `显示 ${visible.length} / ${rows.length} 项`;
     const textEditor = (row, key, label) => `<textarea class="schedule-cell-editor" data-key="${key}" aria-label="${label}" rows="${key === 'description' ? 3 : 2}">${escape(row[key])}</textarea>`;
     $('schedule-body').innerHTML = visible.length ? visible.map((row, index) => `<tr data-id="${escape(row.id)}">
-      <td>${editing ? textEditor(row, 'module', '所属模块') : escape(row.module)}</td>
-      <td>${editing ? textEditor(row, 'name', '功能名称') : escape(row.name)}</td>
+      ${editing ? `<td colspan="2">${textEditor(row, 'module', '平台及功能模块')}</td>` : moduleColumns(row.module).map(value => `<td>${escape(value)}</td>`).join('')}
+      <td class="schedule-task-name">${editing ? textEditor(row, 'name', '功能名称') : escape(row.name)}</td>
       <td>${editing ? textEditor(row, 'description', '功能描述') : escape(row.description)}</td>
       <td>${editing ? `<input class="schedule-cell-editor" data-key="date" aria-label="计划排期日期" type="date" value="${escape(row.date)}">` : escape(row.date) || '<span style="color:#94a0b0">未排期</span>'}</td>
       <td>${editing ? `<select class="schedule-cell-editor" data-key="status" aria-label="状态">${options(row.status)}</select>` : `<span class="schedule-status" data-status="${escape(row.status)}">${escape(row.status)}</span>`}</td>
       ${editing ? `<td><div class="row-actions"><button type="button" data-action="add">下方新增</button><button type="button" data-action="up" ${index === 0 ? 'disabled' : ''}>上移</button><button type="button" data-action="down" ${index === visible.length - 1 ? 'disabled' : ''}>下移</button><button type="button" data-action="delete">删除</button></div></td>` : ''}
-    </tr>`).join('') : `<tr><td colspan="${editing ? 6 : 5}" class="schedule-empty">暂无符合条件的任务，可重置筛选${editing ? '或新增任务' : ''}。</td></tr>`;
+    </tr>`).join('') : `<tr><td colspan="${editing ? 7 : 6}" class="schedule-empty">暂无符合条件的任务，可重置筛选${editing ? '或新增任务' : ''}。</td></tr>`;
   }
   function persist(message, redraw = true) {
     dirty = true;
@@ -106,7 +113,7 @@
     if (pending.edit) Object.assign(rows.find(row => row.id === pending.edit), values);
     else {
       const index = pending.after ? rows.findIndex(row => row.id === pending.after) + 1 : rows.length;
-      rows.splice(index, 0, {id: `task-${Date.now()}-${Math.random().toString(36).slice(2,8)}`, ...values});
+      rows.splice(index, 0, {id: `task-${Date.now()}-${Math.random().toString(36).slice(2,8)}`, ...values, month: rows.find(row => row.id === pending.after)?.month || $('filter-month').value || values.date.slice(5, 7)});
     }
     const added = !pending.edit;
     $('task-dialog').close();
